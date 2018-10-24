@@ -15,6 +15,8 @@ services:
     image: postgres:11-alpine
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
   cgi:
     build: ./app/api/
@@ -26,7 +28,7 @@ services:
     command: "--path=/data/sock/api.sock"
     environment:
       #SQLALCHEMY_DATABASE_URI: "${SQLALCHEMY_DATABASE_URI}"
-      SQLALCHEMY_DATABASE_URI: "sqlite:////data/app.sqlite"
+      DATABASE_URI: "${DATABASE_URI}"
       SECRET_KEY: "${SECRET_KEY}"
 
   caddy:

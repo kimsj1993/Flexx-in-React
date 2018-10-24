@@ -11,8 +11,8 @@ from fluxxapp.socket import register_handlers
 
 app = Flask(__name__)
 
-db_uri = os.environ.get("SQLALCHEMY_DATABASE_URI")
-assert db_uri, "Database URI (SQLALCHEMY_DATABASE_URI) isn't set."
+db_uri = os.environ.get("DATABASE_URI")
+assert db_uri, "Database URI (DATABASE_URI) isn't set."
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 
 app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "CHANGEME")
