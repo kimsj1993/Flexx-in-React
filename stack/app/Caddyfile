@@ -1,0 +1,11 @@
+fluxx.d.calebj.io {
+    gzip
+    rewrite {
+        to /static/{path} {uri}
+    }
+    proxy /api cgi:5000 {
+        except /static
+        websocket
+        transparent
+    }
+}

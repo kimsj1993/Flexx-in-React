@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+  #mongo:
+    #image: mongo
+    #restart: always
+    #command: "--smallfiles --logpath=/dev/null"
+    #environment:
+      #MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      #MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    #volumes:
+      #- ./data/db:/data/db
+
+  postgres:
+    image: postgres:11-alpine
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+
+  cgi:
+    build: ./app/api/
+    volumes:
+      - ./data/app:/data
+      - ./data/sock:/sock
+    links:
+      - postgres
+    command: "--path=/data/sock/api.sock"
+    environment:
+      #SQLALCHEMY_DATABASE_URI: "${SQLALCHEMY_DATABASE_URI}"
+      SQLALCHEMY_DATABASE_URI: "sqlite:////data/app.sqlite"
+      SECRET_KEY: "${SECRET_KEY}"
+
+  caddy:
+    image: abiosoft/caddy:no-stats
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app/static:/srv
+      - ./app/Caddyfile:/etc/Caddyfile
+      - ./data/caddy:/root/.caddy
+      - ./data/sock:/sock
+    links:
+      - cgi
