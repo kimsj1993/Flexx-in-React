@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^3.3.1",
+    "cross-fetch": "^2.2.3",
     "express": "^4.16.4",
     "next": "^7.0.2",
     "next-redux-wrapper": "^2.0.0",
@@ -21,6 +22,7 @@
     "react-jss": "^8.6.1",
     "react-redux": "^5.1.0",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "socket.io-client": "^2.1.1"
   }
 }
