@@ -139,7 +139,7 @@ class SessionResource(Resource):
         db.session.commit()
         session.clear()
 
-        return '', 204
+        return {}
 
 
 @reg_resource("/games", "/games/", "/games/<string:game_id>", "/games/<string:game_id>/players/<string:player_id>")

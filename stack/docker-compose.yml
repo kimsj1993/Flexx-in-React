@@ -27,8 +27,8 @@ services:
     volumes:
       - ./data/app:/data
       - ./data/sock:/sock
-#    links:
-#      - postgres
+    links:
+      - postgres
     command: "--path=/data/sock/api.sock"
     environment:
       DATABASE_URI: "${DATABASE_URI}"

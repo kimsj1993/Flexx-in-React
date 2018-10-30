@@ -1,5 +1,5 @@
 from flask import session
-from flask_socketio import SocketIO, emit, send, join_room, leave_room
+from flask_socketio import SocketIO, disconnect, emit, send, join_room, leave_room
 
 from .api import get_user, get_game
 
