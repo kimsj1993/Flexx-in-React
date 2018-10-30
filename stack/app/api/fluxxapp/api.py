@@ -126,7 +126,7 @@ class SessionResource(Resource):
             if existing_user:
                 abort(409, message="that username is already in use")
 
-            active_user = active_user = get_user(create=True, **args)
+            active_user = get_user(create=True, **args)
             events.user_login(active_user)
 
         resp["user"] = active_user.to_json(include_children=True)

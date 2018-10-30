@@ -4,7 +4,7 @@ from flask_socketio import emit, send, close_room, join_room, leave_room, discon
 
 
 def global_emit(*args, **kwargs):
-    return emit(*args, namespace='/', room='global', **kwargs)
+    return emit(*args, namespace="/", room="global", **kwargs)
 
 
 def user_update(user: ActiveUser, **old_values):
@@ -12,13 +12,13 @@ def user_update(user: ActiveUser, **old_values):
 
 
 def user_login(user: ActiveUser):
-    global_emit("user_login", {"user_id": user.id})
+    global_emit("user_login", {"user": user.to_json()})
 
 
 # only called from logout request
 def user_logout(user: ActiveUser):
-    disconnect(sid=session.sid, namespace='/')
-    global_emit("user_logout", {"user_id": user.id})
+    disconnect(sid=session.sid, namespace="/")
+    global_emit("user_logout", {"user": user.to_json()})
 
 
 def game_create(game: Game):
@@ -26,7 +26,7 @@ def game_create(game: Game):
 
 
 def game_user_join(game: Game, user: ActiveUser):
-    join_room(f"game_{game.id}", sid=session.sid, namespace='/')
+    join_room(f"game_{game.id}", sid=session.sid, namespace="/")
     global_emit("game_user_join", {"game_id": game.id, "user_id": user.id})
 
 
@@ -39,4 +39,5 @@ def game_update(game: Game, **old_values):
 
 
 def game_remove(game: Game):
+    close_room(f"game_{game.id}")
     global_emit("game_remove", {"game_id": game.id})
