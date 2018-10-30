@@ -8,10 +8,29 @@ const userData = (state = null, action) => {
 		default:
 			return state;
 	}
+};
+
+const loginFormUIValue = (state = '', action) => {
+	switch (action.type) {
+		case actions.UPDATE_LOGIN_FORM:
+			return action.value;
+		default:
+			return state;
+	}
 }
 
+const loginFormUI = combineReducers({
+	value: loginFormUIValue,
+
+});
+
+const ui = combineReducers({
+	loginForm: loginFormUI
+});
+
 const rootReducer = combineReducers({
-	userData
+	userData,
+	ui
 });
 
 export default rootReducer;

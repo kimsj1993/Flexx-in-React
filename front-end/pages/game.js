@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 class Game extends Component {
 	componentDidMount() {
-		const { dispatch } = this.props;
+		const { dispatch, getState } = this.props;
 
 		dispatch(actions.ensureLoggedIn());
 
