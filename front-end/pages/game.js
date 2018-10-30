@@ -18,7 +18,7 @@ class Game extends Component {
 
 		dispatch(actions.ensureLoggedIn());
 
-		this.socket = io('fluxx.d.calebj.io');
+		this.socket = io('https://fluxx.d.calebj.io');
 
 		this.socket.on('connection', () => console.log(connected));
 	}

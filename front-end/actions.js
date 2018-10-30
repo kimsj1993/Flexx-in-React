@@ -22,13 +22,10 @@ export const ensureLoggedIn = () => (dispatch, getState) => {
 	const { userData } = getState();
 
 	if (!userData) {
-		fetch('http://fluxx.d.calebj.io/api/session', {
-			mode: 'CORS'
-		})
+		fetch('https://fluxx.d.calebj.io/api/session')
 			.then(res => res.json())
 			.then(json => {
-				console.log(json);
-				if (json == {}) {
+				if (!Object.keys(json).length) {
 					Router.pushRoute('/');
 				} else {
 					dispatch(updateUserData(json));
