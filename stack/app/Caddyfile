@@ -1,5 +1,8 @@
-localhost:80 {
+fluxx.d.calebj.io {
     gzip
+    header / {
+        Access-Control-Allow-Origin http://localhost:3000
+    }
     proxy /api cgi:5000 {
         websocket
         transparent

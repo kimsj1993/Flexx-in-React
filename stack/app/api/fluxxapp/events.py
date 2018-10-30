@@ -27,7 +27,7 @@ def game_create(game: Game):
 
 
 def game_user_join(game: Game, user: ActiveUser):
-    join_room(f"game_{game.id}", namespace='/')
+    join_room(f"game_{game.id}", sid=session.sid, namespace='/')
     broadcast_emit("game_user_join", {"game_id": game.id, "user_id": user.id})
 
 

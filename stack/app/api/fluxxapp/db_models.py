@@ -7,6 +7,7 @@ from sqlalchemy import (Column, Integer, String, Enum, ForeignKey, Float,
 from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, composite, backref
+from sqlalchemy.ext.hybrid import hybrid_property
 
 from sqlalchemy import event
 from sqlalchemy.engine import Engine
@@ -55,6 +56,10 @@ class Game(db.Model, UpdatableMixin):
 
     host_id = db.Column(db.Integer, db.ForeignKey("active_users.id"), nullable=False, index=True)
     host = db.relationship("ActiveUser", foreign_keys=[host_id])
+
+    @hybrid_property
+    def in_progress(self):
+        return self.started != None
 
     def to_json(self, include_children: bool = False):
         ret = {

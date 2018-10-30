@@ -152,20 +152,22 @@ class GameResource(Resource):
     def _validate_params(self, game_id: Optional[str], player_id: Optional[str]):
         if game_id is None:
             pass
-        elif isinstance(game_id, str) and game_id.lower() == '@current':
-            game_id = game_id.lower()
-        elif game_id.isnumeric():
-            game_id = int(game_id)
-        else:
+        elif isinstance(game_id, str):
+            if game_id.lower() == '@current':
+                game_id = game_id.lower()
+            elif game_id.isnumeric():
+                game_id = int(game_id)
+        elif not isinstance(game_id, int):
             abort(400, message="invalid game ID (must be '@current' or numeric)")
 
         if player_id is None:
             pass
-        elif isinstance(player_id, str) and player_id.lower() == '@me':
-            player_id = player_id.lower()
-        elif game_id.isnumeric():
-            player_id = int(player_id)
-        else:
+        elif isinstance(player_id, str):
+            if player_id.lower() == '@me':
+                player_id = player_id.lower()
+            elif game_id.isnumeric():
+                player_id = int(player_id)
+        elif not isinstance(game_id, int):
             abort(400, message="invalid player ID (must be '@me' or numeric)")
 
         return game_id, player_id
@@ -215,8 +217,7 @@ class GameResource(Resource):
                 abort(400, message="cannot create a game with another player as host")
             game = get_game(create=True, host=get_user(), **args)
 
-            resp["game"] = game.to_json(include_children=True)
-
+        resp["game"] = game.to_json(include_children=True)
         return resp
 
     def put(self, game_id: str = None, player_id: str = None):
@@ -232,6 +233,8 @@ class GameResource(Resource):
             abort(401, message="you must be logged in to update a game")
         elif not game:
             abort(404, message="game not found")
+        elif player_id:
+            return self.post(game_id, player_id)
         elif game.host != user:
             abort(403, message="you can only update games where you are the host")
 
@@ -298,3 +301,5 @@ class GameResource(Resource):
             events.game_user_leave(game, player, kick=kick)
             db.session.add(player)
             db.session.commit()
+
+        return '', 204
