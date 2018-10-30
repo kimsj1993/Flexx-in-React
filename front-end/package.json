@@ -17,6 +17,7 @@
     "next-routes": "^1.4.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-jss": "^8.6.1"
+    "react-jss": "^8.6.1",
+    "react-swipeable-views": "^0.13.0"
   }
 }
