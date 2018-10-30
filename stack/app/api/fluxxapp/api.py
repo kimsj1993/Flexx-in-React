@@ -6,11 +6,13 @@ from .db_models import db, ActiveUser, Game
 from . import events
 
 api = Api()
-
-resp_204 = make_response('', 204)
-resp_204.headers['Content-Length'] = 0
-
 _resources = {}
+
+
+def resp_204():
+    resp = make_response('', 204)
+    resp.headers['Content-Length'] = 0
+    return resp
 
 
 def reg_resource(*args, **kwargs):
@@ -144,7 +146,7 @@ class SessionResource(Resource):
         db.session.commit()
         session.clear()
 
-        return {}
+        return resp_204()
 
 
 @reg_resource("/games", "/games/", "/games/<string:game_id>", "/games/<string:game_id>/players/<string:player_id>")
@@ -227,8 +229,8 @@ class GameResource(Resource):
 
         if game:
             events.game_user_join(game, user)
+            resp["game"] = game.to_json(include_children=True)
 
-        resp["game"] = game.to_json(include_children=True)
         return resp
 
     def put(self, game_id: str = None, player_id: str = None):
@@ -313,4 +315,4 @@ class GameResource(Resource):
             db.session.add(player)
             db.session.commit()
 
-        return resp_204
+        return resp_204()
