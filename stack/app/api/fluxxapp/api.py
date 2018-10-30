@@ -1,4 +1,4 @@
-from flask import session, request
+from flask import session, request, make_response
 from flask_restful import Api, Resource, reqparse, abort
 from typing import Optional
 
@@ -302,4 +302,6 @@ class GameResource(Resource):
             db.session.add(player)
             db.session.commit()
 
-        return '', 204
+        resp = make_response('', 204)
+        resp.headers['Content-Length'] = 0
+        return resp
