@@ -13,6 +13,8 @@ def on_connect():
     if not user:
         return False  # not logged in
 
+    join_room("global")
+
     game = user.current_game
 
     if game:

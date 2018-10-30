@@ -1,5 +1,8 @@
 fluxx.d.calebj.io {
-    gzip
+    gzip {
+        not /socket.io
+    }
+    cors
     header / {
         Access-Control-Allow-Origin http://localhost:3000
     }
@@ -10,7 +13,7 @@ fluxx.d.calebj.io {
     }
     proxy /socket.io cgi:5000 {
         websocket
-        transparent
+        #transparent
     }
     proxy / node:3000 {
         transparent

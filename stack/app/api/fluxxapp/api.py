@@ -7,6 +7,9 @@ from . import events
 
 api = Api()
 
+resp_204 = make_response('', 204)
+resp_204.headers['Content-Length'] = 0
+
 _resources = {}
 
 
@@ -133,6 +136,8 @@ class SessionResource(Resource):
 
         if not active_user:
             abort(400, message="not logged in, can't log out")
+        elif active_user.current_game:
+            abort(409, message="you must leave your game first")
 
         events.user_logout(active_user)
         db.session.delete(active_user)
@@ -188,6 +193,7 @@ class GameResource(Resource):
         resp = {}
         user = get_user()
         game_id, player_id = self._validate_params(game_id, player_id)
+        game = None
 
         if not user:
             abort(401, message="you must be logged in to create or join a game")
@@ -210,12 +216,17 @@ class GameResource(Resource):
                 user.current_game = game
                 db.session.add(user)
                 db.session.commit()
-                events.game_user_join(game, user)
         else:
             args = self.parser.parse_args()
+
             if args.pop("host") not in (None, user.id, "@me"):
                 abort(400, message="cannot create a game with another player as host")
+
             game = get_game(create=True, host=get_user(), **args)
+            events.game_create(game)
+
+        if game:
+            events.game_user_join(game, user)
 
         resp["game"] = game.to_json(include_children=True)
         return resp
@@ -302,6 +313,4 @@ class GameResource(Resource):
             db.session.add(player)
             db.session.commit()
 
-        resp = make_response('', 204)
-        resp.headers['Content-Length'] = 0
-        return resp
+        return resp_204
