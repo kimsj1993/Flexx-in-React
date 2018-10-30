@@ -5,4 +5,5 @@ flask-socketio
 flask-sqlalchemy
 gevent
 itsdangerous>=0.24,<1.0.0
+psycopg2
 sqlalchemy

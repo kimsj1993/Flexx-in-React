@@ -1,11 +1,16 @@
-fluxx.d.calebj.io {
+localhost:80 {
     gzip
-    rewrite {
-        to /static/{path} {uri}
-    }
     proxy /api cgi:5000 {
-        except /static
         websocket
         transparent
+        without /api
+    }
+    proxy /socket.io cgi:5000 {
+        websocket
+        transparent
+    }
+    proxy / node:3000 {
+        transparent
+        except /static
     }
 }

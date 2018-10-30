@@ -9,7 +9,7 @@ ENTRYPOINT ["python3.6", "/app/app.py"]
 RUN echo "http://dl-8.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories
 RUN \
     # basic deps
-    apk --no-cache add openssl alpine-sdk linux-headers openssh bash gettext gnupg xz && \
+    apk --no-cache add openssl alpine-sdk linux-headers openssh bash gettext gnupg xz postgresql-dev postgresql-libs && \
     # update pip
     pip install -U pip --retries 30 && \
     # clean up apk cache
@@ -28,5 +28,7 @@ RUN \
             -o \
             \( -type f -a \( -name '*.pyc' -o -name '*.pyo' \) \) \
         \) -exec rm -rf '{}' +
+
+RUN apk del postgresql-dev alpine-sdk linux-headers
 
 COPY . /app/
