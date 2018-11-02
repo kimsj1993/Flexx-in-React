@@ -2,9 +2,9 @@ fluxx.d.calebj.io {
     gzip {
         not /socket.io
     }
-    cors
+    cors / http://localhost:3000 http://amritb.github.io
     header / {
-        Access-Control-Allow-Origin http://localhost:3000
+        Access-Control-Allow-Origin http://localhost:3000 http://amritb.github.io
     }
     proxy /api cgi:5000 {
         websocket
