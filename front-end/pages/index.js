@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+import withLogin from '../utils/withLogin';
+
 import { Router } from '../routes';
 
 import LoginForm from '../components/LoginForm';
@@ -11,15 +13,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 class Main extends Component {
-	constructor(props) {
-		super(props);
-
-		const { userData } = props;
-
-		if (userData) {
-			Router.pushRoute('/game');
-		}
-	}
 
 	handleChange = e => {
 		e.preventDefault();
@@ -29,12 +22,10 @@ class Main extends Component {
 		dispatch(actions.updateLoginForm(e.target.value));
 	}
 
-	handleLogin = e => {
-		e.preventDefault();
+	handleLogin = () => {
+		const { login, value } = this.props;
 
-		const { dispatch, value } = this.props;
-
-		dispatch(actions.handleLogin(value));
+		login(value);
 	}
 
 	render () {
@@ -46,6 +37,6 @@ class Main extends Component {
 	};
 }
 
-export default connect(
+export default withLogin(connect(
 	mapStateToProps
-)(Main);
+)(Main));

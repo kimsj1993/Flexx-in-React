@@ -10,7 +10,9 @@ import makeStore from '../store.js';
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
-import getPageContext from '../src/getPageContext';
+import getPageContext from '../utils/getPageContext';
+
+import LoginProvider from '../utils/LoginProvider';
 
 class MyApp extends App {
   constructor(props) {
@@ -53,7 +55,11 @@ class MyApp extends App {
               {/* Pass pageContext to the _document though the renderPage enhancer
                   to render collected styles on server side. */}
 
-              <Component pageContext={this.pageContext} {...pageProps} />
+              <LoginProvider>
+
+                <Component pageContext={this.pageContext} {...pageProps} />
+
+              </LoginProvider>
               
             </MuiThemeProvider>
             
