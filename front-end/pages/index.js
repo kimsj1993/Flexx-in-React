@@ -1,31 +1,42 @@
 import { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
 
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import Toolbar from '@material-ui/core/Toolbar';
-import { withStyles } from '@material-ui/core/styles';
+import withLogin from '../utils/withLogin';
 
-const styles = theme => ({
-	grow: {
-		flexGrow: 1
-	}
+import { Router } from '../routes';
+
+import LoginForm from '../components/LoginForm';
+
+const mapStateToProps = (state, ownProps) => ({
+	value: state.ui.loginForm.value
 });
 
-class App extends Component {
-	render = () => {
-		const { classes } = this.props;
+class Main extends Component {
+
+	handleChange = e => {
+		e.preventDefault();
+
+		const { dispatch } = this.props;
+
+		dispatch(actions.updateLoginForm(e.target.value));
+	}
+
+	handleLogin = () => {
+		const { login, value } = this.props;
+
+		login(value);
+	}
+
+	render () {
+		const { value } = this.props;
 
 		return (
-			<AppBar position='static'>
-				<Toolbar>
-					<Typography variant='h6'>Hello!</Typography>
-					<div className={ classes.grow } />
-					<Button variant='contained' color='secondary'>Help</Button>
-				</Toolbar>
-			</AppBar>
-		)
+			<LoginForm value={ value } handleChange={ this.handleChange } handleLogin={ this.handleLogin } />
+		);
 	};
 }
 
-export default withStyles(styles)(App);
+export default withLogin(connect(
+	mapStateToProps
+)(Main));
