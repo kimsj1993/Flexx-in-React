@@ -14,6 +14,8 @@ import getPageContext from '../utils/getPageContext';
 
 import LoginProvider from '../utils/LoginProvider';
 
+import SocketProvider from '../utils/SocketProvider';
+
 class MyApp extends App {
   constructor(props) {
     super(props);
@@ -57,7 +59,11 @@ class MyApp extends App {
 
               <LoginProvider>
 
-                <Component pageContext={this.pageContext} {...pageProps} />
+                <SocketProvider>
+
+                  <Component pageContext={this.pageContext} {...pageProps} />
+
+                </SocketProvider>
 
               </LoginProvider>
               
