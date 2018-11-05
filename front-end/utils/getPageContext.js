@@ -19,6 +19,12 @@ const theme = createMuiTheme({
       main: '#f8e71c',
       dark: '#c1b500',
     },
+    cards: {
+      keeper: '#BCDA60',
+      goal: '#F12A91',
+      rule: '#F8E71C',
+      action: '#79B8E9'
+    }
   },
 });
 
