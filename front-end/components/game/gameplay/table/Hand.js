@@ -4,12 +4,12 @@ import CardContainer from '../CardContainer';
 
 const styles = theme => ({
 	root: {
-		flexGrow: 1
+		display: 'flex'
 	},
 	card: {
 		marginRight: -92,
 
-		'&hover': {
+		'&:hover': {
 			marginRight: 0
 		}
 	}

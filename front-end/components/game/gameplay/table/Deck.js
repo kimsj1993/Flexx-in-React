@@ -14,7 +14,8 @@ const styles = theme => ({
 	count: {
 		height: 20,
 		marginTop: 22,
-		width: 64
+		width: 64,
+		color: theme.palette.common.white
 	}
 });
 
