@@ -5,11 +5,13 @@ from pathlib import Path
 from random import shuffle
 from typing import Optional, Union
 
-from .db_models import db, ActiveUser, Game, Card, CARD_TYPE
+from .db_models import db, ActiveUser, Game, Card
+from .enums import CARD_TYPE
 
 
 def load_cards_csv(path: Union[Path, str]):
     present_cards = {c.id: c for c in Card.query.all()}
+    csv_cards = set()
 
     if isinstance(path, str):
         path = Path(path)
@@ -18,17 +20,19 @@ def load_cards_csv(path: Union[Path, str]):
     type_key = "type"
     json_map = {"TRUE": True, "FALSE": False, "NULL": None, "": None}
     json_keys = ("precondition", "result")
+    bool_keys = ("exclusive",)
 
     with path.open() as f:
         reader = csv.DictReader(f)
 
         for row in reader:
             card_id = row["id"]
+            csv_cards.add(card_id)
             ud = {k: (row.get(k) or None) for k in keys}
             ud[type_key] = CARD_TYPE(row[type_key].upper())
 
             for jk in json_keys:
-                jv = row[jk]
+                jv = row.get(jk, "")
 
                 if jv in json_map:
                     jv = json_map[jv]
@@ -37,6 +41,10 @@ def load_cards_csv(path: Union[Path, str]):
 
                 ud[jk] = jv
 
+            for bk in bool_keys:
+                bv = row.get(bk, "")
+                ud[bk] = bv.strip().lower() == "true"
+
             if card_id in present_cards:
                 card = present_cards[card_id]
                 card.update(**ud)
@@ -44,6 +52,9 @@ def load_cards_csv(path: Union[Path, str]):
                 card = Card(**ud)
 
             db.session.add(card)
+
+    for outlier in set(present_cards) - csv_cards:
+        db.session.delete(present_cards[outlier])
 
     db.session.commit()
 
@@ -97,3 +108,7 @@ def get_game(game_id: Optional[str] = None, create=False, **kwargs) -> Optional[
         db.session.commit()
 
         return game
+
+
+def get_card(card_id) -> Optional[Card]:
+    return Card.query.filter_by(id=card_id).one_or_none()

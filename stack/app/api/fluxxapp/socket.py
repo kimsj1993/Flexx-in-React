@@ -11,24 +11,24 @@ CID_SID_MAP = {}  # socket SID -> flask session ID mapping
 SID_CID_MAP = defaultdict(lambda: set())  # flask session ID -> set of socket SIDs
 
 
-def global_emit(*args, **kwargs):
-    return socketio.emit("global", *args, namespace="/", room="global", **kwargs)
+def global_emit(*args, event="global", **kwargs):
+    return socketio.emit(event, *args, namespace="/", room="global", **kwargs)
 
 
-def game_emit(*args, game: Optional[Game] = None, **kwargs):
+def game_emit(*args, event="game", game: Optional[Game] = None, **kwargs):
     if game is None:
         user = get_user()
         game = user.game
 
     if game:
-        return socketio.emit("game", *args, namespace="/", room=f"game_{game.id}", **kwargs)
+        return socketio.emit(event, *args, namespace="/", room=f"game_{game.id}", **kwargs)
 
 
-def user_emit(*args, user: Optional[ActiveUser] = None, **kwargs):
+def user_emit(*args, event="user", user: Optional[ActiveUser] = None, **kwargs):
     sid = (user and user.session.session_id) or session.sid
 
     if sid:
-        return socketio.emit("user", *args, namespace="/", room=sid, **kwargs)
+        return socketio.emit(event, *args, namespace="/", room=sid, **kwargs)
 
 
 def disconnect_user(user: Optional[ActiveUser] = None):
@@ -70,7 +70,7 @@ def on_connect():
     # collect HELLO information
     games = [g.to_json() for g in Game.query.all()]
     users = [u.to_json() for u in ActiveUser.query.all()]
-    cards = [u.to_json() for u in Card.query.all()]
+    cards = [u.to_json(full=True) for u in Card.query.all()]
 
     # room shared by all of a user's connections
     join_room(session.sid)

@@ -2,9 +2,9 @@ from flask import session, request, make_response
 from flask_restful import Api, Resource, reqparse, abort
 from typing import Optional
 
-from .api import get_game, get_user
+from .api import get_game, get_user, get_card
 from .db_models import db, ActiveUser, Game
-from . import events
+from . import events, gamelogic
 
 rest_api = Api()
 _resources = {}
@@ -22,6 +22,30 @@ def reg_resource(*args, **kwargs):
         return cls
 
     return deco
+
+
+def validate_game_id(game_id):
+    if game_id in (None, ""):
+        return
+    elif isinstance(game_id, str):
+        if game_id.lower() == '@current':
+            return game_id.lower()
+        elif game_id.isnumeric():
+            return int(game_id)
+    elif not isinstance(game_id, int):
+        abort(400, message="invalid game ID (must be '@current' or numeric)")
+
+
+def validate_player_id(player_id):
+    if player_id in (None, ""):
+        return
+    elif isinstance(player_id, str):
+        if player_id.lower() == '@me':
+            return player_id.lower()
+        elif game_id.isnumeric():
+            return int(player_id)
+    elif not isinstance(game_id, int):
+        abort(400, message="invalid player ID (must be '@me' or numeric)")
 
 
 @reg_resource("/session")
@@ -129,26 +153,8 @@ class GameResource(Resource):
     parser.add_argument('host', type=int, default=None, nullable=False)
 
     def _validate_params(self, game_id: Optional[str], player_id: Optional[str]):
-        if game_id is None:
-            pass
-        elif isinstance(game_id, str):
-            if game_id.lower() == '@current':
-                game_id = game_id.lower()
-            elif game_id.isnumeric():
-                game_id = int(game_id)
-        elif not isinstance(game_id, int):
-            abort(400, message="invalid game ID (must be '@current' or numeric)")
-
-        if player_id is None:
-            pass
-        elif isinstance(player_id, str):
-            if player_id.lower() == '@me':
-                player_id = player_id.lower()
-            elif game_id.isnumeric():
-                player_id = int(player_id)
-        elif not isinstance(game_id, int):
-            abort(400, message="invalid player ID (must be '@me' or numeric)")
-
+        game_id = validate_game_id(game_id)
+        player_id = validate_player_id(player_id)
         return game_id, player_id
 
     def get(self, game_id: str = None, player_id: str = None):
@@ -175,7 +181,7 @@ class GameResource(Resource):
             abort(400, message="use PUT to update game settings")
         elif player_id not in (None, '@me', user.id):
             abort(403, message="you can only add yourself to games")
-        elif game_id and game_id in ('@current', user.game.id):
+        elif game_id and (game_id == '@current' or user.game and game_id == user.game.id):
             resp["message"] = "requested to join current game, no change"
         elif user.game:
             abort(409, message="you must leave your current game before creating or joining another")
@@ -187,7 +193,8 @@ class GameResource(Resource):
             elif game.in_progress and not game.free_join:
                 abort(409, message="that game has already started and isn't taking new players")
             else:
-                user.game = game
+                game.players.append(user)
+                db.session.add(game)
                 db.session.add(user)
                 db.session.commit()
         else:
@@ -288,10 +295,59 @@ class GameResource(Resource):
         return resp_204()
 
 
+@reg_resource("/games/<string:game_id>/start")
+class StartGameResource(Resource):
+    def post(self, game_id: str):
+        game_id = validate_game_id(game_id)
+
+        user = get_user()
+        game = get_game(game_id)
+
+        if not user:
+            abort(401, message="you must be logged in to start a game")
+        elif not game:
+            abort(404, message="game not found")
+        elif game.host != user:
+            abort(401, message="you must be the host to start the game")
+
+        try:
+            gamelogic.start_game(game)
+        except AssertionError as e:
+            if e.args:
+                abort(400, message=e.args[0])
+            else:
+                abort(400)
+
+        return {"message": "ok"}
+
+
 @reg_resource("/games/<string:game_id>/players/<string:player_id>/hand/<string:card_id>")
 class HandCardResource(Resource):
     "Represents a player hand. card_id can be the card's ID or @random"
-    pass
+    def delete(self, game_id: str, player_id: str, card_id: str):
+        player_id = validate_player_id(player_id)
+        user = get_user()
+        game = get_game(validate_game_id(game_id))
+        card = get_card(card_id)
+
+        if not user:
+            abort(401, message="you must be logged in to start a game")
+        elif not game:
+            abort(404, message="game not found")
+        elif user.game != game:
+            abort(401, message="you must be in that game to have a hand")
+        elif player_id not in (user.id, '@me'):
+            abort(401, message="you can only discard cards from your own hand")
+        elif not card_id and card and card in user.game_state.hand:
+            abort(404, message="card not found")
+
+        try:
+            gamelogic.discard(user.game_state, card)
+        except AssertionError as e:
+            if e.args:
+                abort(400, message=e.args[0])
+            else:
+                abort(400)
 
 
 @reg_resource("/games/<string:game_id>/discard_pile")
@@ -301,7 +357,39 @@ class DiscardResource(Resource):
 
     def get(self, game_id: str):
         "shows the discard pile"
-        pass
+        game = get_game(game_id)
+        return [c.id for c in game.discard_pile]
+
+
+@reg_resource("/games/<string:game_id>/play")
+class PlayResource(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('card_id', type=str, default=None, nullable=False)
+
+    def post(self, game_id: str):
+        "plays a card"
+        user = get_user()
+        game = get_game(validate_game_id(game_id))
+        card_id = self.parser.parse_args()["card_id"]
+        card = get_card(card_id)
+
+        if not user:
+            abort(401, message="you must be logged in to start a game")
+        elif not game:
+            abort(404, message="game not found")
+        elif not card:
+            abort(404, message="card not found")
+        elif user.game != game:
+            abort(401, message="you must be in that game to draw a card")
+
+        try:
+            return gamelogic.play_from_hand(user.game_state, card)
+        except AssertionError as e:
+            if e.args:
+                abort(400, message=e.args[0])
+            else:
+                abort(400)
+
 
 
 @reg_resource("/games/<string:game_id>/draw_pile/@top")
@@ -311,20 +399,22 @@ class DrawResource(Resource):
 
     def get(self, game_id: str):
         "draws a card"
-        pass
+        user = get_user()
+        game = get_game(validate_game_id(game_id))
 
+        if not user:
+            abort(401, message="you must be logged in to start a game")
+        elif not game:
+            abort(404, message="game not found")
+        elif user.game != game:
+            abort(401, message="you must be in that game to draw a card")
 
-@reg_resource("/games/<string:game_id>/table")
-class TableResource(Resource):
-    parser = reqparse.RequestParser()
-    parser.add_argument('num', type=int, default=1, nullable=True)
-
-    def get(self, game_id: str, card_id: str):
-        "shows the discard pile"
-        pass
-
-
-    def get(self, game_id: str):
-        "draws a card"
-        pass
+        try:
+            num = self.parser.parse_args()["num"]
+            return [c.id for c in gamelogic.draw(user.game_state, num)]
+        except AssertionError as e:
+            if e.args:
+                abort(400, message=e.args[0])
+            else:
+                abort(400)
 
