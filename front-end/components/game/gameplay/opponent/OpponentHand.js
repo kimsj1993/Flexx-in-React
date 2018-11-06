@@ -3,19 +3,23 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
 	root: {
 		display: 'flex',
-		justifyContent: 'flex-start'
+		justifyContent: 'flex-start',
+		marginBottom: 8
 	},
 	card: {
 		height: 48,
 		width: 32,
-		marginRight: -16,
-		backgroundColor: theme.palette.primary.dark
+		backgroundColor: theme.palette.primary.dark,
+		border: '1px solid white',
+		borderRadius: 2,
+		boxShadow: theme.shadows[1],
+		marginRight: -20
 	}
 });
 
-const OpponentHand = ({ classes, cardCount }) => (
+const OpponentHand = ({ classes, count }) => (
 	<div className={ classes.root } >
-		{ new Array(cardCount).fill(<div className={ classes.card } />) }
+		{ Array(count).fill(<div className={ classes.card } />) }
 	</div>
 );
 

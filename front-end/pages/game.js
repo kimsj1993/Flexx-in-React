@@ -5,7 +5,6 @@ import withLogin from '../utils/withLogin';
 
 import LogoutButton from '../components/LogoutButton';
 
-import Header from '../components/game/Header';
 import Gameplay from '../components/game/gameplay/Gameplay';
 
 // const mapDispatchToProps = (dispatch, ownProps) => {
@@ -16,7 +15,25 @@ class Game extends Component {
 	componentDidMount() {
 		const { socketConnection } = this.props;
 
-		socketConnection.connect();
+		socketConnection.connect(socket => {
+			socket.on('user', data => console.log(data));
+			socket.on('game', data => console.log(data));
+		});
+
+		const { socket } = socketConnection;
+
+		//socket.on('user', data => console.log(data));
+	}
+
+	componentWillUnmount() {
+		const { socketConnection } = this.props;
+		const { disconnect } = socketConnection;
+
+		//socket.off('user');
+		disconnect(socket => {
+			socket.off('user');
+			socket.off('game');
+		});
 	}
 
 	handleLogout = e => {
@@ -28,7 +45,6 @@ class Game extends Component {
 	render() {
 		return (
 			<div>
-				<Header />
 				<Gameplay />
 				<LogoutButton handleLogout={ this.handleLogout } />
 			</div>

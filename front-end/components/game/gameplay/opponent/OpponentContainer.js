@@ -5,8 +5,8 @@ import Opponent from './Opponent';
 const mapStateToProps = (state, ownProps) => {
 	const { opponentId } = ownProps;
 
-	const { players } = state.data;
-	const { name, imageUrl } = players[opponentId];
+	const { users } = state.data;
+	const { name, imageUrl } = users[opponentId];
 
 	const { opponentData } = state.data.game;
 	const { isTurn, playsRemaining, cardCount, keeperIds } = opponentData[opponentId];

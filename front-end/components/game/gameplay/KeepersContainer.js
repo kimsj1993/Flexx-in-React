@@ -18,10 +18,11 @@ const mapStateToProps = (state, ownProps) => {
 const styles = theme => ({
 	root: {
 		maxHeight: 208,
+		height: 208,
 		overflow: 'scroll',
 		display: 'grid',
 		gridTemplateColumns: 'repeat(2, 128px)',
-		gridAutoRows: 32
+		gridAutoRows: '32px'
 	}
 });
 

@@ -15,7 +15,7 @@ const styles = theme => ({
   header: {
   	width: '100%',
   	height: 36,
-  	borderRadius: '8 0 8 0',
+  	borderRadius: '8px 8px 0 0',
   	backgroundColor: theme.palette.cards.keeper
   }
 });

@@ -15,20 +15,20 @@ const styles = theme => ({
 	},
 	name: {
 		height: 20,
-		paddingottom: 8
+		marginBottom: 8
 	},
 	plays: {
 		height: 20
 	}
 });
 
-const UserInfo = ({ classes, imageUrl, name, playRemaining, isTurn }) => (
+const UserInfo = ({ classes, imageUrl, name, playsRemaining, isTurn }) => (
 	<div className={ classes.root } >
 		<Avatar src={ imageUrl } className={ classes.avatar } />
 		<div>
 			<Typography className={ classes.name } variant='h6'>{ name }</Typography>
 			<Typography className={ classes.plays } variant='body2'>
-				{ (isTurn) ? playRemaining + ' plays remaining.' : ''}
+				{ (isTurn) ? playsRemaining + ' plays remaining.' : ''}
 			</Typography>
 		</div>
 	</div>

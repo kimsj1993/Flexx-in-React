@@ -62,56 +62,92 @@ const dummyState = {
 					name: 'The Rocket',
 					imageUrl: ''
 				}
-			}
+			},
+			rules: {
+				'1': {
+					id: 1,
+					name: 'test1',
+					subtype: 'action-rule',
+					imageUrl: ''
+				},
+				'2': {
+					id: 2,
+					name: 'test2',
+					subtype: 'action-rule',
+					imageUrl: ''
+				},
+				'3': {
+					id: 3,
+					name: 'test3',
+					subtype: 'action-rule',
+					imageUrl: ''
+				}
+			},
+			goals: {
+				'1': {
+					id: 1,
+					name: 'Graduation',
+					requirements: 'The Party + Degree'
+				},
+				'2': {
+					id: 2,
+					name: 'test2',
+					requirements: 'req2'
+				}
+			},
+			actions: {},
 		},
-		playerId: null,
-		players: {
+		playerId: 5,
+		users: {
 			'1': {
 				id: 1,
-				name: 'test1',
+				name: 'Sierra',
 				imageUrl: ''
 			},
 			'2': {
 				id: 2,
-				name: 'test2',
+				name: 'Ajit',
 				imageUrl: ''
 			},
 			'3': {
 				id: 3,
-				name: 'test3',
+				name: 'John',
 				imageUrl: ''
 			},
 			'4': {
 				id: 4,
-				name: 'test4',
+				name: 'Lily',
 				imageUrl: ''
 			},
 			'5': {
 				id: 5,
-				name: 'test5',
+				name: 'Tamir',
 				imageUrl: ''
 			},
 			'6': {
 				id: 6,
-				name: 'test6',
+				name: 'Lee',
 				imageUrl: ''
 			},
 			'7': {
 				id: 7,
-				name: 'test7',
+				name: 'Sarah',
 				imageUrl: ''
 			}
 			,'8': {
 				id: 8,
-				name: 'test8',
+				name: 'Philip',
 				imageUrl: ''
 			}
 		},
 		game: {
 			playerData: {
-				isTurn: true,
+				isTurn: false,
+				canEndTurn: true,
 				playsRemaining: 2,
-				hand: []
+				hand: [{ type: 'keeper', id: 7}, { type: 'goal', id: 2}, { type: 'keeper', id: 12}],
+				tempHand: [],
+				keeperIds: [4,5,6]
 			},
 			opponentData: {
 				'1': {
@@ -123,8 +159,8 @@ const dummyState = {
 				},
 				'2': {
 					id: 2,
-					isTurn: false,
-					playsRemaining: null,
+					isTurn: true,
+					playsRemaining: 3,
 					cardCount: 2,
 					keeperIds: [1, 3]
 				},
@@ -134,8 +170,27 @@ const dummyState = {
 					playsRemaining: null,
 					cardCount: 5,
 					keeperIds: [4, 8, 9, 11, 12]
+				},
+				'7': {
+					id: 7,
+					isTurn: false,
+					playsRemaining: null,
+					cardCount: 4,
+					keeperIds: []
 				}
-			}
+			},
+			currentRules: {
+				drawRule: 2,
+				playRule: 4,
+				handLimit: 6,
+				keeperLimit: '—',
+				actionRules: [1],
+				gameplayRules: [2, 3],
+				bonusRules: []
+			},
+			currentGoals: [1],
+			deckCount: 45,
+			discards: [{ type: 'goal', id: 1}, { type: 'keeper', id: 10}, { type: 'keeper', id: 12}]
 		}
 	},
 	ui: {

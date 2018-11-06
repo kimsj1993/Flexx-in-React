@@ -2,8 +2,13 @@ import { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import OpponentsContainer from './opponent/OpponentsContainer';
+import PlayerTurnCardContainer from './playerTurnCard/PlayerTurnCardContainer';
+import CardContainer from './card/CardContainer';
+import GameStateCard from './gameStateCard/GameStateCard';
+import TableContainer from './table/TableContainer';
 
 import Paper from '@material-ui/core/Paper';
+import Header from './Header';
 
 const styles = theme => ({
 	root: {
@@ -13,16 +18,37 @@ const styles = theme => ({
 	opponentsRoot: {
 		height: 400 - 48,
 		backgroundColor: '#926496',
-		zIndex: 2
+		zIndex: 2,
+		marginBottom: 16
+	},
+	playerArea: {
+		padding: '0 16px'
+	},
+	spacer: {
+		flexGrow: 1
+	},
+	gameInfo: {
+		display: 'flex',
+		alignItems: 'start'
 	}
 });
 
 const Gameplay = ({ classes }) => (
 	<section className={ classes.root } >
+		<Header />
 		<Paper square={ true } classes={{ root: classes.opponentsRoot }}>
 			<OpponentsContainer />
 		</Paper>
-		<section />
+		<section className={ classes.playerArea } >
+			<section className={ classes.gameInfo } >
+				<PlayerTurnCardContainer />
+				<div className={ classes.spacer } />
+				<GameStateCard tabIndex={ 0 } />
+			</section>
+			<section>
+				<TableContainer />
+			</section>
+		</section>
 	</section>
 );
 

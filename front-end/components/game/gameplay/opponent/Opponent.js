@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 
 import UserInfo from '../UserInfo';
 import OpponentHand from './OpponentHand';
-import PlayerKeepers from '../PlayerKeepers';
+import KeepersContainer from '../KeepersContainer';
 
 const styles = theme => ({
   root: {
@@ -21,13 +21,17 @@ const styles = theme => ({
     marginTop: 16,
     width: '100%',
     padding: 8,
-    marginBottom: 8
+    marginBottom: 8,
+    display: 'flex'
   },
   userInfoHighlight: {
     width: 8,
-    height: '100%',
+    height: 64,
     marginRight: 8,
-    borderRadius: '4 0 0 4',
+    marginLeft: -8,
+    marginTop: -8,
+    marginBottom: -8,
+    borderRadius: '4px 0 0 4px',
     backgroundColor: theme.palette.secondary.main
   }
 });
@@ -45,7 +49,7 @@ const Opponent = ({ classes, imageUrl, name, playsRemaining, isTurn, cardCount, 
           />
         </Paper>
         <OpponentHand count={ cardCount } />
-        <PlayerKeepers keeperIds={ keeperIds } />
+        <KeepersContainer keeperIds={ keeperIds } />
       </div>
   </div>
 );

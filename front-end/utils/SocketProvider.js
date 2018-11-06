@@ -7,25 +7,37 @@ export default class SocketProvider extends Component {
 		super(props);
 		this.state = {
 			socket: null,
-			connect: this.connect,
-			disconnect: this.disconnect,
+			connect: this.connect.bind(this),
+			disconnect: this.disconnect.bind(this),
 			connected: false
 		}
 	}
 
-	connect = () => {
-		if (!this.state.connected) {
+	connect (callback) {
+		const { connected } = this.state;
+
+		if (!connected) {
+			
+			const socket = io('https://fluxx.d.calebj.io');
+
 			this.setState({
-				socket: io('https://fluxx.d.calebj.io'),
+				socket,
 				connected: true
+			}, () => {
+				if (callback) callback(socket);
 			});
 		}
-		console.log('connected');
 	}
 
-	disconnect = () => {
-		if (this.state.socket) {
-			this.state.socket.close();
+	disconnect (callback) {
+		const { socket } = this.state;
+
+		if (socket) {
+
+			if (callback) callback(socket);
+
+			socket.close();
+
 			this.setState({
 				socket: null,
 				connected: false
