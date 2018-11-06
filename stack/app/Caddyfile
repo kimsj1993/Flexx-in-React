@@ -4,7 +4,7 @@ fluxx.d.calebj.io {
     }
     cors / http://localhost:3000 http://amritb.github.io
     header / {
-        Access-Control-Allow-Origin http://localhost:3000 http://amritb.github.io
+        Access-Control-Allow-Origin http://localhost:3000,http://amritb.github.io
     }
     proxy /api cgi:5000 {
         websocket

@@ -6,7 +6,8 @@ from flask_socketio import emit, send, close_room, join_room, leave_room, discon
 from .api import get_user
 from .db_models import db, ActiveUser, Game
 from .socket import (socketio, global_emit, game_emit, user_emit,
-                     disconnect_user, user_join_room, user_leave_room)
+                     disconnect_user, user_join_room, user_leave_room,
+                     game_sync)
 
 
 def user_update(user: ActiveUser, **old_values):
@@ -27,9 +28,14 @@ def game_create(game: Game):
     global_emit({"e": "GAME_CREATE", "game": game.to_json()})
 
 
+def game_start(game: Game):
+    game_emit({"e": "GAME_START", "game": game.to_json(full=True)})
+
+
 def game_user_join(game: Game, user: ActiveUser):
     user_join_room(f"game_{game.id}", user)
     global_emit({"e": "GAME_USER_JOIN", "game_id": game.id, "user_id": user.id})
+    game_sync(game, user)
 
 
 def game_user_leave(game: Game, user: ActiveUser, kick=False):

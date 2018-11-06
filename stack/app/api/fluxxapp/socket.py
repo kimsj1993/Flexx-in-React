@@ -4,7 +4,7 @@ from flask_socketio import SocketIO, disconnect, emit, send, join_room, leave_ro
 from typing import Optional
 
 from .api import get_user, get_game
-from .db_models import ActiveUser, Game
+from .db_models import ActiveUser, Game, Card
 
 socketio = SocketIO(manage_session=False)
 CID_SID_MAP = {}  # socket SID -> flask session ID mapping
@@ -18,7 +18,7 @@ def global_emit(*args, **kwargs):
 def game_emit(*args, game: Optional[Game] = None, **kwargs):
     if game is None:
         user = get_user()
-        game = user.current_game
+        game = user.game
 
     if game:
         return socketio.emit("game", *args, namespace="/", room=f"game_{game.id}", **kwargs)
@@ -35,7 +35,7 @@ def disconnect_user(user: Optional[ActiveUser] = None):
     sid = (user and user.session.session_id) or session.sid
 
     for ssid in SID_CID_MAP[sid].copy():
-        socketio.disconnect(sid=ssid, namespace="/")
+        disconnect(sid=ssid, namespace="/")
 
 
 def user_join_room(room: str, user: Optional[ActiveUser] = None):
@@ -52,6 +52,10 @@ def user_leave_room(room: str, user: Optional[ActiveUser] = None):
         leave_room(room, sid=ssid, namespace="/")
 
 
+def game_sync(game: Game, user: ActiveUser):
+    user_emit({"e": "GAME_SYNC", "game": game.to_json(full=True), "state": user.game_state.to_json(full=True)})
+
+
 @socketio.on("connect")
 def on_connect():
     user = get_user()
@@ -59,21 +63,25 @@ def on_connect():
     if not user:
         return False  # not logged in
 
-    # room shared by all of a user's connections
-    join_room(session.sid)
-    join_room("global")
-
-    if user.current_game:
-        join_room(room=f"game_{user.current_game.id}")
-
     # populate connection SID in user SID mappings
     SID_CID_MAP[session.sid].add(request.sid)
     CID_SID_MAP[request.sid] = session.sid
 
+    # collect HELLO information
     games = [g.to_json() for g in Game.query.all()]
     users = [u.to_json() for u in ActiveUser.query.all()]
+    cards = [u.to_json() for u in Card.query.all()]
 
-    emit("user", {"e": "HELLO", "games": games, "users": users})
+    # room shared by all of a user's connections
+    join_room(session.sid)
+    join_room("global")
+
+    emit("user", {"e": "HELLO", "games": games, "users": users, "cards": cards})
+
+    # send game sync
+    if user.game:
+        join_room(room=f"game_{user.game.id}")
+        game_sync(user.game, user)
 
 
 @socketio.on("disconnect")

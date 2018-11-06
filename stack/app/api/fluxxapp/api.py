@@ -1,7 +1,52 @@
+import csv
 from flask import session, current_app
-from typing import Optional
+import json
+from pathlib import Path
+from random import shuffle
+from typing import Optional, Union
 
-from .db_models import db, ActiveUser, Game
+from .db_models import db, ActiveUser, Game, Card, CARD_TYPE
+
+
+def load_cards_csv(path: Union[Path, str]):
+    present_cards = {c.id: c for c in Card.query.all()}
+
+    if isinstance(path, str):
+        path = Path(path)
+
+    keys = ("id", "name", "description", "image_url", "subtype")
+    type_key = "type"
+    json_map = {"TRUE": True, "FALSE": False, "NULL": None, "": None}
+    json_keys = ("precondition", "result")
+
+    with path.open() as f:
+        reader = csv.DictReader(f)
+
+        for row in reader:
+            card_id = row["id"]
+            ud = {k: (row.get(k) or None) for k in keys}
+            ud[type_key] = CARD_TYPE(row[type_key].upper())
+
+            for jk in json_keys:
+                jv = row[jk]
+
+                if jv in json_map:
+                    jv = json_map[jv]
+                else:
+                    jv = json.loads(jv)
+
+                ud[jk] = jv
+
+            if card_id in present_cards:
+                card = present_cards[card_id]
+                card.update(**ud)
+            else:
+                card = Card(**ud)
+
+            db.session.add(card)
+
+    db.session.commit()
+
 
 def get_user(create=False, **kwargs) -> Optional[ActiveUser]:
     user_id = session.get("user_id")
@@ -29,7 +74,7 @@ def get_game(game_id: Optional[str] = None, create=False, **kwargs) -> Optional[
         if user_id is None:
             return None
 
-        flt = ActiveUser.id == user_id
+        flt = Game.players.any(id=user_id)
     else:
         flt = Game.id == game_id
 
@@ -40,7 +85,12 @@ def get_game(game_id: Optional[str] = None, create=False, **kwargs) -> Optional[
 
     if create:
         host = kwargs.pop("host", get_user())
-        game = Game(host=host, **kwargs)
+        game = Game(host=host, players=[host], **kwargs)
+
+        cards = Card.query.all()
+        shuffle(cards)
+        game.draw_pile.extend(cards)
+
         host.current_game = game
         db.session.add(game)
         db.session.add(host)

@@ -1,6 +1,8 @@
 import os
+from pathlib import Path
 
 from fluxxapp import app
+from fluxxapp.api import load_cards_csv
 from fluxxapp.db_models import db, Session
 from fluxxapp.rest_api import rest_api
 from fluxxapp.session import session
@@ -34,8 +36,10 @@ if __name__ == "__main__":
     db.create_all()
     db.session.commit()
 
+    load_cards_csv(Path.cwd() / "cards.csv")
+
     rest_api.app = app
     rest_api.init_app(app)
 
     socketio.init_app(app)
-    socketio.run(app, host="0.0.0.0", port=5000)
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True)

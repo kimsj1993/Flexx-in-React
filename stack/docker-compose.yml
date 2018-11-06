@@ -17,6 +17,8 @@ services:
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: fluxx
+      POSTGRES_USER: fluxx
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
   cgi:

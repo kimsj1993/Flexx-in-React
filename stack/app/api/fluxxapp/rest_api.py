@@ -44,12 +44,15 @@ class SessionResource(Resource):
         args = self.parser.parse_args()
         username = args['username']
 
+        if username == "":
+            abort(400, message="username can't be blank")
+
         active_user = get_user()
 
         if not active_user:
             return self.post()
 
-        if active_user.username == args["username"]:
+        if active_user.username == username:
             resp["message"] = "username not changed"
         else:
             existing_user = ActiveUser.query.filter_by(**args).one_or_none()
@@ -74,6 +77,11 @@ class SessionResource(Resource):
         args = self.parser.parse_args()
         active_user = get_user()
 
+        username = args['username']
+
+        if username == "":
+            abort(400, message="username can't be blank")
+
         if active_user:
             abort(409, message="already logged in, use PUT to update")
         else:
@@ -94,7 +102,7 @@ class SessionResource(Resource):
 
         if not active_user:
             abort(400, message="not logged in, can't log out")
-        elif active_user.current_game:
+        elif active_user.game:
             abort(409, message="you must leave your game first")
 
         events.user_logout(active_user)
@@ -145,13 +153,13 @@ class GameResource(Resource):
 
     def get(self, game_id: str = None, player_id: str = None):
         if game_id is None:
-            return [g.to_json(include_children=True) for g in Game.query.all()]
+            return [g.to_json() for g in Game.query.all()]
 
         game_id, player_id = self._validate_params(game_id, player_id)
         game = get_game(game_id)
 
         if game:
-            return game.to_json(include_children=True)
+            return game.to_json(full=True)
         else:
             abort(404, message="game not found")
 
@@ -167,9 +175,9 @@ class GameResource(Resource):
             abort(400, message="use PUT to update game settings")
         elif player_id not in (None, '@me', user.id):
             abort(403, message="you can only add yourself to games")
-        elif game_id and game_id in ('@current', user.current_game_id):
+        elif game_id and game_id in ('@current', user.game.id):
             resp["message"] = "requested to join current game, no change"
-        elif user.current_game:
+        elif user.game:
             abort(409, message="you must leave your current game before creating or joining another")
         elif game_id and player_id:
             game = get_game(game_id)
@@ -179,7 +187,7 @@ class GameResource(Resource):
             elif game.in_progress and not game.free_join:
                 abort(409, message="that game has already started and isn't taking new players")
             else:
-                user.current_game = game
+                user.game = game
                 db.session.add(user)
                 db.session.commit()
         else:
@@ -250,7 +258,7 @@ class GameResource(Resource):
             abort(401, message="you must be logged in to delete a game or player")
         elif not game:
             abort(404, message="game not found")
-        elif user.current_game != game:
+        elif user.game != game:
             abort(403, message="can't leave or delete a game you're not in")
         elif game.host != user and player_id not in (user.id, '@me'):
             abort(401, message="you must be the host to delete a game or player")
@@ -258,9 +266,8 @@ class GameResource(Resource):
             if len(game.players) > 1:
                 abort(409, message="you must delegate another host before leaving")
 
-            user.current_game_id = None
             events.game_remove(game)
-            db.session.add(user)
+            # db.session.delete(user.game_state)  # not needed, game delete cascades
             db.session.delete(game)
             db.session.commit()
         else:
@@ -274,9 +281,50 @@ class GameResource(Resource):
             else:
                 player = user
 
-            player.current_game_id = None
             events.game_user_leave(game, player, kick=kick)
-            db.session.add(player)
+            db.session.delete(player.game_state)
             db.session.commit()
 
         return resp_204()
+
+
+@reg_resource("/games/<string:game_id>/players/<string:player_id>/hand/<string:card_id>")
+class HandCardResource(Resource):
+    "Represents a player hand. card_id can be the card's ID or @random"
+    pass
+
+
+@reg_resource("/games/<string:game_id>/discard_pile")
+class DiscardResource(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('card_id', type=int, default=None, nullable=False)
+
+    def get(self, game_id: str):
+        "shows the discard pile"
+        pass
+
+
+@reg_resource("/games/<string:game_id>/draw_pile/@top")
+class DrawResource(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('num', type=int, default=1, nullable=True)
+
+    def get(self, game_id: str):
+        "draws a card"
+        pass
+
+
+@reg_resource("/games/<string:game_id>/table")
+class TableResource(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument('num', type=int, default=1, nullable=True)
+
+    def get(self, game_id: str, card_id: str):
+        "shows the discard pile"
+        pass
+
+
+    def get(self, game_id: str):
+        "draws a card"
+        pass
+
