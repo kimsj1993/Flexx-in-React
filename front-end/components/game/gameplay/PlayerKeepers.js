@@ -6,7 +6,7 @@ import Keeper from './Keeper';
 const mapStateToProps = (state, ownProps) => {
 	const { keeperIds } = ownProps;
 
-	const { keepers } = state.data;
+	const { keepers } = state.data.cards;
 
 	const keeperData = keeperIds.map(id => keepers[id]);
 
@@ -27,12 +27,12 @@ const styles = theme => ({
 
 const PlayerKeepers = ({ classes, keeperData }) => (
 	<div className={ classes.root } >
-		{ keeperData.map({ name, imageUrl } => (
+		{ keeperData.map(({ name, imageUrl }) => (
 			<Keeper name={ name } imageUrl={ imageUrl } />
 		))}
 	</div>
 );
 
-export default connect({
+export default connect(
 	mapStateToProps
-})(withStyles(styles)(PlayerKeepers));
+)(withStyles(styles)(PlayerKeepers));

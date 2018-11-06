@@ -8,12 +8,13 @@ const styles = theme => ({
 	card: {
 		height: 48,
 		width: 32,
-		marginRight: -16
+		marginRight: -16,
+		backgroundColor: theme.palette.primary.dark
 	}
 });
 
 const OpponentHand = ({ classes, cardCount }) => (
-	<div className={ classes.root }
+	<div className={ classes.root } >
 		{ new Array(cardCount).fill(<div className={ classes.card } />) }
 	</div>
 );

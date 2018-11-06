@@ -9,7 +9,9 @@ const styles = theme => ({
 	},
 	avatar: {
 		width: 48,
-		height: 48
+		height: 48,
+		backgroundColor: theme.palette.grey[100],
+		marginRight: 8
 	},
 	name: {
 		height: 20,

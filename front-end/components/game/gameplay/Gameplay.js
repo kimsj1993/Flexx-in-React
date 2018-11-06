@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+import OpponentsContainer from './opponent/OpponentsContainer';
+
 import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
@@ -15,13 +17,13 @@ const styles = theme => ({
 	}
 });
 
-const GamePlay = ({ classes }) => (
+const Gameplay = ({ classes }) => (
 	<section className={ classes.root } >
-		<Paper square='true' classes={{ root: classes.opponentsRoot }}>
-
+		<Paper square={ true } classes={{ root: classes.opponentsRoot }}>
+			<OpponentsContainer />
 		</Paper>
 		<section />
 	</section>
 );
 
-export default withStyles(styles)(GamePlay);
+export default withStyles(styles)(Gameplay);

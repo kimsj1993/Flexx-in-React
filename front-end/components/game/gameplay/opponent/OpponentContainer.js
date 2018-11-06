@@ -3,16 +3,15 @@ import { connect } from 'react-redux';
 import Opponent from './Opponent';
 
 const mapStateToProps = (state, ownProps) => {
-	const { playerId } = ownProps;
+	const { opponentId } = ownProps;
 
-	const { players } = data;
-	const { name, imageUrl } = players[playerId];
+	const { players } = state.data;
+	const { name, imageUrl } = players[opponentId];
 
-	const { playerData } = state.data.game;
-	const { isTurn, playsRemaining, cardCount, keeperIds } = playerData[playerId];
+	const { opponentData } = state.data.game;
+	const { isTurn, playsRemaining, cardCount, keeperIds } = opponentData[opponentId];
 
 	return {
-		playerId,
 		name,
 		imageUrl,
 		isTurn,
@@ -23,9 +22,9 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const OpponentContainer = (props) => (
-	<Opponent ...props />
+	<Opponent {...props} />
 );
 
-export default connect({
+export default connect(
 	mapStateToProps
-})(OpponentContainer);
+)(OpponentContainer);

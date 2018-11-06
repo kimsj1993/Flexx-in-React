@@ -1,6 +1,10 @@
 import { combineReducers } from 'redux';
 import * as actions from './actions';
 
+import dummyState from './dummyState';
+
+const data = state => (state || dummyState.data);
+
 const userData = (state = null, action) => {
 	switch (action.type) {
 		case actions.UPDATE_USER_DATA:
@@ -20,8 +24,7 @@ const loginFormUIValue = (state = '', action) => {
 }
 
 const loginFormUI = combineReducers({
-	value: loginFormUIValue,
-
+	value: loginFormUIValue
 });
 
 const ui = combineReducers({
@@ -29,7 +32,7 @@ const ui = combineReducers({
 });
 
 const rootReducer = combineReducers({
-	userData,
+	data,
 	ui
 });
 

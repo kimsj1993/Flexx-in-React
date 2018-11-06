@@ -9,15 +9,16 @@ import PlayerKeepers from '../PlayerKeepers';
 
 const styles = theme => ({
   root: {
-    width: 272,
+    width: 288,
     height: '100%',
     paddingLeft: 16,
     paddingRight: 16
   },
   opponentHighlight: {
-    backgroundColor: theme.pallete.primary.light
+    backgroundColor: theme.palette.primary.light
   },
   userInfoRoot: {
+    marginTop: 16,
     width: '100%',
     padding: 8,
     marginBottom: 8
@@ -27,26 +28,28 @@ const styles = theme => ({
     height: '100%',
     marginRight: 8,
     borderRadius: '4 0 0 4',
-    backgroundColor: theme.pallete.secondary.main
+    backgroundColor: theme.palette.secondary.main
   }
 });
 
-const Opponent = ({ classes, playerId, imageUrl, name, playsRemaining, isTurn, cardCount, keeperIds }) => (
+const Opponent = ({ classes, imageUrl, name, playsRemaining, isTurn, cardCount, keeperIds }) => (
   <div className={ (isTurn) ? classes.opponentHighlight : '' } >
-    <Paper classes={{ root: classes.userInfoRoot }} >
-      { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
-      <UserInfo 
-        imageUrl={ imageUrl } 
-        name={ name } 
-        playsRemaining={ playsRemaining }
-        isTurn={ isTurn }
-      />
-      <OpponentHand count={ cardCount } />
-      <PlayerKeepers keeperIds={ keeperIds } />
-    </Paper>
+    <div className={ classes.root } >
+        <Paper classes={{ root: classes.userInfoRoot }} >
+          { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
+          <UserInfo 
+            imageUrl={ imageUrl } 
+            name={ name } 
+            playsRemaining={ playsRemaining }
+            isTurn={ isTurn }
+          />
+        </Paper>
+        <OpponentHand count={ cardCount } />
+        <PlayerKeepers keeperIds={ keeperIds } />
+      </div>
   </div>
 );
 
 
-}
+
 export default withStyles(styles)(Opponent);
