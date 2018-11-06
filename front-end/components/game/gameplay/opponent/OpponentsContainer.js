@@ -13,7 +13,7 @@ const styles = theme => ({
 
 const mapStateToProps = (state, ownProps) => {
 	console.log(state);
-	const opponentIds = Object.keys(state.data.game.opponentData);
+	const opponentIds = Object.keys(state.data.opponents);
 
 	return { opponentIds };
 };

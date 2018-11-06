@@ -7,7 +7,7 @@ const mapStateToProps = (state, ownProps) => {
 
 	const { imageUrl, name } = users[playerId];
 
-	const { isTurn, playsRemaining, canEndTurn } = state.data.game.playerData;
+	const { isTurn, playsRemaining, canEndTurn } = state.data;
 
 	return {
 		imageUrl,

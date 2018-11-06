@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import GameSummaryTab from './GameSummaryTab';
 
 const mapStateToProps = (state, ownProps) => {
-	const { game, cards } = state.data;
-	const { currentRules, currentGoals } = game;
-
-	const { drawRule, playRule, handLimit, keeperLimit } = currentRules;
+	const { drawRule, playRule, handLimit, keeperLimit, currentGoals } = state.data;
 
 	const goals = currentGoals.map( id => {
-		const data = cards.goals[id];
+		const data = state.data.goals[id];
 
 		const { name, requirements } = data;
 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Table from './Table';
 
 const mapStateToProps = (state, ownProps) => {
-	const { keeperIds } = state.data.game.playerData;
+	const { keeperIds } = state.data;
 	
 	return { keeperIds };
 };

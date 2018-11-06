@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import Discard from './Discard';
 
 const mapStateToProps = (state, ownProps) => {
-	const { discards } = state.data.game;
+	const { discards } = state.data;
 
 	const cards = discards.map(({ id, type }) => {
-		const data = state.data.cards[type + 's'][id];
+		const data = state.data[type + 's'][id];
 
 		return { id, type };
 	});

@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import OpponentsContainer from './opponent/OpponentsContainer';
 import PlayerTurnCardContainer from './playerTurnCard/PlayerTurnCardContainer';
 import CardContainer from './card/CardContainer';
-import GameStateCard from './gameStateCard/GameStateCard';
+import GameStateCardContainer from './gameStateCard/GameStateCardContainer';
 import TableContainer from './table/TableContainer';
 
 import Paper from '@material-ui/core/Paper';
@@ -43,7 +43,7 @@ const Gameplay = ({ classes }) => (
 			<section className={ classes.gameInfo } >
 				<PlayerTurnCardContainer />
 				<div className={ classes.spacer } />
-				<GameStateCard tabIndex={ 0 } />
+				<GameStateCardContainer />
 			</section>
 			<section>
 				<TableContainer />

@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import GameRulesTab from './GameRulesTab';
 
 const mapStateToProps = (state, ownProps) => {
-	const { game, cards } = state.data;
-	const { currentRules } = game;
+	const { drawRule, playRule, handLimit, keeperLimit, cards } = state.data;
 
-	const { drawRule, playRule, handLimit, keeperLimit } = currentRules;
-
-	const actionRules = currentRules.actionRules.map( id => {
-		const data = cards.rules[id];
+	const actionRules = state.data.actionRules.map( id => {
+		const data = state.data.rules[id];
 
 		const { name, imageUrl } = data;
 
@@ -19,8 +16,8 @@ const mapStateToProps = (state, ownProps) => {
 		};
 	});
 
-	const gameplayRules = currentRules.gameplayRules.map( id => {
-		const data = cards.rules[id];
+	const gameplayRules = state.data.gameplayRules.map( id => {
+		const data = state.data.rules[id];
 
 		const { name, imageUrl } = data;
 
@@ -30,8 +27,8 @@ const mapStateToProps = (state, ownProps) => {
 		};
 	});
 
-	const bonusRules = currentRules.bonusRules.map( id => {
-		const data = cards.rules[id];
+	const bonusRules = state.data.bonusRules.map( id => {
+		const data = state.data.rules[id];
 
 		const { name, imageUrl } = data;
 

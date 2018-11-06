@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 import Hand from './Hand';
 
 const mapStateToProps = (state, ownProps) => {
-	const { hand } = state.data.game.playerData;
+	const { hand } = state.data;
 
 	const cards = hand.map(({ id, type }) => {
-		const data = state.data.cards[type + 's'][id];
+		const data = state.data[type + 's'][id];
 
 		return { id, type };
 	});

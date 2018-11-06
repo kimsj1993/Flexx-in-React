@@ -5,7 +5,7 @@ import Card from './Card';
 const mapStateToProps = (state, ownProps) => {
 	const { type, id } = ownProps;
 
-	const { name, subtype } = state.data.cards[type];
+	const { name, subtype } = state.data[type];
 
 	return {
 		type,

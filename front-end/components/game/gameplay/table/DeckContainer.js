@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Deck from './Deck';
 
 const mapStateToProps = (state, ownProps) => {
-	const { deckCount } = state.data.game;
+	const { deckCount } = state.data;
 	
 	return { count: deckCount }
 };

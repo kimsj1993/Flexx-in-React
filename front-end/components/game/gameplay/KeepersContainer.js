@@ -6,7 +6,7 @@ import Keeper from './Keeper';
 const mapStateToProps = (state, ownProps) => {
 	const { keeperIds } = ownProps;
 
-	const { keepers } = state.data.cards;
+	const { keepers } = state.data;
 
 	const keeperData = keeperIds.map(id => keepers[id]);
 

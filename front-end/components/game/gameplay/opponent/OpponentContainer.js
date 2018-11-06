@@ -8,8 +8,8 @@ const mapStateToProps = (state, ownProps) => {
 	const { users } = state.data;
 	const { name, imageUrl } = users[opponentId];
 
-	const { opponentData } = state.data.game;
-	const { isTurn, playsRemaining, cardCount, keeperIds } = opponentData[opponentId];
+	const { opponents } = state.data;
+	const { isTurn, playsRemaining, cardCount, keeperIds } = opponents[opponentId];
 
 	return {
 		name,
