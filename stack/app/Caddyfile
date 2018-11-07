@@ -1,11 +1,22 @@
 fluxx.d.calebj.io {
-    gzip
-    rewrite {
-        to /static/{path} {uri}
+    gzip {
+        not /socket.io
+    }
+    cors / http://localhost:3000 http://amritb.github.io
+    header / {
+        Access-Control-Allow-Origin http://localhost:3000,http://amritb.github.io
     }
     proxy /api cgi:5000 {
-        except /static
         websocket
         transparent
+        without /api
+    }
+    proxy /socket.io cgi:5000 {
+        websocket
+        #transparent
+    }
+    proxy / node:3000 {
+        transparent
+        except /static
     }
 }

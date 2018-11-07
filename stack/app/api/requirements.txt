@@ -4,5 +4,7 @@ flask-session
 flask-socketio
 flask-sqlalchemy
 gevent
+gevent-websocket
 itsdangerous>=0.24,<1.0.0
-sqlalchemy
+psycopg2
+git+https://github.com/zzzeek/sqlalchemy.git

@@ -12,14 +12,20 @@ services:
       #- ./data/db:/data/db
 
   postgres:
+    restart: always
     image: postgres:11-alpine
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     environment:
+      POSTGRES_DB: fluxx
+      POSTGRES_USER: fluxx
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
 
   cgi:
     build: ./app/api/
+    restart: always
+#    ports:
+#      - 5000:5000
     volumes:
       - ./data/app:/data
       - ./data/sock:/sock
@@ -27,15 +33,26 @@ services:
       - postgres
     command: "--path=/data/sock/api.sock"
     environment:
-      #SQLALCHEMY_DATABASE_URI: "${SQLALCHEMY_DATABASE_URI}"
       DATABASE_URI: "${DATABASE_URI}"
       SECRET_KEY: "${SECRET_KEY}"
 
+  node:
+    build: ./app/front-end/
+#    ports:
+#      - 3000:3000
+    volumes:
+      - ./data/app:/data
+    environment:
+      PORT: 3000
+      API_SERVER: http://cgi/api/
+
   caddy:
+    restart: always
     image: abiosoft/caddy:no-stats
     ports:
       - 80:80
       - 443:443
+#      - 2015:2015
     volumes:
       - ./app/static:/srv
       - ./app/Caddyfile:/etc/Caddyfile
@@ -43,3 +60,4 @@ services:
       - ./data/sock:/sock
     links:
       - cgi
+      - node

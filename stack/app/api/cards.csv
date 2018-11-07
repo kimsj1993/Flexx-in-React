@@ -1,0 +1,100 @@
+id,name,type,subtype,description,precondition,result,exclusive,value 1,value 2
+bread,Bread,KEEPER,FOOD,,,,,,
+chocolate,Chocolate,KEEPER,FOOD,,,,,,
+cookies,Cookies,KEEPER,FOOD,,,,,,
+dreams,Dreams,KEEPER,,,,,,,
+love,Love,KEEPER,,,,,,,
+milk,Milk,KEEPER,FOOD,,,,,,
+money,Money,KEEPER,,,,,,,
+music,Music,KEEPER,,,,,,,
+peace,Peace,KEEPER,,,,,,,
+sleep,Sleep,KEEPER,,,,,,,
+television,Television,KEEPER,,,,,,,
+brain,The Brain,KEEPER,,,,,,,
+eye,The Eye,KEEPER,,,,,,,
+moon,The Moon,KEEPER,,,,,,,
+party,The Party,KEEPER,,,,,,,
+rocket,The Rocket,KEEPER,,,,,,,
+sun,The Sun,KEEPER,,,,,,,
+toaster,The Toaster,KEEPER,,,,,,,
+time,Time,KEEPER,,,,,,,
+milk_cookies,Milk & Cookies,GOAL,,,"{""player_keepers"": {""all_of"": [""milk"", ""cookies""]}}","""victory""",,milk,cookies
+cant_buy_love,Can't Buy Me Love,GOAL,,,"{""player_keepers"": {""all_of"": [""money"", ""love""]}}","""victory""",,money,love
+winning_lottery,Winning the Lottery,GOAL,,,"{""player_keepers"": {""all_of"": [""dreams"", ""money""]}}","""victory""",,dreams,money
+chocolate_milk,Chocolate Milk,GOAL,,,"{""player_keepers"": {""all_of"": [""chocolate"", ""milk""]}}","""victory""",,chocolate,milk
+great_theme_song,Great Theme Song,GOAL,,,"{""player_keepers"": {""all_of"": [""music"", ""television""]}}","""victory""",,music,television
+hippyism,Hippyism,GOAL,,,"{""player_keepers"": {""all_of"": [""peace"", ""love""]}}","""victory""",,peace,love
+bread_chocolate,Bread & Chocolate,GOAL,,,"{""player_keepers"": {""all_of"": [""bread"", ""chocolate""]}}","""victory""",,bread,chocolate
+hearts_minds,Hearts & Minds,GOAL,,,"{""player_keepers"": {""all_of"": [""love"", ""brain""]}}","""victory""",,love,brain
+squishy_chocolate,Squishy Chocolate,GOAL,,,"{""player_keepers"": {""all_of"": [""chocolate"", ""sun""]}}","""victory""",,chocolate,sun
+toast,Toast,GOAL,,,"{""player_keepers"": {""all_of"": [""bread"", ""toaster""]}}","""victory""",,bread,toaster
+baked_goods,Baked Goods,GOAL,,,"{""player_keepers"": {""all_of"": [""bread"", ""cookies""]}}","""victory""",,bread,cookies
+minds_ey,The Mind's Eye,GOAL,,,"{""player_keepers"": {""all_of"": [""brain"", ""eye""]}}","""victory""",,brain,eye
+day_dreams,Day Dreams,GOAL,,,"{""player_keepers"": {""all_of"": [""sun"", ""dreams""]}}","""victory""",,sun,dreams
+night_day,Night & Day,GOAL,,,"{""player_keepers"": {""all_of"": [""sun"", ""moon""]}}","""victory""",,sun,moon
+chocolate_cookies,Chocolate Cookies,GOAL,,,"{""player_keepers"": {""all_of"": [""chocolate"", ""cookies""]}}","""victory""",,chocolate,cookies
+dreamland,Dreamland,GOAL,,,"{""player_keepers"": {""all_of"": [""sleep"", ""dreams""]}}","""victory""",,sleep,dreams
+bedtime,Bedtime,GOAL,,,"{""player_keepers"": {""all_of"": [""sleep"", ""time""]}}","""victory""",,sleep,time
+rocket_science,Rocket Science,GOAL,,,"{""player_keepers"": {""all_of"": [""rocket"", ""brain""]}}","""victory""",,rocket,brain
+party_time,Party Time,GOAL,,,"{""player_keepers"": {""all_of"": [""party"", ""time""]}}","""victory""",,party,time
+turn_it_up,Turn It Up!,GOAL,,,"{""player_keepers"": {""all_of"": [""music"", ""party""]}}","""victory""",,music,party
+rocket_moon,Rocket to the Moon,GOAL,,,"{""player_keepers"": {""all_of"": [""rocket"", ""moon""]}}","""victory""",,rocket,moon
+lullaby,Lullaby,GOAL,,,"{""player_keepers"": {""all_of"": [""sleep"", ""music""]}}","""victory""",,sleep,music
+time_is_money,Time is Money,GOAL,,,"{""player_keepers"": {""all_of"": [""time"", ""money""]}}","""victory""",,time,money
+world_peace,World Peace,GOAL,,,"{""player_keepers"": {""all_of"": [""dreams"", ""peace""]}}","""victory""",,dreams,peace
+the_appliances,The Appliances,GOAL,,,"{""player_keepers"": {""all_of"": [""toaster"", ""television""]}}","""victory""",,toaster,television
+eye_beholder,The Eye of the Beholder,GOAL,,,"{""player_keepers"": {""all_of"": [""eye""]}}","""victory""",,eye,love
+party_snacks,Party Snacks,GOAL,,,"{""player_keepers"": {""all_of"": [""party""], ""one_of"": {""category"": ""FOOD""}}}","""victory""",,party,FOOD
+the_brain,The Brain,GOAL,,,"{""player_keepers"": {""all_of"": [""brain""]}, ""table_keepers"": {""none_of"": [""television""]}}","""victory""",,brain,television
+ten_cards,10 Cards in Hand,GOAL,,,"{""player_hand"": {""at_least"": 10}}","""victory""",,,
+five_keepers,5 Keepers,GOAL,,,"{""player_keepers"": {""at_least"": 5}}","""victory""",,,
+goal_mill,Goal Mill,NEW_RULE,ACTION_RULE,,,"{""free_action"": ""goal_mill""}",,,
+mystery_play,Mystery Play,NEW_RULE,ACTION_RULE,,,"{""free_action"": ""mystery_play""}",,,
+recycling,Recycling,NEW_RULE,ACTION_RULE,,,"{""free_action"": ""recycling""}",,,
+get_on_with_it,Get On With It!,NEW_RULE,ACTION_RULE,,,"{""free_action"": ""get_on_with_it""}",,,
+play_2,Play 2,NEW_RULE,PLAY_RULE,,,"{""game"": {""play_num"": 2}}",TRUE,,
+play_3,Play 3,NEW_RULE,PLAY_RULE,,,"{""game"": {""play_num"": 3}}",TRUE,,
+play_4,Play 4,NEW_RULE,PLAY_RULE,,,"{""game"": {""play_num"": 4}}",TRUE,,
+play_all_but_1,Play All But 1,NEW_RULE,PLAY_RULE,,,"{""game"": {""play_num"": -1}}",TRUE,,
+play_all,Play All,NEW_RULE,PLAY_RULE,,,"{""game"": {""play_num"": 0}}",TRUE,,
+draw_2,Draw 2,NEW_RULE,DRAW_RULE,,,"{""game"": {""draw_num"": 2}}",TRUE,,
+draw_3,Draw 3,NEW_RULE,DRAW_RULE,,,"{""game"": {""draw_num"": 3}}",TRUE,,
+draw_4,Draw 4,NEW_RULE,DRAW_RULE,,,"{""game"": {""draw_num"": 4}}",TRUE,,
+draw_5,Draw 5,NEW_RULE,DRAW_RULE,,,"{""game"": {""draw_num"": 5}}",TRUE,,
+keeper_limit_2,Keeper Limit 2,NEW_RULE,KEEPER_LIMIT,,,"{""game"": {""keeper_limit"": 2}}",TRUE,,
+keeper_limit_3,Keeper Limit 3,NEW_RULE,KEEPER_LIMIT,,,"{""game"": {""keeper_limit"": 3}}",TRUE,,
+keeper_limit_4,Keeper Limit 4,NEW_RULE,KEEPER_LIMIT,,,"{""game"": {""keeper_limit"": 4}}",TRUE,,
+hand_limit_0,Hand Limit 0,NEW_RULE,HAND_LIMIT,,,"{""game"": {""hand_limit"": 0}}",TRUE,,
+hand_limit_1,Hand Limit 1,NEW_RULE,HAND_LIMIT,,,"{""game"": {""hand_limit"": 1}}",TRUE,,
+hand_limit_2,Hand Limit 2,NEW_RULE,HAND_LIMIT,,,"{""game"": {""hand_limit"": 2}}",TRUE,,
+inflation,Inflation,NEW_RULE,GAME_RULE,,,"{""game"": {""inflation"": true}}",,,
+first_play_random,First Play Random,NEW_RULE,GAME_RULE,,,"{""game"": {""first_play_random"": true}}",,,
+party_bonus,Party Bonus,NEW_RULE,BONUS,,"{""table_keepers"": {""all_of"": [""party""]}}","{""all_players"": {""draw_extra"": 1, ""play_extra"": 1}}",,,
+rich_bonus,Rich Bonus,NEW_RULE,BONUS,,"{""max_count"": ""player_keepers"", ""allow_tie"": false}","{""player"": {""play_extra"": 1}}",,,
+poor_bonus,Poor Bonus,NEW_RULE,BONUS,,"{""min_count"": ""player_keepers"", ""allow_tie"": false}","{""player"": {""draw_extra"": 1}}",,,
+no_hand_bonus,No-Hand Bonus,NEW_RULE,BONUS,,"{""player_hand"": {""equals"": 0}}","{""player"": {""draw_extra"": 3}}",,,
+double_agenda,Double Agenda,NEW_RULE,GAME_RULE,,,"{""game"": {""num_goals"": 2}}",,,
+swap_plays_draws,Swap Plays For Draws,NEW_RULE,ACTION_RULE,,,"{""game"": {""swap_plays_draws"": true}}",,,
+trade_hands,Trade Hands,ACTION,,,"{""pick"": ""player""}",,,,
+exchange_keepers,Exchange Keepers,ACTION,,,"{""pick"": ""keeper"", ""from"": ""other_player""}",,,,
+trash_keeper,Trash a Keeper,ACTION,,,"{""pick"": ""keeper"", ""from"": ""other_player""}",,,,
+steal_keeper,Steal a Keeper,ACTION,,,"{""pick"": ""keeper"", ""from"": ""other_player""}",,,,
+draw_2_and_use,Draw 2 and Use 'Em,ACTION,,,,,,,
+discard_draw,Discard and Draw,ACTION,,,,,,,
+draw_3_play_2,"Draw 3, Play 2 of Them",ACTION,,,,,,,
+jackpot,Jackpot!,ACTION,,,,,,,
+rotate_hand,Rotate Hands,ACTION,,,"{""pick"": ""direction""}",,,,
+share_wealth,Share the Wealth,ACTION,,,,,,,
+rps_showdown,Rock-Paper-Scissors Showdown,ACTION,,,"{""pick"": ""player""}",,,,
+everybody_gets_1,Everybody Gets 1,ACTION,,,,,,,
+take_another_turn,Take Another Turn,ACTION,,,,,,,
+empty_trash,Empty the Trash,ACTION,,,,,,,
+use_what_you_take,Use What You Take,ACTION,,,"{""pick"": ""hand_index"", ""from"": ""other_player""}",,,,
+zap_a_card,Zap a Card,ACTION,,,"{""pick"": ""card"", ""from"": ""table""}",,,,
+random_tax,Random Tax,ACTION,,,"{""pick"": ""hand_index"", ""from"": ""other_player"", ""count"": ""all""}",,,,
+lets_do_that_again,Let's Do That Again!,ACTION,,,"{""pick"": {""one_of"": [""action"", ""new_rule""]}, ""from"": ""discard""}",,,,
+todays_special,Today's Special!,ACTION,,,,,,,
+no_limits,No Limits,ACTION,,,,,,,
+rules_reset,Rules Reset,ACTION,,,,,,,
+trash_a_new_rule,Trash a New Rule,ACTION,,,"{""pick"": ""new_rule"", ""from"": ""table""}",,,,
+lets_simplify,Let's Simplify,ACTION,,,"{""pick"": ""new_rule"", ""from"": ""table"", ""count_frac"": {""at_most"": 0.5}}",,,,
