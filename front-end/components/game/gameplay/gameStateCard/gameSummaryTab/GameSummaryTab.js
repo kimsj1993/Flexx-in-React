@@ -12,7 +12,8 @@ import SummaryGoal from './SummaryGoal';
 const styles = theme => ({
 	root: {
 		padding: 8,
-		backgroundColor: theme.palette.common.white
+		backgroundColor: theme.palette.common.white,
+		height: '100%'
 	},
 	mainRules: {
 		display: 'flex',

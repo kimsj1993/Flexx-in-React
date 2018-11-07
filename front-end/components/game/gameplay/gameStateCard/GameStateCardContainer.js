@@ -11,7 +11,6 @@ const mapStateToProps = (state, ownProps) => ({
 class GameStateCardContainer extends Component {
 
 	handleChange = (event, value) => {
-		console.log(value)
 		const { dispatch } = this.props;
 
 		dispatch(Actions.updateGameInfoTab(value));

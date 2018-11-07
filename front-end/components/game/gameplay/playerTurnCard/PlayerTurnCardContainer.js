@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import PlayerTurnCard from './PlayerTurnCard';
 
 const mapStateToProps = (state, ownProps) => {
-	const { playerId, users } = state.data;
+	const { player, users } = state.data;
 
-	const { imageUrl, name } = users[playerId];
+	const { imageUrl, name } = player;
 
 	const { isTurn, playsRemaining, canEndTurn } = state.data;
 

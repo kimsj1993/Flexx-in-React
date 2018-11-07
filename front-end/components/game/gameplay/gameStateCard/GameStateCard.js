@@ -11,18 +11,23 @@ import GameRulesTabContainer from './gameRulesTab/GameRulesTabContainer';
 const styles = theme => ({
 	root: {
 	    backgroundColor: theme.palette.background.paper,
-	    width: 416
+	    boxShadow: theme.shadows[2]
 	},
 	appBarRoot: {
 		width: 416
 	},
 	tabRoot: {
 		minWidth: 'calc(100% / 3)'
+	},
+	content: {
+		height: 292,
+		maxHeight: 292,
+		overflow: 'scroll'
 	}
 });
 
 const GameStateCard = ({ classes, theme, tabIndex, changeTab }) => (
-	<div>
+	<div className={ classes.root } >
 		<AppBar classes={{ root: classes.appBarRoot }} position="static" color="default">
 			<Tabs
 				value={ tabIndex }
@@ -36,9 +41,11 @@ const GameStateCard = ({ classes, theme, tabIndex, changeTab }) => (
 				<Tab classes={{ root: classes.tabRoot}} label='Chat' />
 			</Tabs>
 		</AppBar>
-		{ tabIndex == 0 && <GameSummaryTabContainer /> }
-		{ tabIndex == 1 && <GameRulesTabContainer /> }
-		{ tabIndex == 2 && <div /> }
+		<div className={ classes.content } >
+			{ tabIndex == 0 && <GameSummaryTabContainer /> }
+			{ tabIndex == 1 && <GameRulesTabContainer /> }
+			{ tabIndex == 2 && <div /> }
+		</div>
 	</div>
 );
 

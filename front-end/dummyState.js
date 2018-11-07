@@ -95,7 +95,11 @@ const dummyState = {
 			}
 		},
 		actions: {},
-		playerId: 5,
+		player: {
+			id: 9,
+			name: 'Steph',
+			imageUrl: ''
+		},
 		users: {
 			'1': {
 				id: 1,
