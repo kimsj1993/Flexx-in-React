@@ -17,13 +17,24 @@ const styles = theme => ({
   	height: 36,
   	borderRadius: '8px 8px 0 0',
   	backgroundColor: theme.palette.cards.keeper
+  },
+  type: {
+    fontFamily: "'Roboto Condensed', sans-serif",
+    color: theme.palette.common.white,
+    fontWeight: 'bold',
+    fontSize: 14,
+    textTransform: 'uppercase',
+    paddingLeft: 8,
+    height: 32,
+    lineHeight: '32px',
+    whiteSpace: 'nowrap'
   }
 });
 
 const Keeper = ({ classes, name, imageUrl }) => (
 	<Paper classes={{ root: classes.root }}>
 		<div className={ classes.header } >
-			<Typography color='white'>{ name }</Typography>
+			<Typography classes={{ root: classes.type }}>{ name }</Typography>
 		</div>
 	</Paper>
 );
