@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 
 import GameSummaryTabContainer from './gameSummaryTab/GameSummaryTabContainer';
 import GameRulesTabContainer from './gameRulesTab/GameRulesTabContainer';
+import GameChat from './gameChatTab/GameChat'
 
 const styles = theme => ({
 	root: {
@@ -44,7 +45,7 @@ const GameStateCard = ({ classes, theme, tabIndex, changeTab }) => (
 		<div className={ classes.content } >
 			{ tabIndex == 0 && <GameSummaryTabContainer /> }
 			{ tabIndex == 1 && <GameRulesTabContainer /> }
-			{ tabIndex == 2 && <div /> }
+			{ tabIndex == 2 && <GameChat /> }
 		</div>
 	</div>
 );
