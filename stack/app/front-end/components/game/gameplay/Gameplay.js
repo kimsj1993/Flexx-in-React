@@ -6,9 +6,11 @@ import PlayerTurnCardContainer from './playerTurnCard/PlayerTurnCardContainer';
 import CardContainer from './card/CardContainer';
 import GameStateCardContainer from './gameStateCard/GameStateCardContainer';
 import TableContainer from './table/TableContainer';
-
 import Paper from '@material-ui/core/Paper';
 import Header from './Header';
+
+
+
 
 const styles = theme => ({
 	root: {
@@ -38,7 +40,9 @@ const Gameplay = ({ classes }) => (
 		<Header />
 		<Paper square={ true } classes={{ root: classes.opponentsRoot }}>
 			<OpponentsContainer />
+
 		</Paper>
+
 		<section className={ classes.playerArea } >
 			<section className={ classes.gameInfo } >
 				<PlayerTurnCardContainer />

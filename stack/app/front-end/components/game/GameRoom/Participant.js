@@ -17,7 +17,8 @@ const styles = theme => ({
         display: 'grid',
         gridTemplateColumns: '1fr 1fr 1fr',
         gridGap: '10px',
-        padding: '10px'
+        padding: '10px',
+        margin: '15px'
     },
     userImage: {
         gridRowStart: '1',
@@ -57,8 +58,6 @@ const Participant = ({classes}) => (
                 Ready
             </Typography>
         </div>
-
-
 
 
     </Paper>
