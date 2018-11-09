@@ -33,7 +33,7 @@ class LoginProvider extends Component {
 				this.setState({
 					loggedIn: true
 				});
-				dispatch(updateUserData(json));
+				//dispatch(updateUserData(json));
 				Router.pushRoute('/game');
 			});
 	};
@@ -45,7 +45,7 @@ class LoginProvider extends Component {
 			method: 'DELETE',
 			credentials: 'include'
 		}).then(() => {
-			dispatch(updateUserData(null));
+			//dispatch(updateUserData(null));
 			socketConnection.disconnect();
 			Router.pushRoute('/');
 		});

@@ -19,7 +19,7 @@ const styles = theme => ({
 
 const OpponentHand = ({ classes, count }) => (
 	<div className={ classes.root } >
-		{ Array(count).fill(<div className={ classes.card } />) }
+		{ Array(count).fill(null).map((val, index) => (<div className={ classes.card } key={ index } />)) }
 	</div>
 );
 

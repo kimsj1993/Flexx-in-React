@@ -17,7 +17,7 @@ const styles = theme => ({
 
 const Hand = ({ classes, cards }) => (
 	<div className={ classes.root } >
-		{ cards.map(props => (<div className={ classes.card } ><CardContainer {...props} /></div>)) }
+		{ cards.map((props, index) => (<div className={ classes.card } key={ index } ><CardContainer {...props} /></div>)) }
 	</div>
 );
 
