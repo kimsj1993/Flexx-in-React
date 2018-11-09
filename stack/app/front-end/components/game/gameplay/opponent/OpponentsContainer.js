@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const OpponentsContainer = ({ classes, opponentIds }) => (
 	<div className={ classes.root } >
-		{opponentIds.map(id => (<OpponentContainer opponentId={ id } />))}
+		{opponentIds.map((id, index) => (<OpponentContainer opponentId={ id } key={ index } />))}
 	</div>
 );
 

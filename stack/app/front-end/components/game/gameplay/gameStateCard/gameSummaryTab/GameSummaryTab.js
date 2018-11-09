@@ -43,7 +43,7 @@ const GameSummaryCard = ({ classes, drawRule, playRule, handLimit, keeperLimit, 
 			Goal
 		</Typography>
 		<div className={ classes.goals } >
-			{ goals.map(props => (<SummaryGoal {...props} />)) }
+			{ goals.map((props, index) => (<SummaryGoal {...props} key={ index } />)) }
 		</div>
 	</Paper>
 );

@@ -3,8 +3,6 @@ import { Router } from './routes'
 
 // types
 
-export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
-
 export const UPDATE_PLAYER_ID = 'UPDATE_PLAYER_ID';
 export const ADD_USER_DATA = 'UPDATE_USER_DATA';
 export const ADD_KEEPER_DATA = 'ADD_KEEPER_DATA';
@@ -44,11 +42,6 @@ export const UPDATE_GAME_INFO_TAB = 'UPDATE_GAME_INFO_TAB';
 // action creators
 
 export const updatePlayerId = id => ({
-	type: UPDATE_USER_DATA,
-	payload: id
-});
-
-export const updateUserData = id => ({
 	type: UPDATE_USER_DATA,
 	payload: id
 });

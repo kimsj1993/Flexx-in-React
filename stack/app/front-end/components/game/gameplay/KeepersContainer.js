@@ -28,8 +28,8 @@ const styles = theme => ({
 
 const PlayerKeepers = ({ classes, keeperData }) => (
 	<div className={ classes.root } >
-		{ keeperData.map(({ name, imageUrl }) => (
-			<Keeper name={ name } imageUrl={ imageUrl } />
+		{ keeperData.map(({ name, imageUrl }, index) => (
+			<Keeper name={ name } imageUrl={ imageUrl } key={ index } />
 		))}
 	</div>
 );
