@@ -68,7 +68,7 @@ class LoginProvider extends Component {
 					this.setState({
 						loggedIn: true
 					});
-					dispatch(updateUserData(json));
+					//dispatch(updateUserData(json));
 					Router.pushRoute('/game');
 				}
 			});

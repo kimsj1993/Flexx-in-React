@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect';
 
-const getCard = ({ cardData }, { type, id }) => 
+const getCardData = ({ cardData }, { type, id }) => 
 	cardData[type][id];
 
-const makeGetCard = () => {
+const makeGetCardData = () => {
 	return createSelector(
 		[ getCard ],
 		card => card
