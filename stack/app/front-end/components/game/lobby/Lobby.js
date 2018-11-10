@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import RoomList from './RoomList/RoomList'
 
 
@@ -25,6 +26,9 @@ const styles = theme => ({
 
     const Lobby = ({classes}) => (
     <div>
+        <Button variant="contained" color="primary">
+            CreateRoom
+        </Button>
         <div className={ classes.roomContainer}>
             <div className={classes.top}>WAITING</div>
             <div className={classes.top}>NAME</div>
