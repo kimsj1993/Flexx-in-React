@@ -7,7 +7,6 @@ import CardContainer from './card/CardContainer';
 import GameStateCardContainer from './gameStateCard/GameStateCardContainer';
 import TableContainer from './table/TableContainer';
 import Paper from '@material-ui/core/Paper';
-import Header from './Header';
 
 
 const styles = theme => ({

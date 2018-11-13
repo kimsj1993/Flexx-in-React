@@ -1,42 +1,20 @@
 import { connect } from 'react-redux';
 
+import { tableSelectors } from '../../../../../state/modules/data/table';
+import { cardsSelectors } from '../../../../../state/modules/data/cards';
+
 import GameRulesTab from './GameRulesTab';
 
 const mapStateToProps = (state, ownProps) => {
-	const { drawRule, playRule, handLimit, keeperLimit, cards } = state.data;
+	const drawRule = tableSelectors.getDrawRule( state );
+	const playRule = tableSelectors.getPlayRule( state );
+	const handLimit = tableSelectors.getHandLimit( state );
+	const keeperLimit = tableSelectors.getKeeperLimit( state );
 
-	const actionRules = state.data.actionRules.map( id => {
-		const data = state.data.rules[id];
-
-		const { name, imageUrl } = data;
-
-		return {
-			name,
-			imageUrl
-		};
-	});
-
-	const gameplayRules = state.data.gameplayRules.map( id => {
-		const data = state.data.rules[id];
-
-		const { name, imageUrl } = data;
-
-		return {
-			name,
-			imageUrl
-		};
-	});
-
-	const bonusRules = state.data.bonusRules.map( id => {
-		const data = state.data.rules[id];
-
-		const { name, imageUrl } = data;
-
-		return {
-			name,
-			imageUrl
-		};
-	});
+	const rules = tableSelectors.getRules( state );
+	const actionRules = rules.filter( ( { subtype } ) => subtype == 'action_rule' );
+	const gameplayRules = rules.filter( ( { subtype } ) => subtype == 'game_rule' );
+	const bonusRules = rules.filter( ( { subtype } ) => subtype == 'bonus' );
 
 	return {
 		drawRule,

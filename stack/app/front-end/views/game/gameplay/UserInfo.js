@@ -22,9 +22,9 @@ const styles = theme => ({
 	}
 });
 
-const UserInfo = ({ classes, imageUrl, name, playsRemaining, isTurn }) => (
+const UserInfo = ( { classes, name, playsRemaining, isTurn } ) => (
 	<div className={ classes.root } >
-		<Avatar src={ imageUrl } className={ classes.avatar } />
+		<Avatar className={ classes.avatar } />
 		<div>
 			<Typography className={ classes.name } variant='h6'>{ name }</Typography>
 			<Typography className={ classes.plays } variant='body2'>

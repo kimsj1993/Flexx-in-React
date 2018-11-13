@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
+import { cardsOperations, cardsSelectors } from '../../../state/modules/data/cards';
+
 import Keeper from './Keeper';
 
 const mapStateToProps = (state, ownProps) => {
 	const { keeperIds } = ownProps;
 
-	const { keepers } = state.data;
-
-	const keeperData = keeperIds.map(id => keepers[id]);
+	const keepers = keeperIds.map( id => cardsSelectors.getCard( state, id ) );
 
 	return {
-		keeperData
+		keepers
 	};
 }
 
@@ -26,10 +26,10 @@ const styles = theme => ({
 	}
 });
 
-const PlayerKeepers = ({ classes, keeperData }) => (
+const PlayerKeepers = ({ classes, keepers }) => (
 	<div className={ classes.root } >
-		{ keeperData.map(({ name, imageUrl }, index) => (
-			<Keeper name={ name } imageUrl={ imageUrl } key={ index } />
+		{ keepers.map(({ name }, index) => (
+			<Keeper name={ name } key={ index } />
 		))}
 	</div>
 );

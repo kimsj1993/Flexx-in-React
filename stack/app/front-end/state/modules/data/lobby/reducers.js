@@ -5,17 +5,20 @@ import * as types from "./types";
 
 const roomsReducer = ( state = {}, action ) => {
 	switch(action.type) {
-		case types.UPDATE_ROOMS:
+		case types.UPDATE_ROOMS: {
 			return action.payload;
-		case types.ADD_ROOM:
+		}
+		case types.ADD_ROOM: {
 			return {
 				...state,
 				[action.payload.id]: action.payload
 			};
-		case types.REMOVE_ROOM:
-			const { [action.payload.id ], ...rest } = state;
+		}
+		case types.REMOVE_ROOM: {
+			const { [action.payload.id ]: value, ...rest } = state;
 			return rest;
-		case types.ROOM_STARTED:
+		}
+		case types.ROOM_STARTED: {
 			const room = state[action.payload];
 			return {
 				...state,
@@ -24,13 +27,15 @@ const roomsReducer = ( state = {}, action ) => {
 					started: true
 				}
 			};
-		case types.UPDATE_ROOM:
+		}
+		case types.UPDATE_ROOM: {
 			const room = state[ action.payload.id ];
 			return {
 				...state,
 				[ action.payload.id ]: action.payload.room
 			};
-		case types.ROOM_USER_JOINED:
+		}
+		case types.ROOM_USER_JOINED: {
 			const room = state[action.payload];
 			const { playerCount } = room;
 			return {
@@ -40,7 +45,8 @@ const roomsReducer = ( state = {}, action ) => {
 					playerCount: playerCount + 1
 				}
 			};
-		case types.ROOM_USER_LEFT:
+		}
+		case types.ROOM_USER_LEFT: {
 			const room = state[action.payload];
 			const { playerCount } = room;
 			return {
@@ -50,6 +56,7 @@ const roomsReducer = ( state = {}, action ) => {
 					playerCount: playerCount - 1
 				}
 			};
+		}
 		default: return state;
 	};
 };

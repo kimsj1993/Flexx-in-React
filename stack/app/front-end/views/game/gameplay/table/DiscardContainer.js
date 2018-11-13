@@ -1,15 +1,14 @@
 import { connect } from 'react-redux';
 
+import { tableSelectors } from '../../../../state/modules/data/table';
+import { cardsSelectors } from '../../../../state/modules/data/cards';
+
 import Discard from './Discard';
 
 const mapStateToProps = (state, ownProps) => {
-	const { discards } = state.data;
+	const discardIds = tableSelectors.getDiscardIds( state );
 
-	const cards = discards.map(({ id, type }) => {
-		const data = state.data[type + 's'][id];
-
-		return { id, type };
-	});
+	const cards = discardIds.map( id => cardsSelectors.getCard( state, id ) );
 	
 	return { cards };
 };

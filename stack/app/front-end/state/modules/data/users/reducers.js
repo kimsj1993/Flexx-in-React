@@ -21,7 +21,7 @@ const reducer = ( state = {}, action ) => {
 				[action.payload.id]: action.payload
 			};
 		case types.REMOVE_USER:
-			const { [action.payload], ...rest } = state;
+			const { [action.payload]: value, ...rest } = state;
 			return rest;
 		default: return state;
 	};

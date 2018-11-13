@@ -1,15 +1,16 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
 
 import withLogin from '../utils/withLogin';
 
+import { loginSelectors, loginOperations } from '../state/modules/ui/login';
+
 import { Router } from '../routes';
 
-import LoginForm from '../components/LoginForm';
-const mapStateToProps = (state, ownProps) => ({
-	value: state.ui.loginForm.value
-});
+import LoginForm from '../views/LoginForm';
+const mapStateToProps = ( state ) => ( {
+	value: loginSelectors.getValue( state )
+} );
 
 class Main extends Component {
 
@@ -18,7 +19,7 @@ class Main extends Component {
 
 		const { dispatch } = this.props;
 
-		dispatch(actions.updateLoginForm(e.target.value));
+		dispatch( loginOperations.updateLoginForm( e.target.value ) );
 	}
 
 	handleLogin = () => {

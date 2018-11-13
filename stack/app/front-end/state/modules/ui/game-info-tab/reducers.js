@@ -9,7 +9,7 @@ import * as types from "./types";
 
 const indexReducer = ( state = 0, action ) => {
 	switch ( action.type ) {
-		case: types.UPDATE_TAB:
+		case types.UPDATE_TAB:
 			return action.payload;
 		default: return state;
 	};

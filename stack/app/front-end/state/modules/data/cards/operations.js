@@ -5,11 +5,13 @@ const addKeeperCard = actions.addKeeperCard;
 const addGoalCard = actions.addGoalCard;
 const addRuleCard = actions.addRuleCard;
 const addActionCard = actions.addActionCard;
+const addCards = actions.addCards;
 
 export {
 	addCard,
 	addKeeperCard,
 	addGoalCard,
 	addRuleCard,
-	addActionCard
+	addActionCard,
+	addCards
 };

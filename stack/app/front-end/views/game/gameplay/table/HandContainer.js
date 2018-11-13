@@ -1,15 +1,17 @@
 import { connect } from 'react-redux';
 
+import { handSelectors } from '../../../../state/modules/data/hand';
+import { userSelectors } from '../../../../state/modules/data/user';
+import { cardsSelectors } from '../../../../state/modules/data/cards';
+
 import Hand from './Hand';
 
 const mapStateToProps = (state, ownProps) => {
-	const { hand } = state.data;
+	const userId = userSelectors.getUserId( state );
 
-	const cards = hand.map(({ id, type }) => {
-		const data = state.data[type + 's'][id];
+	const handIds = handSelectors.getHandIds( state );
 
-		return { id, type };
-	});
+	const cards = handIds.map( id => cardsSelectors.getCard( state, id ) );
 	
 	return { cards };
 };

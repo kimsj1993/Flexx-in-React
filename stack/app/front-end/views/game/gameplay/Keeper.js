@@ -31,7 +31,7 @@ const styles = theme => ({
   }
 });
 
-const Keeper = ({ classes, name, imageUrl }) => (
+const Keeper = ({ classes, name }) => (
 	<Paper classes={{ root: classes.root }}>
 		<div className={ classes.header } >
 			<Typography classes={{ root: classes.type }}>{ name }</Typography>

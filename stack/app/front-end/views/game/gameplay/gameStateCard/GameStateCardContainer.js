@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
-import * as Actions from '../../../../actions';
+
+import { gameInfoTabSelectors, gameInfoTabOperations } from '../../../../state/modules/ui/game-info-tab';
 
 import GameStateCard from './GameStateCard';
 
 const mapStateToProps = (state, ownProps) => ({
-	tabIndex: state.ui.gameInfoTab.index
+	tabIndex: gameInfoTabSelectors.getTabIndex( state )
 });
 
 class GameStateCardContainer extends Component {
@@ -13,7 +14,7 @@ class GameStateCardContainer extends Component {
 	handleChange = (event, value) => {
 		const { dispatch } = this.props;
 
-		dispatch(Actions.updateGameInfoTab(value));
+		dispatch( gameInfoTabOperations.updateTab( { index: value } ) );
 	}
 
 	render = () => (

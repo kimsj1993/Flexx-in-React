@@ -1,8 +1,13 @@
-const getRooms = ( state ) => state.data.lobby.rooms;
+const getRoomIds = ( state ) => Object.keys( state.data.lobby.rooms ) || [];
 
-const getUnstartedRooms = ( state ) => getRooms( state ).filter( room => !room.started );
+const getRooms = ( state ) => getRoomIds( state ).map( id => state.data.lobby.rooms[ id ] );
+
+const getJoinableRooms = ( state ) => getRooms( state ).filter( 
+	room => !room.started && room.playerCount < room.maxPlayers 
+);
 
 export {
 	getRooms,
-	getUnstartedRooms
+	getRoomIds,
+	getJoinableRooms
 };

@@ -33,7 +33,6 @@ const Header = ({ classes }) => (
 	<div className={ classes.root } >
 		<AppBar position='static' classes={{ root: classes.appBarRoot }}>
 			<Toolbar classes={{ root: classes.toolbarRoot }}>
-				<Button classes={{ root: classes.buttonRoot }} variant='contained' color='primary'>Leave Game</Button>
 				<div className={ classes.grow } />
 				<Button classes={{ root: classes.buttonRoot }} variant='contained' color='secondary'>Help</Button>
 			</Toolbar>

@@ -1,9 +1,11 @@
 import { connect } from 'react-redux';
 
+import { tableSelectors } from '../../../../state/modules/data/table';
+
 import Deck from './Deck';
 
 const mapStateToProps = (state, ownProps) => {
-	const { deckCount } = state.data;
+	const deckCount = tableSelectors.getDeckCount( state );
 	
 	return { count: deckCount }
 };

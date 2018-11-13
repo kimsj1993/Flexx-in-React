@@ -4,7 +4,10 @@ import { Provider } from './login-context';
 import fetch from 'cross-fetch';
 
 import { connect } from 'react-redux';
-import { updateUserData } from '../actions';
+
+import { userOperations } from '../state/modules/data/user';
+import { usersOperations } from '../state/modules/data/users';
+import { gameOperations } from '../state/modules/data/game';
 
 import { Router } from '../routes'
 
@@ -23,7 +26,6 @@ class LoginProvider extends Component {
 
 	login = (username) => {
 		const { dispatch } = this.props;
-		console.log(username);
 		fetch('https://fluxx.d.calebj.io/api/session?username=' + username, {
 			method: 'POST',
 			credentials: 'include'
@@ -33,7 +35,8 @@ class LoginProvider extends Component {
 				this.setState({
 					loggedIn: true
 				});
-				//dispatch(updateUserData(json));
+				dispatch( userOperations.updateUserData( { id: json.user.id } ) );
+				dispatch( usersOperations.addUser( json.user ) );
 				Router.pushRoute('/game');
 			});
 	};
@@ -45,7 +48,7 @@ class LoginProvider extends Component {
 			method: 'DELETE',
 			credentials: 'include'
 		}).then(() => {
-			//dispatch(updateUserData(null));
+			dispatch( userOperations.clearUserData() );
 			socketConnection.disconnect();
 			Router.pushRoute('/');
 		});
@@ -68,7 +71,8 @@ class LoginProvider extends Component {
 					this.setState({
 						loggedIn: true
 					});
-					//dispatch(updateUserData(json));
+					dispatch( userOperations.updateUserData( { id: json.user.id } ) );
+					dispatch( usersOperations.addUser( json.user ) );
 					Router.pushRoute('/game');
 				}
 			});

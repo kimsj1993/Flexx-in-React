@@ -14,20 +14,23 @@ import { gameTypes } from '../game';
 
 const reducer = ( state = {}, action ) => {
 	switch (action.type) {
-		case types.ADD_PLAYER:
+		case types.ADD_PLAYER: {
 			return {
 				...state,
 				[ action.payload.id ]: action.payload
 			};
-		case types.ADD_PLAYERS:
-			return {
-				...state,
-				action.payload
-			};
-		case types.REMOVE_PLAYER:
-			const { [ payload.id ], ...rest } = state;
+		}
+		case types.ADD_PLAYERS: {
+			return action.payload.reduce( ( newState, player ) => ( {
+				...newState,
+				[ player.id ]: player
+			} ), {} );
+		}
+		case types.REMOVE_PLAYER: {
+			const { [ payload.id ]: value, ...rest } = state;
 			return rest;
-		case types.UPDATE_PLAYER_CARD_COUNT:
+		}
+		case types.UPDATE_PLAYER_CARD_COUNT: {
 			const { cardCount, ...rest } = state[ payload.id ];
 			return {
 				...state,
@@ -36,7 +39,8 @@ const reducer = ( state = {}, action ) => {
 					cardCount: payload.count
 				}
 			};
-		case types.UPDATE_PLAYER_KEEPERS:
+		}
+		case types.UPDATE_PLAYER_KEEPERS: {
 			const { keepers, ...rest } = state[ payload.id ];
 			return {
 				...state,
@@ -45,7 +49,8 @@ const reducer = ( state = {}, action ) => {
 					keepers: payload.keepers
 				}
 			};
-		case gameTypes.END_GAME:
+		}
+		case gameTypes.END_GAME: {
 			const playerIds = Objects.keys( state );
 			return playerIds.reduce( ( newState, id ) => ( {
 				...newState,
@@ -56,6 +61,7 @@ const reducer = ( state = {}, action ) => {
 					position: state[ id ].position
 				}
 			} ), {} );
+		}
 		case gameTypes.LEAVE_GAME:
 			return {};
 		default: return state;

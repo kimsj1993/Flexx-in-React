@@ -5,7 +5,6 @@ import { default as game } from './game';
 import { default as hand } from './hand';
 import { default as lobby } from './lobby';
 import { default as players } from './players';
-import { default as room } from './room';
 import { default as table } from './table';
 import { default as turn } from './turn';
 import { default as user } from './user';
@@ -17,7 +16,6 @@ const reducer = combineReducers( {
 	hand,
 	lobby,
 	players,
-	room,
 	table,
 	turn,
 	user,

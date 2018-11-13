@@ -7,8 +7,6 @@ import Participant from'./Participant'
 import Button from '@material-ui/core/Button';
 import GameChat from '../gameplay/gameStateCard/gameChatTab/GameChat'
 
-
-
 const styles = theme => ({
     root: {
         display : 'grid',
@@ -54,20 +52,29 @@ const styles = theme => ({
 
 });
 
-const GameRoom = ({classes}) => (
+const Room = ({ classes, players, startGameHandler, deleteGameHandler }) => (
     <Paper classes={{ root: classes.root }} >
         <div className={classes.currentUserContainer}>
             <div className={classes.userImageContainer}>
 
             </div>
             <div className={classes.buttonsContainer}>
-                <Button variant="contained" color="primary" className={classes.button}>
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    className={classes.button}
+                    onClick={ startGameHandler }
+                >
                     Start
                 </Button>
                 <Button variant="contained" color="secondary" className={classes.button}>
                     Invite
                 </Button>
-                <Button variant="contained" className={classes.button}>
+                <Button 
+                    variant="contained" 
+                    className={classes.button}
+                    onClick={ deleteGameHandler }
+                >
                     Exit
                 </Button>
             </div>
@@ -75,11 +82,13 @@ const GameRoom = ({classes}) => (
         </div>
 
         <div className={classes.participants}>
-            <Participant className={classes.participantsItem}/>
-            <Participant className={classes.participantsItem}/>
-            <Participant className={classes.participantsItem}/>
-            <Participant className={classes.participantsItem}/>
-
+            { players.map( player => (
+                <Participant 
+                    className={classes.participantsItem}
+                    name={ player.name }
+                    status='Ready'
+                />
+            ) ) }
         </div>
 
         <div className={classes.roomChat}>
@@ -90,4 +99,4 @@ const GameRoom = ({classes}) => (
 );
 
 
-export default withStyles(styles)(GameRoom);
+export default withStyles(styles)(Room);

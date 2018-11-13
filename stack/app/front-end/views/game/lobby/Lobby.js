@@ -1,49 +1,58 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
-import RoomList from './RoomList/RoomList'
 
-
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
-    roomContainer: {
-        display: 'grid',
-        gridTemplateColumns: '1fr 3fr 1fr 1fr 1.5fr',
-        padding: '10px',
-        justifyContent: 'center'
-
-
+    root: {
+        minWidth: '800px',
+        marginTop: 48
     },
-    top: {
-        backgroundColor: '#FFC0CB',
-        border: '1px solid',
-        padding: '20px',
-        textAlign: 'center'
+    table: {
+        width: '100%'
     }
-
 });
 
-    const Lobby = ({classes}) => (
-    <div>
-        <Button variant="contained" color="primary">
-            CreateRoom
-        </Button>
-        <div className={ classes.roomContainer}>
-            <div className={classes.top}>WAITING</div>
-            <div className={classes.top}>NAME</div>
-            <div className={classes.top}>Player</div>
-            <div className={classes.top}>-</div>
-            <div className={classes.top}>-</div>
-        </div>
-        <RoomList></RoomList>
-        <RoomList></RoomList>
-        <RoomList></RoomList>
-        <RoomList></RoomList>
-
-    </div>
-
-
+const Lobby = ( { classes, rooms, joinHandlerCreator, createHandler } ) => (
+    <Paper className={ classes.root } >
+        <Button variant='contained' color='primary' onClick={ createHandler } >Create Game</Button>
+        <Table className={ classes.table } >
+            <TableHead>
+                <TableRow>
+                    <TableCell>Players</TableCell>
+                    <TableCell>Max Players</TableCell>
+                    <TableCell />
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                { rooms && rooms.map( room => (
+                    <TableRow key={ room.id }>
+                        <TableCell>
+                            { room.playerCount }
+                        </TableCell>
+                        <TableCell>
+                            { room.maxPlayers }
+                        </TableCell>
+                        <TableCell>
+                            <Button 
+                                variant='contained' 
+                                color='primary' 
+                                onClick={ joinHandlerCreator( room.id ) } 
+                            >
+                                Join
+                            </Button>
+                        </TableCell>
+                    </TableRow>
+                ) ) }
+            </TableBody>
+        </Table>
+    </Paper>
 );
 
 

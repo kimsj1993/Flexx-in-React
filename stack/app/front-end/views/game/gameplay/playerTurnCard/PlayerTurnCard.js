@@ -27,10 +27,10 @@ const styles = theme => ({
 	}
 });
 
-const PlayerTurnCard = ({ classes, isTurn, imageUrl, name, playsRemaining, canEndTurn }) => (
+const PlayerTurnCard = ({ classes, isTurn, name, playsRemaining, canEndTurn }) => (
 	<Paper classes={{ root: classes.root }} >
 		{ (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
-		<UserInfo imageUrl={ imageUrl } name={ name } playsRemaining={ playsRemaining } isTurn={ isTurn } />
+		<UserInfo name={ name } playsRemaining={ playsRemaining } isTurn={ isTurn } />
 		<div className={ classes.spacer } />
 		{ (isTurn) ? (<Button variant='contained' color='primary' disabled={ !canEndTurn } >End Turn</Button>) : ''}
 	</Paper>

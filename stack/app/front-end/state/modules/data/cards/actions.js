@@ -29,6 +29,7 @@ const addActionCard = ( { id, name, subtype } ) =>
 
 export {
 	addCard,
+	addCards,
 	addKeeperCard,
 	addGoalCard,
 	addRuleCard,

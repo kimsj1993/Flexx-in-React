@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
 
+import { tableSelectors } from '../../../../../state/modules/data/table';
+import { cardsSelectors } from '../../../../../state/modules/data/cards';
+
 import GameSummaryTab from './GameSummaryTab';
 
 const mapStateToProps = (state, ownProps) => {
-	const { drawRule, playRule, handLimit, keeperLimit, currentGoals } = state.data;
+	const drawRule = tableSelectors.getDrawRule( state );
+	const playRule = tableSelectors.getPlayRule( state );
+	const handLimit = tableSelectors.getHandLimit( state );
+	const keeperLimit = tableSelectors.getKeeperLimit( state );
+	const goalIds = tableSelectors.getGoalIds( state );
 
-	const goals = currentGoals.map( id => {
-		const data = state.data.goals[id];
-
-		const { name, requirements } = data;
-
-		return {
-			name,
-			requirements
-		};
-	});
+	const goals = goalIds.map( id => cardsSelectors.getCard( id ) );
 
 	return {
 		drawRule,

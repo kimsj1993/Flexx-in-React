@@ -36,13 +36,12 @@ const styles = theme => ({
   }
 });
 
-const Opponent = ({ classes, imageUrl, name, playsRemaining, isTurn, cardCount, keeperIds }) => (
+const Opponent = ({ classes, name, playsRemaining, isTurn, cardCount, keeperIds }) => (
   <div className={ (isTurn) ? classes.opponentHighlight : '' } >
     <div className={ classes.root } >
         <Paper classes={{ root: classes.userInfoRoot }} >
           { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
           <UserInfo 
-            imageUrl={ imageUrl } 
             name={ name } 
             playsRemaining={ playsRemaining }
             isTurn={ isTurn }

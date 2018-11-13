@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 
+import { cardsSelectors } from '../../../../state/modules/data/cards';
+
 import Card from './Card';
 
 const mapStateToProps = (state, ownProps) => {
-	const { type, id } = ownProps;
+	const { id } = ownProps;
 
-	const { name, subtype } = state.data[type];
+	const { name, subtype } = cardsSelectors.getCard( state, id );
 
 	return {
 		type,

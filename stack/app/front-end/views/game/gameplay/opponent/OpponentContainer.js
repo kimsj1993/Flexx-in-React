@@ -2,18 +2,25 @@ import { connect } from 'react-redux';
 
 import Opponent from './Opponent';
 
+import { playersSelectors } from '../../../../state/modules/data/players';
+import { usersSelectors } from '../../../../state/modules/data/users';
+import { turnSelectors } from '../../../../state/modules/data/turn';
+
 const mapStateToProps = (state, ownProps) => {
 	const { opponentId } = ownProps;
 
-	const { users } = state.data;
-	const { name, imageUrl } = users[opponentId];
+	const name = usersSelectors.getUserById( state, opponentId ).username;
 
-	const { opponents } = state.data;
-	const { isTurn, playsRemaining, cardCount, keeperIds } = opponents[opponentId];
+	const isTurn = turnSelectors.isPlayerTurn( state, opponentId );
+
+	const playsRemaining = turnSelectors.getPlaysRemaining( state );
+
+	const cardCount = playersSelectors.getPlayerCardCount( state, opponentId );
+
+	const keeperIds = playersSelectors.getPlayerKeeperIds( state, opponentId );
 
 	return {
 		name,
-		imageUrl,
 		isTurn,
 		playsRemaining,
 		cardCount,

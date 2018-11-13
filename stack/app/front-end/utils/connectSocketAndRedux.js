@@ -85,6 +85,7 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 	socket.on('user', data => {
 		switch ( data.e ) {
 			case 'GAME_SYNC':
+				console.log(data)
 				dispatch( gameOperations.initGame( {
 					id: data.game.id,
 					host: data.game.host_id,
@@ -100,10 +101,10 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 				);
 
 				dispatch( turnOperations.updatePlaysRemaining( {
-					count: turnPlayer.plays_left
+					count: turnPlayer.plays_remaining
 				} ) );
 				dispatch( turnOperations.updatePlaysRemainingTemp( {
-					count: turnPlayer.plays_left_t
+					count: turnPlayer.temp_plays_remaining
 				} ) );
 
 				dispatch( tableOperations.updateDiscardPile( {
@@ -133,7 +134,7 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 
 				const players = data.game.player_states.map( player => ( {
 					id: player.player_id,
-					cardCount: player.hand.length,
+					cardCount: 0,
 					keepers: player.keepers,
 					position: player.position
 				} ) );
@@ -159,8 +160,9 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 				} ) );
 				break;
 			case 'HELLO':
+				console.log(data)
 				const types = {
-					KEEPER: 'keeper'.
+					KEEPER: 'keeper',
 					GOAL: 'goal',
 					NEW_RULE: 'rule',
 					ACTION: 'action'
@@ -169,7 +171,7 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 					id: card.id,
 					name: card.name,
 					type: types[ card.type ],
-					subtype: card.subtype.toLowercase()
+					subtype: card.subtype && card.subtype.toLowerCase()
 				} ) );
 				dispatch( cardsOperations.addCards( {
 					cards
@@ -200,5 +202,7 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 };
 
 export const onSocketDisconnect = socket => {
-
+	socket.off('global');
+	socket.off('game');
+	socket.off('user');
 };

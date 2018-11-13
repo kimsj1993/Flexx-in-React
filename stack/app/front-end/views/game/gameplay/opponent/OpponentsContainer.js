@@ -1,6 +1,9 @@
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
+import { playersSelectors } from '../../../../state/modules/data/players';
+import { userSelectors } from '../../../../state/modules/data/user';
+
 import OpponentContainer from './OpponentContainer';
 
 const styles = theme => ({
@@ -12,7 +15,8 @@ const styles = theme => ({
 });
 
 const mapStateToProps = (state, ownProps) => {
-	const opponentIds = Object.keys(state.data.opponents);
+	const userId = userSelectors.getUserId( state );
+	const opponentIds = playersSelectors.getPlayerIds( state ).filter( id => id != userId );
 
 	return { opponentIds };
 };
