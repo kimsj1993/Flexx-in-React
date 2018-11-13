@@ -1,13 +1,13 @@
-const getPlayerCardsTotal = ( state, id ) => state.data.game.players[ id ];
+const getGameId = state => state.data.game.id;
+const getGameHost = state => state.data.game.host;
+const gameActive = state => state.data.game.active;
+const gameStarted = state => state.data.game.started;
+const gameEnded = state => state.data.game.ended;
 
-const getPlayerKeepers = ( state, id ) => state.data.game.players[ id ]
-	.map( id => state.data.cards[ id ] );
-
-const isPlayerTurn = ( state, id ) => state.data.game.turn == id;
-
-const getHand = ( state ) => state.data.game.hand
-	.map( id => state.data.cards[ id ] );
-
-const getTempHand = ( state ) => state.data.game.tempHand
-	.map( id => state.data.cards[ id ] );
-
+export {
+	getGameId,
+	getGameHost,
+	gameActive,
+	gameStarted,
+	gameEnded
+};
