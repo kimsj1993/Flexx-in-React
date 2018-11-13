@@ -24,6 +24,12 @@ const roomsReducer = ( state = {}, action ) => {
 					started: true
 				}
 			};
+		case types.UPDATE_ROOM:
+			const room = state[ action.payload.id ];
+			return {
+				...state,
+				[ action.payload.id ]: action.payload.room
+			};
 		case types.ROOM_USER_JOINED:
 			const room = state[action.payload];
 			const { playerCount } = room;

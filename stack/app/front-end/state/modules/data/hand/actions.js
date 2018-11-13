@@ -1,13 +1,13 @@
 import * as types from "./types";
 
-const updateHand = ( { ids } ) => ( {
+const updateHand = ( { hand } ) => ( {
 	type: types.UPDATE_HAND,
-	payload: ids
+	payload: hand
 } );
 
-const updateTempHand = ( { ids } ) => ( {
+const updateTempHand = ( { hand } ) => ( {
 	type: types.UPDATE_HAND,
-	payload: ids
+	payload: hand
 } );
 
 export {

@@ -4,18 +4,14 @@ const addPlayer = ( {
 	id, 
 	cardCount, 
 	keepers, 
-	position, 
-	playsRemaining, 
-	playsRemainingTemp 
+	position 
 } ) => ( {
 	type: types.ADD_PLAYER,
 	payload: { 
 		id, 
 		cardCount, 
 		keepers, 
-		position, 
-		playsRemaining, 
-		playsRemainingTemp 
+		position
 	}
 } );
 

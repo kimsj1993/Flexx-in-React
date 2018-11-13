@@ -10,7 +10,7 @@ const addCard = ( { id, name, type, subtype } ) => ( {
 	}
 } );
 
-const addCards = ( cards ) => ( {
+const addCards = ( { cards } ) => ( {
 	type: types.ADD_CARDS,
 	payload: cards
 } );
