@@ -9,53 +9,39 @@ const roomsReducer = ( state = {}, action ) => {
 			return action.payload;
 		}
 		case types.ADD_ROOM: {
-			return {
-				...state,
-				[action.payload.id]: action.payload
-			};
+			return Object.assign( {}, state, { [ action.payload.id ] : action.payload } );
 		}
 		case types.REMOVE_ROOM: {
 			const { [action.payload.id ]: value, ...rest } = state;
-			return rest;
+			return Object.assign( {}, rest );
 		}
 		case types.ROOM_STARTED: {
 			const room = state[action.payload];
-			return {
-				...state,
-				[action.payload]: {
-					...room,
-					started: true
-				}
-			};
+			return Object.assign( {}, state, { [ action.payload ]: Object.assign( {}, room, { started: true } ) } );
 		}
 		case types.UPDATE_ROOM: {
 			const room = state[ action.payload.id ];
-			return {
-				...state,
-				[ action.payload.id ]: action.payload.room
-			};
+			return Object.assign( {}, state, { [ action.payload.id ] : action.payload.room } );
 		}
 		case types.ROOM_USER_JOINED: {
-			const room = state[action.payload];
+			const room = state[action.payload.roomId];
 			const { playerCount } = room;
-			return {
-				...state,
-				[action.payload]: {
-					...room,
-					playerCount: playerCount + 1
-				}
-			};
+			return Object.assign( {}, state, 
+				{ [action.payload.roomId]: Object.assign( 
+					{}, 
+					room, 
+					{ playerCount : playerCount + 1 } 
+				) } );
 		}
 		case types.ROOM_USER_LEFT: {
-			const room = state[action.payload];
+			const room = state[action.payload.roomId];
 			const { playerCount } = room;
-			return {
-				...state,
-				[action.payload]: {
-					...room,
-					playerCount: playerCount - 1
-				}
-			};
+			return Object.assign( {}, state, 
+				{ [action.payload.roomId] : Object.assign( 
+					{}, 
+					room, 
+					{ playerCount: playerCount - 1 } 
+				) } );
 		}
 		default: return state;
 	};

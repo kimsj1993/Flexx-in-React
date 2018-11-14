@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
+
 import { gameSelectors } from '../state/modules/data/game';
 
 import withSocket from '../utils/withSocket';
@@ -25,6 +26,8 @@ const mapStateToProps = ( state, ownProps ) => {
 };
 
 class Game extends Component {
+
+
 
 	componentDidMount() {
 		const { socketConnection, dispatch, state } = this.props;

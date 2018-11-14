@@ -1,4 +1,5 @@
 import * as types from "./types";
+import produce from "immer";
 
 /* State Shape
 {
@@ -12,20 +13,18 @@ import * as types from "./types";
 }
 */
 
-const reducer = (state = {}, action) => {
-	switch(action.type) {
-		case types.ADD_CARD:
-			return {
-				...state,
-				[action.payload.id]: action.payload
-			};
-		case types.ADD_CARDS:
-			return action.payload.reduce( ( prevState, card ) => ( {
-				...prevState,
-				[card.id] : card
-			} ), { ...state } );
-		default: return state;
-	}
-};
+const reducer = (state = {}, action) => 
+	produce( state, draft => {
+		switch ( action.type ) {
+			case types.ADD_CARD:
+				draft[ action.payload.id ] = action.payload;
+				return draft;
+			case types.ADD_CARDS:
+				action.payload.forEach( card => {
+					draft[ card.id ] = card;
+				});
+				return draft;
+		};
+} );
 
 export default reducer;

@@ -2,9 +2,11 @@ import React from 'react';
 import App, { Container } from 'next/app';
 
 import { Provider } from "react-redux";
-import withRedux from "next-redux-wrapper";
+//import withRedux from "next-redux-wrapper";
 
-import configureStore from '../state/store.js';
+import withReduxStore from '../utils/with-redux-store';
+
+//import configureStore from '../state/store.js';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -32,11 +34,11 @@ class MyApp extends App {
   
 
   render() {
-    const { Component, pageProps, store } = this.props;
+    const { Component, pageProps, reduxStore } = this.props;
     return (
       <Container>
 
-        <Provider store={ store }>
+        <Provider store={ reduxStore }>
 
           {/* Wrap every page in Jss and Theme providers */}
           <JssProvider
@@ -77,4 +79,4 @@ class MyApp extends App {
   }
 }
 
-export default withRedux(configureStore)(MyApp);
+export default withReduxStore(MyApp);
