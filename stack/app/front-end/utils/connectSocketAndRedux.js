@@ -100,12 +100,12 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 					player => player.id == data.game.current_player_id
 				);
 
-				dispatch( turnOperations.updatePlaysRemaining( {
-					count: turnPlayer.plays_remaining
-				} ) );
-				dispatch( turnOperations.updatePlaysRemainingTemp( {
-					count: turnPlayer.temp_plays_remaining
-				} ) );
+				// dispatch( turnOperations.updatePlaysRemaining( {
+				// 	count: turnPlayer.plays_left || 0
+				// } ) );
+				// dispatch( turnOperations.updatePlaysRemainingTemp( {
+				// 	count: turnPlayer.temp_left_t || 0
+				// } ) );
 
 				dispatch( tableOperations.updateDiscardPile( {
 					discards: data.game.discard_pile

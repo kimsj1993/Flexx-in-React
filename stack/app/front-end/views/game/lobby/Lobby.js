@@ -49,7 +49,7 @@ const Lobby = ( { classes, rooms, joinHandlerCreator, createHandler } ) => (
                             </Button>
                         </TableCell>
                     </TableRow>
-                ) ) }
+                ) ) || '' }
             </TableBody>
         </Table>
     </Paper>

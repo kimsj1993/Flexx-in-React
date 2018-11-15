@@ -82,7 +82,7 @@ const Room = ({ classes, players, startGameHandler, deleteGameHandler }) => (
         </div>
 
         <div className={classes.participants}>
-            { players.map( player => (
+            { players && players.map( player => (
                 <Participant 
                     className={classes.participantsItem}
                     name={ player.name }

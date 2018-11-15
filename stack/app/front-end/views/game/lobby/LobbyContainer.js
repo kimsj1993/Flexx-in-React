@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { lobbyOperations, lobbySelectors } from '../../../../state/modules/data/lobby';
+import { lobbyOperations, lobbySelectors } from '../../../state/modules/data/lobby';
 
 import Lobby from './Lobby';
 
@@ -18,9 +18,10 @@ const mapStateToProps = ( state, { dispatch } ) => {
 	};
 };
 
-const LobbyContainer = ( props ) => (
-	<Lobby { ...props } />
-);
+const LobbyContainer = ( props ) => {
+	console.log(props)
+	return (<Lobby { ...props } />)
+};
 
 export default connect(
 	mapStateToProps

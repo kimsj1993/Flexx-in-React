@@ -8,8 +8,8 @@ import withSocket from '../utils/withSocket';
 import withLogin from '../utils/withLogin';
 
 import Gameplay from '../views/game/gameplay/Gameplay';
-import LobbyContainer from '../views/game/lobby/Lobby';
-import RoomContainer from '../views/game/room/Room';
+import LobbyContainer from '../views/game/lobby/LobbyContainer';
+import RoomContainer from '../views/game/room/RoomContainer';
 import Header from '../views/game/Header';
 
 import { onSocketConnection, onSocketDisconnect } from '../utils/connectSocketAndRedux';
@@ -55,13 +55,13 @@ class Game extends Component {
 	}
 
 	render() {
-		const { gameActive, gameStarted } = this.props;
+		const { activeGame, gameStarted } = this.props;
 
 		return (
 			<div>
 				<Header />
-				{ !gameActive && <LobbyContainer /> }
-				{ gameActive && !gameStarted && <RoomContainer /> }
+				{ !activeGame && <LobbyContainer /> }
+				{ activeGame && !gameStarted && <RoomContainer /> }
 				{ gameStarted && <Gameplay /> }
 			</div>
 		);

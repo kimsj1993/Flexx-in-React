@@ -1,5 +1,5 @@
-const getUserByID = ( state, id ) => state.data.users[ id ];
+const getUserById = ( state, id ) => state.data.users[ id ];
 
 export {
-	getUserByID
+	getUserById
 };
