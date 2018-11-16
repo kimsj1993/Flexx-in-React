@@ -37,22 +37,21 @@ const byId = handleActions(
 	{} // initial state
 );
 
+const allIds = handleActions(
+	{
+		[ types.ADD_USER ]: ( state, { payload } ) => [ ...state, payload.id ],
 
+		[ types.REMOVE_USER ]: ( state, { payload } ) => state.filter( id => id != payload ),
 
-const reducer = ( state = {}, action ) => {
-	switch ( action.type ) {
-		case types.UPDATE_USERS:
-			return action.payload;
-		case types.ADD_USER:
-			return {
-				...state,
-				[action.payload.id]: action.payload
-			};
-		case types.REMOVE_USER:
-			const { [action.payload]: value, ...rest } = state;
-			return rest;
-		default: return state;
-	};
-};
+		[ types.CLEAR_USERS ]: () => []
+	},
+
+	[] // initial state
+);
+
+const reducer = combineReducers( {
+	byId,
+	allIds
+} );
 
 export default reducer;
