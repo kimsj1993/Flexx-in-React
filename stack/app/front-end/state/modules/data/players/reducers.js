@@ -1,5 +1,6 @@
 import * as types from "./types";
-import { gameTypes } from '../game';
+import { handleActions } from 'redux-actions';
+import { combineReducers } from "redux";
 
 /* State Shape
 {
@@ -12,60 +13,46 @@ import { gameTypes } from '../game';
 }
 */
 
-const reducer = ( state = {}, action ) => {
-	switch (action.type) {
-		case types.ADD_PLAYER: {
-			return {
-				...state,
-				[ action.payload.id ]: action.payload
-			};
-		}
-		case types.ADD_PLAYERS: {
-			return action.payload.reduce( ( newState, player ) => ( {
-				...newState,
-				[ player.id ]: player
-			} ), {} );
-		}
-		case types.REMOVE_PLAYER: {
-			const { [ payload.id ]: value, ...rest } = state;
-			return rest;
-		}
-		case types.UPDATE_PLAYER_CARD_COUNT: {
-			const { cardCount, ...rest } = state[ payload.id ];
-			return {
-				...state,
-				[ payload.id ]: {
-					...rest,
-					cardCount: payload.count
-				}
-			};
-		}
-		case types.UPDATE_PLAYER_KEEPERS: {
-			const { keepers, ...rest } = state[ payload.id ];
-			return {
-				...state,
-				[ payload.id ]: {
-					...rest,
-					keepers: payload.keepers
-				}
-			};
-		}
-		case gameTypes.END_GAME: {
-			const playerIds = Objects.keys( state );
-			return playerIds.reduce( ( newState, id ) => ( {
-				...newState,
-				[id]: {
-					id,
-					cardCount: 0,
-					keepers: [],
-					position: state[ id ].position
-				}
-			} ), {} );
-		}
-		case gameTypes.LEAVE_GAME:
-			return {};
-		default: return state;
-	}
-};
+const byId = handleActions(
+	{
+		[ types.ADD_PLAYER ]: ( state, { payload } ) => ( {
+			...state,
+			[ payload.id ]: payload
+		} ),
+
+		[ types.REMOVE_PLAYER ]: ( state, { payload } ) =>
+			Object.keys( state ).reduce( ( newState, id ) => {
+				return ( id == payload ) ? newState : { ...newState, [ id ]: { ...state[ id ] } };
+		}, {} ),
+
+		[ types.UPDATE_PLAYER ]: ( state, { payload } ) =>
+			Object.keys( state ).reduce( (newState, id ) => {
+				return ( id == payload.id ) ?
+					{ ...newState, [ id ]: { ...state[ id ], ...payload } } :
+					{ ...newState, [ id ]: { ...state[ id ] } }
+		} ),
+
+		[ types.CLEAR_PLAYERS ]: () => {}
+	},
+
+	{} // initial state
+);
+
+const allIds = handleActions(
+	{
+		[ types.ADD_PLAYER ]: ( state, { payload } ) => [ ...state, payload.id ],
+
+		[ types.REMOVE_PLAYER]: ( state, { payload } ) => state.filter( id => id != payload ),
+
+		[ types.CLEAR_PLAYERS]: () => []
+	},
+
+	[] // initial state
+);
+
+const reducer = combineReducers( {
+	byId,
+	allIds
+} );
 
 export default reducer;

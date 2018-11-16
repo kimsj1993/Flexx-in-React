@@ -15,8 +15,8 @@ import Header from '../views/game/Header';
 import { onSocketConnection, onSocketDisconnect } from '../utils/connectSocketAndRedux';
 
 const mapStateToProps = ( state, ownProps ) => {
-	const activeGame = gameSelectors.gameActive( state );
-	const gameStarted = gameSelectors.gameStarted( state );
+	const activeGame = state.data.game.active;
+	const gameStarted = activeGame && state.data.lobby.byId[ state.data.game.id ].started;
 
 	return {
 		activeGame,

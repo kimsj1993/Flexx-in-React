@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 
 	const handIds = handSelectors.getHandIds( state );
 
-	const cards = handIds.map( id => cardsSelectors.getCard( state, id ) );
+	const cards = handIds.map( id => cardsSelectors.getCardById( state, id ) );
 	
 	return { cards };
 };

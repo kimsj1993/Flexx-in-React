@@ -1,15 +1,31 @@
 import * as actions from "./actions";
 
 const addPlayer = actions.addPlayer;
-const addPlayers = actions.addPlayers;
 const removePlayer = actions.removePlayer;
-const updatePlayerCardCount = actions.updatePlayerCardCount;
-const updatePlayerKeepers = actions.updatePlayerKeepers;
+const updatePlayer = actions.updatePlayer;
+const clearPlayers = actions.clearPlayers;
+
+const addPlayers = ( { players } ) => dispatch =>
+	players.forEach( player => dispatch( addPlayer( player ) ) );
+
+const removePlayers = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( removePlayer( { id } ) ) );
+
+const updatePlayers = ( { updates } ) => dispatch =>
+	updates.forEach( update => dispatch( updatePlayer( update ) ) );
+
+const replacePlayers = ( { players } ) => dispatch => {
+	dispatch( clearPlayers() );
+	dispatch( addPlayers( { players } ) );
+};
 
 export {
 	addPlayer,
-	addPlayers,
 	removePlayer,
-	updatePlayerCardCount,
-	updatePlayerKeepers
+	updatePlayer,
+	clearPlayers,
+	addPlayers,
+	removePlayers,
+	updatePlayers,
+	replacePlayers
 };

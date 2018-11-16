@@ -1,57 +1,28 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const updateRooms = ( { rooms } ) => ( {
-	type: types.UPDATE_ROOMS,
-	payload: rooms
-} );
+const addRoom = createAction(
+	types.ADD_ROOM,
+	( { id, host, created, started, freeJoin, minPlayers, maxPlayers, players, password } ) => 
+		( { id, host, created, started, freeJoin, minPlayers, maxPlayers, players, password } )
+);
 
-const addRoom = ( { id, started, playerCount, maxPlayers } ) => ( {
-	type: types.ADD_ROOM,
-	payload: { id, started, playerCount, maxPlayers }
-} );
+const removeRoom = createAction(
+	types.REMOVE_ROOM,
+	( { id } ) => id
+);
 
-const removeRoom = ( { id } ) => ( {
-	type: types.REMOVE_ROOM,
-	payload: id
-} );
+const updateRoom = createAction(
+	types.UPDATE_ROOM,
+	( { id, host, created, started, freeJoin, minPlayers, maxPlayers, players } ) => 
+		( { id, host, created, started, freeJoin, minPlayers, maxPlayers, players } )
+);
 
-const updateRoom = ( { id, room } ) => ( {
-	type: types.UPDATE_ROOM,
-	payload: { id, room }
-} );
-
-const roomStarted = ( { id } ) => ( {
-	type: types.ROOM_STARTED,
-	payload: id
-} );
-
-const roomUserJoined = ( { userId, roomId } ) => ( {
-	type: types.ROOM_USER_JOINED,
-	payload: { userId, roomId }
-} );
-
-const roomUserLeft = ( { userId, roomId } ) => ( {
-	type: types.ROOM_USER_LEFT,
-	payload: { userId, roomId }
-} );
-
-const fetchRooms = ( { done, success } ) => ( {
-	type: types.FETCH_ROOMS,
-	payload: {
-		done,
-		success
-	}
-} );
+const clearRooms = createAction( types.CLEAR_ROOMS );
 
 export {
-	updateRooms,
 	addRoom,
 	removeRoom,
 	updateRoom,
-	roomStarted,
-	roomUserJoined,
-	roomUserLeft,
-	fetchRooms,
-	createGame,
-	joinGame
+	clearRooms
 };

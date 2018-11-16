@@ -5,7 +5,7 @@ import { tableSelectors } from '../../../../state/modules/data/table';
 import Deck from './Deck';
 
 const mapStateToProps = (state, ownProps) => {
-	const deckCount = tableSelectors.getDeckCount( state );
+	const deckCount = tableSelectors.getDeck( state );
 	
 	return { count: deckCount }
 };

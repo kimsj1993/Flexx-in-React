@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 
-import CardContainer from '../CardContainer';
+import CardContainer from '../card/CardContainer';
 
 const styles = theme => ({
 	root: {

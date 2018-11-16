@@ -22,16 +22,16 @@ const byId = handleActions(
 		[ types.REMOVE_USER ]: ( state, { payload } ) =>
 			Object.keys( state ).reduce( ( newState, id ) => {
 				return ( id == payload ) ? newState : { ...newState, [ id ]: { ...state[ id ] } };
-			}, {} ),
+		}, {} ),
 
 		[ types.UPDATE_USER ]: ( state, { payload } ) =>
 			Object.keys( state ).reduce( (newState, id ) => {
 				return ( id == payload.id ) ?
-					{ ...newState, [ id ]: { ...state[ id ], ...payload } } :
-					{ ...newState, [ id ]: { ...state[ id ] }
-			} ),
+					( { ...newState, [ id ]: { ...state[ id ], ...payload } } ) :
+					( { ...newState, [ id ]: { ...state[ id ] } } )
+		}, {} ),
 
-		[ types.CLEAR_USERS ]: () => {}
+		[ types.CLEAR_USERS ]: () => ( {} )
 	},
 
 	{} // initial state

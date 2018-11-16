@@ -1,9 +1,11 @@
 import * as actions from "./actions";
 
-const updateUserData = actions.updateUserData;
-const clearUserData = actions.clearUserData;
+const initUser = actions.initUser;
+const updateUser = actions.updateUser;
+const clearUser = actions.clearUser;
 
 export {
-	updateUserData,
-	clearUserData
+	initUser,
+	updateUser,
+	clearUser
 };

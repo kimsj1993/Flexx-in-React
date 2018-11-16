@@ -4,9 +4,7 @@ import { gameTypes } from '../game';
 
 /* State Shape
 {
-	turn: playerId,
-	playsRemaining: Number >= 0,
-	playsRemainingTemp: Number >= 0
+	turn: playerId
 }
 */
 

@@ -35,7 +35,7 @@ class LoginProvider extends Component {
 				this.setState({
 					loggedIn: true
 				});
-				dispatch( userOperations.updateUserData( { id: json.user.id } ) );
+				dispatch( userOperations.initUser( { id: json.user.id } ) );
 				dispatch( usersOperations.addUser( json.user ) );
 				Router.pushRoute('/game');
 			});
@@ -48,7 +48,7 @@ class LoginProvider extends Component {
 			method: 'DELETE',
 			credentials: 'include'
 		}).then(() => {
-			dispatch( userOperations.clearUserData() );
+			dispatch( userOperations.clearUser() );
 			socketConnection.disconnect();
 			Router.pushRoute('/');
 		});
@@ -71,7 +71,7 @@ class LoginProvider extends Component {
 					this.setState({
 						loggedIn: true
 					});
-					dispatch( userOperations.updateUserData( { id: json.user.id } ) );
+					dispatch( userOperations.initUser( { id: json.user.id } ) );
 					dispatch( usersOperations.addUser( json.user ) );
 					Router.pushRoute('/game');
 				}

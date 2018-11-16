@@ -7,7 +7,7 @@ import Table from './Table';
 
 const mapStateToProps = (state, ownProps) => {
 	const userId = userSelectors.getUserId( state );
-	const keeperIds = tableSelectors.getPlayerKeeperIds( state, userId );
+	const keeperIds = playersSelectors.getPlayerKeeperIds( state, userId );
 	
 	return { keeperIds };
 };

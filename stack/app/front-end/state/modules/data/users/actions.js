@@ -13,7 +13,7 @@ const removeUser = createAction(
 
 const updateUser = createAction(
 	types.UPDATE_USER,
-	( { id } ) => id
+	( { id, username } ) => ( { id, username } )
 );
 
 const clearUsers = createAction( types.CLEAR_USERS );

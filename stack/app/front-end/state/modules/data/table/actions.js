@@ -1,86 +1,86 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const addRule = ( { id } ) => ( {
-	type: types.ADD_RULE,
-	payload: id
-} );
+const addRule = createAction(
+	types.ADD_RULE,
+	( { id } ) => id
+);
 
-const removeRule = ( { id } ) => ( {
-	type: types.REMOVE_RULE,
-	payload: id
-} );
+const removeRule = createAction(
+	types.REMOVE_RULE,
+	( { id } ) => id
+);
 
-const addRules = ( { rules } ) => ( {
-	type: types.ADD_RULES,
-	payload: rules
-} );
+const clearRules = createAction( types.CLEAR_RULES );
 
-const updateDrawRule = ( { draw } ) => ( {
-	type: types.UPDATE_DRAW_RULE,
-	payload: draw
-} );
+const updateDrawRule = createAction(
+	types.UPDATE_DRAW_RULE,
+	( { count } ) => count
+);
 
-const updatePlayRule = ( { play } ) => ( {
-	type: types.UPDATE_PLAY_RULE,
-	payload: play
-} );
+const updatePlayRule = createAction(
+	types.UPDATE_PLAY_RULE,
+	( { count } ) => count
+);
 
-const updateHandLimit = ( { limit } ) => ( {
-	type: types.UPDATE_HAND_LIMIT,
-	payload: limit
-} );
+const updateHandLimit = createAction(
+	types.UPDATE_HAND_LIMIT,
+	( { limit } ) => limit
+);
 
-const updateKeeperLimit = ( { limit } ) => ( {
-	type: types.UPDATE_KEEPER_LIMIT,
-	payload: limit
-} );
+const clearHandLimit = createAction( types.CLEAR_HAND_LIMIT );
 
-const resetRules = ( ) => ( {
-	type: types.RESET_RULES
-} );
+const updateKeeperLimit = createAction(
+	types.UPDATE_KEEPER_LIMIT,
+	( { limit } ) => limit
+);
 
-const addGoal = ( { id } ) => ( {
-	type: types.ADD_GOAL,
-	payload: id
-} );
+const clearKeeperLimit = createAction( types.CLEAR_KEEPER_LIMIT );
 
-const removeGoal = ( { id } ) => ( {
-	type: types.REMOVE_GOAL,
-	payload: id
-} );
+const addGoal = createAction(
+	types.ADD_GOAL,
+	( { id } ) => id
+);
 
-const addGoals = ( { goals } ) => ( {
-	type: types.ADD_GOALS,
-	payload: goals
-} );
+const removeGoal = createAction(
+	types.REMOVE_GOAL,
+	( { id } ) => id
+);
 
-const resetGoals = ( ) => ( {
-	type: types.RESET_GOALS
-} );
+const clearGoals = createAction( types.CLEAR_GOALS );
 
-const updateDeckCount = ( { count } ) => ( {
-	type: types.UPDATE_DECK_COUNT,
-	payload: count
-} );
+const updateDeck = createAction(
+	types.UPDATE_DECK,
+	( { count } ) => count
+);
 
-const updateDiscardPile = ( { discards } ) => ( {
-	type: types.UPDATE_DISCARD_PILE,
-	payload: discards
-} );
+const addDiscard = createAction(
+	types.ADD_DISCARD,
+	( { id } ) => id
+);
+
+const removeDiscard = createAction(
+	types.REMOVE_DISCARD,
+	( { id } ) => id
+);
+
+const clearDiscards = createAction( types.CLEAR_DISCARDS );
 
 export {
 	addRule,
 	removeRule,
-	addRules,
+	clearRules,
 	updateDrawRule,
 	updatePlayRule,
 	updateHandLimit,
+	clearHandLimit,
 	updateKeeperLimit,
-	resetRules,
+	clearKeeperLimit,
 	addGoal,
 	removeGoal,
-	addGoals,
-	resetGoals,
-	updateDeckCount,
-	updateDiscardPile
+	clearGoals,
+	updateDeck,
+	addDiscard,
+	removeDiscard,
+	clearDiscards
 };

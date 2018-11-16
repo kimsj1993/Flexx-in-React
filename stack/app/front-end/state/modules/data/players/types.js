@@ -1,13 +1,11 @@
 const ADD_PLAYER = 'app/modules/data/players/ADD_PLAYER';
-const ADD_PLAYERS = 'app/modules/data/players/ADD_PLAYERS';
 const REMOVE_PLAYER = 'app/modules/data/players/REMOVE_PLAYER';
-const UPDATE_PLAYER_CARD_COUNT = 'app/modules/data/players/UPDATE_PLAYER_CARD_COUNT';
-const UPDATE_PLAYER_KEEPERS = 'app/modules/data/players/UPDATE_PLAYER_KEEPERS';
+const UPDATE_PLAYER = 'app/modules/data/players/UPDATE_PLAYER';
+const CLEAR_PLAYERS = 'app/modules/data/players/CLEAR_PLAYERS';
 
 export {
 	ADD_PLAYER,
-	ADD_PLAYERS,
 	REMOVE_PLAYER,
-	UPDATE_PLAYER_CARD_COUNT,
-	UPDATE_PLAYER_KEEPERS
+	UPDATE_PLAYER,
+	CLEAR_PLAYERS
 };

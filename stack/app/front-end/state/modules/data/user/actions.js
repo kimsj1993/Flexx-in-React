@@ -1,15 +1,20 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const updateUserData = ( { id } ) => ( {
-	type: types.UPDATE_USER_DATA,
-	payload: id
-} );
+const initUser = createAction(
+	types.INIT_USER,
+	( { id } ) => ( { id } )
+);
 
-const clearUserData = () => ( {
-	type: types.CLEAR_USER_DATA
-} );
+const updateUser = createAction(
+	types.UPDATE_USER,
+	update => update
+);
+
+const clearUser = createAction( types.CLEAR_USER );
 
 export {
-	updateUserData,
-	clearUserData
+	initUser,
+	updateUser,
+	clearUser
 };

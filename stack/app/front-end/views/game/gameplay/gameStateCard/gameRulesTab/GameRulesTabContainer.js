@@ -11,7 +11,10 @@ const mapStateToProps = (state, ownProps) => {
 	const handLimit = tableSelectors.getHandLimit( state );
 	const keeperLimit = tableSelectors.getKeeperLimit( state );
 
-	const rules = tableSelectors.getRules( state );
+	const ruleIds = tableSelectors.getRuleIds( state );
+	
+	const rules = ruleIds.map( id => cardsSelectors.getCardById( state, id ) );
+
 	const actionRules = rules.filter( ( { subtype } ) => subtype == 'action_rule' );
 	const gameplayRules = rules.filter( ( { subtype } ) => subtype == 'game_rule' );
 	const bonusRules = rules.filter( ( { subtype } ) => subtype == 'bonus' );

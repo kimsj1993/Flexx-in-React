@@ -1,80 +1,79 @@
 import { combineReducers } from 'redux';
+import { handleActions } from 'redux-actions';
 import * as types from "./types";
-import produce from "immer";
 
 /* State Shape
 {
-	id: gameId,
-	host: playerId,
+	id: gameId || null,
 	active: Boolean,
-	started: Boolean,
-	ended: Boolean
+	won: Boolean,
+	turn: playerId || null,
+	winner: playerId || null
 }
 */
 
-const idReducer = ( state = null, action ) => 
-	produce( state, draft => {
-		switch ( action.type ) {
-			case types.INIT_GAME:
-				return action.payload.id;
-			case types.LEAVE_GAME:
-			case types.END_GAME:
-				return null;
-		};
-} );
+const id = handleActions(
+	{
+		[ types.INIT_GAME ]: ( state, { payload } ) => payload,
 
-const hostReducer = ( state = null, action ) =>
-	produce( state, draft => {
-		switch ( action.type ) {
-			case types.INIT_GAME:
-				return action.payload.host;
-			case types.LEAVE_GAME:
-			case types.END_GAME:
-				return null;
-		};
-} );
+		[ types.LEAVE_GAME ]: () => null
+	},
 
-const activeReducer = ( state = false, action ) => 
-	produce( state, draft => {
-		switch ( action.type ) {
-			case types.INIT_GAME:
-				return true;
-			case types.LEAVE_GAME:
-				return false;
-		};
-} );
+	null // initial state
+);
 
-const startedReducer = ( state = false, action ) => 
-	produce( state, draft => {
-		switch ( action.type ) {
-			case types.INIT_GAME:
-				return action.payload.started;
-			case types.START_GAME:
-				return true;
-			case types.LEAVE_GAME:
-			case types.END_GAME:
-				return false;
-			};
-} );
+const active = handleActions(
+	{
+		[ types.INIT_GAME ]: () => true,
 
-const endedReducer = ( state = false, action ) => 
-	produce( state, draft => {
-		switch ( action.type ) {
-			case types.INIT_GAME:
-			case types.START_GAME:
-			case types.LEAVE_GAME:
-				return false;
-			case types.END_GAME:
-				return true;
-			};
-} );
+		[ types.LEAVE_GAME ]: () => false
+	},
+
+	false // initial state
+);
+
+const won = handleActions(
+	{
+		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.won,
+
+		[ types.RESET_GAME ]: () => false,
+
+		[ types.LEAVE_GAME ]: () => false
+	},
+
+	false // initial state
+);
+
+const turn = handleActions(
+	{
+		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.won,
+
+		[ types.RESET_GAME ]: () => null,
+
+		[ types.LEAVE_GAME ]: () => null
+	},
+
+	null // initial state
+);
+
+const winner = handleActions(
+	{
+		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.won,
+
+		[ types.RESET_GAME ]: () => null,
+
+		[ types.LEAVE_GAME ]: () => null
+	},
+
+	null // initial state
+);
 
 const reducer = combineReducers( {
-	id: idReducer,
-	host: hostReducer,
-	active: activeReducer,
-	started: startedReducer,
-	ended: endedReducer
+	id,
+	active,
+	won,
+	turn,
+	winner
 } );
 
 export default reducer;

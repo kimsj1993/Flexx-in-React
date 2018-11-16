@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { handleActions } from 'redux-actions';
 import * as types from "./types";
 
 /* State Shape
@@ -8,29 +9,29 @@ import * as types from "./types";
 }
 */
 
-const loggedInReducer = ( state = false, action ) => {
-	switch ( action.type ) {
-		case types.UPDATE_USER_DATA:
-			return true;
-		case types.CLEAR_USER_DATA:
-			return false;
-		default: return state;
-	};
-};
+const loggedIn = handleActions(
+	{
+		[ types.INIT_USER ]: () => true,
 
-const idReducer = ( state = null, action ) => {
-	switch ( action.type ) {
-		case types.UPDATE_USER_DATA:
-			return action.payload;
-		case types.CLEAR_USER_DATA:
-			return null;
-		default: return state;
-	};
-};
+		[ types.CLEAR_USER ]: () => false
+	},
+
+	false // initial state
+);
+
+const id = handleActions(
+	{
+		[ types.INIT_USER ]: ( state, { payload } ) => payload.id,
+
+		[ types.CLEAR_USER ]: () => null
+	},
+
+	null // initial state
+);
 
 const reducer = combineReducers( {
-	loggedIn: loggedInReducer,
-	id: idReducer
+	loggedIn,
+	id
 } );
 
 export default reducer;

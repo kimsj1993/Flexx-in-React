@@ -1,11 +1,19 @@
 import * as actions from "./actions";
 
-const endGame = actions.endGame;
 const initGame = actions.initGame;
-const startGame = actions.startGame;
+const updateGame = actions.updateGame;
+const resetGame = actions.resetGame;
+const leaveGame = actions.leaveGame;
+
+const replaceGame = ( { id } ) => dispatch => {
+	dispatch( leaveGame() );
+	dispatch( initGame( { id } ) );
+}
 
 export {
-	endGame,
 	initGame,
-	startGame
+	updateGame,
+	resetGame,
+	leaveGame,
+	replaceGame
 };

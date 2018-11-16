@@ -8,7 +8,7 @@ import Keeper from './Keeper';
 const mapStateToProps = (state, ownProps) => {
 	const { keeperIds } = ownProps;
 
-	const keepers = keeperIds.map( id => cardsSelectors.getCard( state, id ) );
+	const keepers = keeperIds.map( id => cardsSelectors.getCardById( state, id ) );
 
 	return {
 		keepers

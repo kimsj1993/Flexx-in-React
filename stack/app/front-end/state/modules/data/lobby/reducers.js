@@ -1,54 +1,63 @@
 import { combineReducers } from "redux";
+import { handleActions } from 'redux-actions';
 import * as types from "./types";
 
+/* State Shape
+{
+	id: {
+		id,
+		host: playerId,
+		created: timestamp,
+		started: timestamp,
+		freeJoin: Boolean,
+		minPlayers: Number >= 2, <= 6,
+		maxPlayers: Number >= 2, <= 6,
+		players: Number >= 0
+	},
+	...
+}
+*/
 
+const byId = handleActions(
+	{
+		[ types.ADD_ROOM ]: ( state, { payload } ) => ( {
+			...state,
+			[ payload.id ]: payload
+		} ),
 
-const roomsReducer = ( state = {}, action ) => {
-	switch(action.type) {
-		case types.UPDATE_ROOMS: {
-			return action.payload;
-		}
-		case types.ADD_ROOM: {
-			return Object.assign( {}, state, { [ action.payload.id ] : action.payload } );
-		}
-		case types.REMOVE_ROOM: {
-			const { [action.payload.id ]: value, ...rest } = state;
-			return Object.assign( {}, rest );
-		}
-		case types.ROOM_STARTED: {
-			const room = state[action.payload];
-			return Object.assign( {}, state, { [ action.payload ]: Object.assign( {}, room, { started: true } ) } );
-		}
-		case types.UPDATE_ROOM: {
-			const room = state[ action.payload.id ];
-			return Object.assign( {}, state, { [ action.payload.id ] : action.payload.room } );
-		}
-		case types.ROOM_USER_JOINED: {
-			const room = state[action.payload.roomId];
-			const { playerCount } = room;
-			return Object.assign( {}, state, 
-				{ [action.payload[roomId]]: Object.assign( 
-					{}, 
-					room, 
-					{ playerCount : playerCount + 1 } 
-				) } );
-		}
-		case types.ROOM_USER_LEFT: {
-			const room = state[action.payload.roomId];
-			const { playerCount } = room;
-			return Object.assign( {}, state, 
-				{ [action.payload.roomId] : Object.assign( 
-					{}, 
-					room, 
-					{ playerCount: playerCount - 1 } 
-				) } );
-		}
-		default: return state;
-	};
-};
+		[ types.REMOVE_ROOM ]: ( state, { payload } ) => 
+			Object.keys( state ).reduce( ( newState, id ) => {
+				return ( id == payload ) ? newState : { ...newState, [ id ]: { ...state[ id ] } };
+		}, {} ),
+
+		[ types.UPDATE_ROOM ]: ( state, { payload } ) =>
+			Object.keys( state ).reduce( (newState, id ) => {
+				return ( id == payload.id ) ?
+					{ ...newState, [ id ]: { ...state[ id ], ...payload } } :
+					{ ...newState, [ id ]: { ...state[ id ] } }
+		}, {} ),
+
+		[ types.CLEAR_ROOMS ]: () => ( {} )
+	},
+
+	{} // initial state
+);
+
+const allIds = handleActions(
+	{
+		[ types.ADD_ROOM ]: ( state, { payload } ) => [ ...state, payload.id ],
+
+		[ types.REMOVE_ROOM ]: ( state, { payload } ) => state.filter( id => id != payload ),
+
+		[ types.CLEAR_ROOMS ]: () => []
+	},
+
+	[] // initial state
+);
 
 const reducer = combineReducers({
-	rooms: roomsReducer
+	byId,
+	allIds
 });
 
 export default reducer;

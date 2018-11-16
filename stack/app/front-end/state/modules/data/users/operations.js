@@ -11,6 +11,9 @@ const addUsers = ( { users } ) => dispatch =>
 const removeUsers = ( { ids } ) => dispatch =>
 	ids.forEach( id => dispatch( removeUser( { id } ) ) );
 
+const updateUsers = ( { updates } ) => dispatch =>
+	updates.forEach( update => dispatch( updateUser( update ) ) );
+
 const replaceUsers = ( { users } ) => dispatch => {
 	dispatch( clearUsers() );
 	dispatch( addUsers( { users } ) );
@@ -23,5 +26,6 @@ export {
 	clearUsers,
 	addUsers,
 	removeUsers,
+	updateUsers,
 	replaceUsers
 };

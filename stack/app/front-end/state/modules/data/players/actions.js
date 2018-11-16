@@ -1,50 +1,30 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const addPlayer = ( { 
-	id, 
-	cardCount, 
-	keepers, 
-	position 
-} ) => ( {
-	type: types.ADD_PLAYER,
-	payload: { 
-		id, 
-		cardCount, 
-		keepers, 
-		position
-	}
-} );
+const addPlayer = createAction(
+	types.ADD_PLAYER,
+	( { id, cards, tempCards, playsLeft, tempPlaysLeft, keeperIds, position } ) => 
+		( { id, cards, tempCards, playsLeft, tempPlaysLeft, keeperIds, position } )
+);
 
-const addPlayers = ( { players } ) => ( {
-	type: types.ADD_PLAYERS,
-	payload: players
-} );
+const removePlayer = createAction(
+	types.REMOVE_PLAYER,
+	( { id } ) => id
+);
 
-const removePlayer = ( { id } ) => ( {
-	type: types.REMOVE_PLAYER,
-	payload: id
-} );
+const updatePlayer = createAction(
+	types.UPDATE_PLAYER,
+	( { id, cards, tempCards, playsLeft, tempPlaysLeft, keeperIds, position } ) => 
+		( { id, cards, tempCards, playsLeft, tempPlaysLeft, keeperIds, position } )
+);
 
-const updatePlayerCardCount = ( { id, count } ) => ( {
-	type: types.UPDATE_PLAYER_CARD_COUNT,
-	payload: {
-		id,
-		count
-	}
-} );
-
-const updatePlayerKeepers = ( { id, keepers } ) => ( {
-	type: types.UPDATE_PLAYER_KEEPERS,
-	payload: {
-		id,
-		keepers
-	}
-} );
+const clearPlayers = createAction(
+	types.CLEAR_PLAYERS
+);
 
 export {
 	addPlayer,
-	addPlayers,
 	removePlayer,
-	updatePlayerCardCount,
-	updatePlayerKeepers
+	updatePlayer,
+	clearPlayers
 };

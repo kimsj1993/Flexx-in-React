@@ -4,18 +4,18 @@ import Opponent from './Opponent';
 
 import { playersSelectors } from '../../../../state/modules/data/players';
 import { usersSelectors } from '../../../../state/modules/data/users';
-import { turnSelectors } from '../../../../state/modules/data/turn';
+import { gameSelectors } from '../../../../state/modules/data/game';
 
 const mapStateToProps = (state, ownProps) => {
 	const { opponentId } = ownProps;
 
 	const name = usersSelectors.getUserById( state, opponentId ).username;
 
-	const isTurn = turnSelectors.isPlayerTurn( state, opponentId );
+	const isTurn = gameSelectors.isPlayerTurn( state, opponentId );
 
-	const playsRemaining = turnSelectors.getPlaysRemaining( state );
+	const playsRemaining = playersSelectors.getPlayerById( state, opponentId ).playsLeft;
 
-	const cardCount = playersSelectors.getPlayerCardCount( state, opponentId );
+	const cardCount = playersSelectors.getPlayerById( state, opponentId ).cards;
 
 	const keeperIds = playersSelectors.getPlayerKeeperIds( state, opponentId );
 

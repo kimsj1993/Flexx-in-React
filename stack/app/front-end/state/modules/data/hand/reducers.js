@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
+import { handleActions } from 'redux-actions';
 import * as types from "./types";
-import { gameTypes } from '../game';
 
 /* State Shape
 {
@@ -9,33 +9,33 @@ import { gameTypes } from '../game';
 }
 */
 
-const handReducer = ( state = [], action ) => {
-	switch ( action.type ) {
-		case types.UPDATE_HAND:
-			return action.payload;
-		case gameTypes.END_GAME:
-			return [];
-		case gameTypes.LEAVE_GAME:
-			return [];
-		default: return state;
-	};
-};
+const hand = handleActions(
+	{
+		[ types.ADD_HAND_CARD ]: ( state, { payload } ) => [ ...state, payload ],
 
-const tempHandReducer = ( state = [], action ) => {
-	switch ( action.type ) {
-		case types.UPDATE_TEMP_HAND:
-			return action.payload;
-		case gameTypes.END_GAME:
-			return [];
-		case gameTypes.LEAVE_GAME:
-			return [];
-		default: return state;
-	};
-};
+		[ types.REMOVE_HAND_CARD ]: ( state, { payload } ) => state.filter( id => id != payload ),
+
+		[ types.CLEAR_HAND ]: () => []
+	},
+
+	[] // initial state
+);
+
+const tempHand = handleActions(
+	{
+		[ types.ADD_TEMP_HAND_CARD ]: ( state, { payload } ) => [ ...state, payload ],
+
+		[ types.REMOVE_TEMP_HAND_CARD ]: ( state, { payload } ) => state.filter( id => id != payload ),
+
+		[ types.CLEAR_TEMP_HAND ]: () => []
+	},
+
+	[] // initial state
+);
 
 const reducer = combineReducers( {
-	hand: handReducer,
-	tempHand: tempHandReducer
+	hand,
+	tempHand
 } );
 
 export default reducer;

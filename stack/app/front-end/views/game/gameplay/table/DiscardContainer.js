@@ -8,7 +8,7 @@ import Discard from './Discard';
 const mapStateToProps = (state, ownProps) => {
 	const discardIds = tableSelectors.getDiscardIds( state );
 
-	const cards = discardIds.map( id => cardsSelectors.getCard( state, id ) );
+	const cards = discardIds.map( id => cardsSelectors.getCardById( state, id ) );
 	
 	return { cards };
 };

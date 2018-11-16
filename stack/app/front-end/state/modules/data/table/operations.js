@@ -2,32 +2,107 @@ import * as actions from "./actions";
 
 const addRule = actions.addRule;
 const removeRule = actions.removeRule;
-const addRules = actions.addRules;
+const clearRules = actions.clearRules;
 const updateDrawRule = actions.updateDrawRule;
 const updatePlayRule = actions.updatePlayRule;
 const updateHandLimit = actions.updateHandLimit;
+const clearHandLimit = actions.clearHandLimit;
 const updateKeeperLimit = actions.updateKeeperLimit;
-const resetRules = actions.resetRules;
+const clearKeeperLimit = actions.clearKeeperLimit;
 const addGoal = actions.addGoal;
 const removeGoal = actions.removeGoal;
-const addGoals = actions.addGoals;
-const resetGoals = actions.resetGoals;
-const updateDeckCount = actions.updateDeckCount;
-const updateDiscardPile = actions.updateDiscardPile;
+const clearGoals = actions.clearGoals;
+const updateDeck = actions.updateDeck;
+const addDiscard = actions.addDiscard;
+const removeDiscard = actions.removeDiscard;
+const clearDiscards = actions.clearDiscards;
+
+const addRules = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( addRule( { id } ) ) );
+
+const removeRules = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( removeRule( { id } ) ) );
+
+const replaceRules = ( { ids } ) => dispatch => {
+	dispatch( clearRules() );
+	dispatch( addRules( { ids } ) );
+};
+
+const resetDrawRule = () => dispatch =>
+	dispatch( updateDrawRule( { count: 1 } ) );
+
+const resetPlayRule = () => dispatch =>
+	dispatch( updateDrawRule( { count: 1 } ) );
+
+const resetTableRules = () => dispatch => {
+	dispatch( resetDrawRule() );
+	dispatch( resetPlayRule() );
+	dispatch( clearHandLimit() );
+	dispatch( clearKeeperLimit() );
+	dispatch( clearRules() );
+};
+
+const addGoals = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( addGoal( { id } ) ) );
+
+const removeGoals = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( removeGoal( { id } ) ) );
+
+const replaceGoals = ( { ids } ) => dispatch => {
+	dispatch( clearGoals() );
+	dispatch( addRules( { ids } ) );
+};
+
+const clearDeck = () => dispatch =>
+	dispatch( updateDeck( { count: 0 } ) );
+
+const addDiscards = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( addDiscard( { id } ) ) );
+
+const removeDiscards = ( { ids } ) => dispatch =>
+	ids.forEach( id => dispatch( removeDiscard( { id } ) ) );
+
+const replaceDiscards = ( { ids } ) => dispatch => {
+	dispatch( clearDiscards() );
+	dispatch( addRules( { ids } ) );
+};
+
+const resetTable = () => dispatch => {
+	dispatch( resetTableRules() );
+	dispatch( clearGoals() );
+	dispatch( clearDeck() );
+	dispatch( clearDiscards() );
+}
 
 export {
 	addRule,
 	removeRule,
-	addRules,
+	clearRules,
 	updateDrawRule,
 	updatePlayRule,
 	updateHandLimit,
+	clearHandLimit,
 	updateKeeperLimit,
-	resetRules,
+	clearKeeperLimit,
 	addGoal,
 	removeGoal,
+	clearGoals,
+	updateDeck,
+	addDiscard,
+	removeDiscard,
+	clearDiscards,
+	addRules,
+	removeRules,
+	replaceRules,
+	resetDrawRule,
+	resetPlayRule,
+	resetTableRules,
 	addGoals,
-	resetGoals,
-	updateDeckCount,
-	updateDiscardPile
+	removeGoals,
+	replaceGoals,
+	clearDeck,
+	addDiscards,
+	removeDiscards,
+	replaceDiscards,
+	resetTable
 };

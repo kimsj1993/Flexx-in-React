@@ -1,25 +1,23 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const leaveGame = () => ( {
-	type: types.LEAVE_GAME
-} );
+const initGame = createAction(
+	types.INIT_GAME,
+	( { id } ) => id
+);
 
-const endGame = () => ( {
-	type: types.END_GAME
-} );
+const updateGame = createAction(
+	types.UPDATE_GAME,
+	( { won, turn, winner } ) => ( { won, turn, winner } )
+);
 
-const initGame = ( { id, host, started } ) => ( {
-	type: types.INIT_GAME,
-	payload: { id, host, started }
-} );
+const resetGame = createAction( types.RESET_GAME );
 
-const startGame = () => ( {
-	type: types.START_GAME
-} );
+const leaveGame = createAction( types.LEAVE_GAME );
 
 export {
-	leaveGame,
-	endGame,
 	initGame,
-	startGame
+	updateGame,
+	resetGame,
+	leaveGame
 };

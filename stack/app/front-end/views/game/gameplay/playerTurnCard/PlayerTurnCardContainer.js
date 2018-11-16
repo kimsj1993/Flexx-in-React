@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 
-import { turnSelectors } from '../../../../state/modules/data/turn';
+import { playersSelectors } from '../../../../state/modules/data/players';
 import { userSelectors } from '../../../../state/modules/data/user';
 import { usersSelectors } from '../../../../state/modules/data/users';
 import { tableSelectors } from '../../../../state/modules/data/table';
+import { gameSelectors } from '../../../../state/modules/data/game';
 
 import PlayerTurnCard from './PlayerTurnCard';
 
@@ -11,11 +12,13 @@ const mapStateToProps = (state, ownProps) => {
 	const userId = userSelectors.getUserId( state );
 	const user = usersSelectors.getUserById( state, userId );
 
-	const name = user.username;
+	const name = user && user.username;
 
-	const isTurn = turnSelectors.isPlayerTurn( state, userId );
+	const isTurn = gameSelectors.isPlayerTurn( state, userId );
 
-	const playsRemaining = turnSelectors.getPlaysRemaining();
+	const player = playersSelectors.getPlayerById( state, userId );
+
+	const playsRemaining = player && player.playsLeft;
 
 	const canEndTurn = true;
 

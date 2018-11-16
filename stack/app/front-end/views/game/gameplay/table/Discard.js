@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
-import CardContainer from '../CardContainer';
+import CardContainer from '../card/CardContainer';
 
 const styles = theme => ({
 	root: {
