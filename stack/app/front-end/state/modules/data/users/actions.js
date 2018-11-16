@@ -1,22 +1,26 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const updateUsers = ( { users } ) => ( {
-	type: types.UPDATE_USERS,
-	payload: users
-} );
+const addUser = createAction(
+	types.ADD_USER,
+	( { id, username } ) => ( { id, username } )
+);
 
-const addUser = ( { id, username } ) => ( {
-	type: types.ADD_USER,
-	payload: { id, username }
-} );
+const removeUser = createAction(
+	types.REMOVE_USER,
+	( { id } ) => id
+);
 
-const removeUser = ( { id } ) => ( {
-	type: types.REMOVE_USER,
-	payload: id
-} );
+const updateUser = createAction(
+	types.UPDATE_USER,
+	( { id } ) => id
+);
+
+const clearUsers = createAction( types.CLEAR_USERS );
 
 export {
-	updateUsers,
 	addUser,
-	removeUser
+	removeUser,
+	updateUser,
+	clearUsers
 };

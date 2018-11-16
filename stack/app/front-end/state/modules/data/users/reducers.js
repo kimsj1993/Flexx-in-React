@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { handleActions } from 'redux-actions';
 import * as types from "./types";
 
 /* State Shape
@@ -10,6 +11,33 @@ import * as types from "./types";
     ...
 }
 */
+
+const byId = handleActions(
+	{
+		[ types.ADD_USER ]: ( state, { payload } ) => ( {
+			...state,
+			[ payload.id ]: payload
+		} ),
+
+		[ types.REMOVE_USER ]: ( state, { payload } ) =>
+			Object.keys( state ).reduce( ( newState, id ) => {
+				return ( id == payload ) ? newState : { ...newState, [ id ]: { ...state[ id ] } };
+			}, {} ),
+
+		[ types.UPDATE_USER ]: ( state, { payload } ) =>
+			Object.keys( state ).reduce( (newState, id ) => {
+				return ( id == payload.id ) ?
+					{ ...newState, [ id ]: { ...state[ id ], ...payload } } :
+					{ ...newState, [ id ]: { ...state[ id ] }
+			} ),
+
+		[ types.CLEAR_USERS ]: () => {}
+	},
+
+	{} // initial state
+);
+
+
 
 const reducer = ( state = {}, action ) => {
 	switch ( action.type ) {

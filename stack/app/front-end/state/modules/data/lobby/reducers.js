@@ -27,7 +27,7 @@ const roomsReducer = ( state = {}, action ) => {
 			const room = state[action.payload.roomId];
 			const { playerCount } = room;
 			return Object.assign( {}, state, 
-				{ [action.payload.roomId]: Object.assign( 
+				{ [action.payload[roomId]]: Object.assign( 
 					{}, 
 					room, 
 					{ playerCount : playerCount + 1 } 

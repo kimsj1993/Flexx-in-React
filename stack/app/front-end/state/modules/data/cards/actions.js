@@ -1,37 +1,11 @@
 import * as types from "./types";
+import { createAction } from 'redux-actions';
 
-const addCard = ( { id, name, type, subtype } ) => ( {
-	type: types.ADD_CARD,
-	payload: {
-		id,
-		name,
-		type,
-		subtype
-	}
-} );
-
-const addCards = ( { cards } ) => ( {
-	type: types.ADD_CARDS,
-	payload: cards
-} );
-
-const addKeeperCard = ( { id, name, subtype } ) => 
-	addCard( id, name, 'keeper', subtype );
-
-const addGoalCard = ( { id, name, subtype } ) => 
-	addCard( id, name, 'goal', subtype );
-
-const addRuleCard = ( { id, name, subtype } ) => 
-	addCard( id, name, 'rule', subtype );
-
-const addActionCard = ( { id, name, subtype } ) => 
-	addCard( id, name, 'action', subtype );
+const addCard = createAction(
+	types.ADD_CARD,
+	( { id, name, type, subtype } ) => ( { id, name, type, subtype } )
+);
 
 export {
-	addCard,
-	addCards,
-	addKeeperCard,
-	addGoalCard,
-	addRuleCard,
-	addActionCard
+	addCard
 };

@@ -10,7 +10,7 @@ import Room from './Room';
 
 const mapStateToProps = state => {
 	const playerIds = playersSelectors.getPlayerIds( state );
-	const players = playerIds.map( id => { name: usersSelectors.getUserById( state, id ).username } );
+	const players = playerIds.map( id => ( { name: usersSelectors.getUserById( state, id ).username } ) );
 
 	return {
 		players

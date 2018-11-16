@@ -1,17 +1,11 @@
 import * as actions from "./actions";
 
 const addCard = actions.addCard;
-const addKeeperCard = actions.addKeeperCard;
-const addGoalCard = actions.addGoalCard;
-const addRuleCard = actions.addRuleCard;
-const addActionCard = actions.addActionCard;
-const addCards = actions.addCards;
+
+const addCards = ( { cards } ) => dispatch => 
+	cards.forEach( card => dispatch( addCard( card ) ) );
 
 export {
 	addCard,
-	addKeeperCard,
-	addGoalCard,
-	addRuleCard,
-	addActionCard,
 	addCards
 };

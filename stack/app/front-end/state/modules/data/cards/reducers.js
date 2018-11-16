@@ -1,5 +1,6 @@
 import * as types from "./types";
-import produce from "immer";
+import { handleAction } from 'redux-actions';
+import { combineReducers } from "redux";
 
 /* State Shape
 {
@@ -13,18 +14,24 @@ import produce from "immer";
 }
 */
 
-const reducer = (state = {}, action) => 
-	produce( state, draft => {
-		switch ( action.type ) {
-			case types.ADD_CARD:
-				draft[ action.payload.id ] = action.payload;
-				return draft;
-			case types.ADD_CARDS:
-				action.payload.forEach( card => {
-					draft[ card.id ] = card;
-				});
-				return draft;
-		};
+const byId = handleAction(
+	types.ADD_CARD,
+	( state, { payload } ) => ( {
+		...state,
+		[ payload.id ]: payload
+	} ),
+	{}
+);
+
+const allIds = handleAction(
+	types.ADD_CARD,
+	( state, { payload } ) => [ ...state, payload.id ],
+	[]
+);
+
+const reducer = combineReducers( {
+	byId,
+	allIds
 } );
 
 export default reducer;
