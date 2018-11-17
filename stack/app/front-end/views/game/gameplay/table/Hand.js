@@ -1,6 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
 
-import CardContainer from '../card/CardContainer';
+import Card from '../card/Card';
 
 const styles = theme => ({
 	root: {
@@ -15,9 +15,9 @@ const styles = theme => ({
 	}
 });
 
-const Hand = ({ classes, cards }) => (
+const Hand = ({ classes, cards, playCard }) => (
 	<div className={ classes.root } >
-		{ cards.map((props, index) => (<div className={ classes.card } key={ index } ><CardContainer {...props} /></div>)) }
+		{ cards.map((card, index) => (<div className={ classes.card } key={ index } onClick={ playCard( card.id ) } ><Card { ...card } /></div>)) }
 	</div>
 );
 

@@ -30,7 +30,12 @@ const replaceTempHand = ( { ids } ) => dispatch => {
 	dispatch( addTempHandCards( { ids } ) );
 };
 
-const playCard = ( { gameId, cardId } ) => dispatch => {
+const playCard = ( { cardId } ) => ( dispatch, getState ) => {
+
+	const state = getState();
+
+	const gameId = state.data.game.id;
+	
 	fetch(
 		'https://fluxx.d.calebj.io/api/games/' + gameId + '?play&card_id=' + cardId,
 		{

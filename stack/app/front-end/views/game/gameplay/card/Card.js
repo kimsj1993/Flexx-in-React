@@ -23,7 +23,7 @@ const Card = ({ classes, type, subtype, name }) => (
 
 		</div>
 		<div>
-
+			{ name }
 		</div>
 	</Paper>
 );

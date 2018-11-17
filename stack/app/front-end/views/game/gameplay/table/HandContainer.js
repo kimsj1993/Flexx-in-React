@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { handSelectors } from '../../../../state/modules/data/hand';
+import { handSelectors, handOperations } from '../../../../state/modules/data/hand';
 import { userSelectors } from '../../../../state/modules/data/user';
 import { cardsSelectors } from '../../../../state/modules/data/cards';
 
@@ -16,10 +16,15 @@ const mapStateToProps = (state, ownProps) => {
 	return { cards };
 };
 
+const mapDispatchToProps = dispatch => ( {
+	playCard: id => () => dispatch( handOperations.playCard( { cardId: id } ) )
+} );
+
 const HandContainer = (props) => (
 	<Hand {...props} />
 );
 
 export default connect(
-	mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(HandContainer);
