@@ -32,6 +32,13 @@ const byId = handleActions(
 					{ ...newState, [ id ]: { ...state[ id ] } }
 		} ),
 
+		[ types.RESET_PLAYER ]: ( state, { payload } ) =>
+			Object.keys( state ).reduce( (newState, id ) => {
+				return ( id == payload.id ) ?
+					{ ...newState, [ id ]: { ...state[ id ], cards: 0, tempCards: 0, playsLeft: 0, tempPlaysLeft: 0, keeperIds: [] } } :
+					{ ...newState, [ id ]: { ...state[ id ] } }
+		} ),
+
 		[ types.CLEAR_PLAYERS ]: () => {}
 	},
 

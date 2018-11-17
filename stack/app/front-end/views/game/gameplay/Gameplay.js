@@ -36,7 +36,7 @@ const styles = theme => ({
 
 const Gameplay = ({ classes }) => (
 	<section className={ classes.root } >
-		<Paper square={ true } classes={{ root: classes.opponentsRoot }}>
+		<Paper square classes={{ root: classes.opponentsRoot }}>
 			<OpponentsContainer />
 		</Paper>
 		<section className={ classes.playerArea } >

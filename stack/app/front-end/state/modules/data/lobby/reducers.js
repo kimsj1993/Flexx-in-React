@@ -12,7 +12,7 @@ import * as types from "./types";
 		freeJoin: Boolean,
 		minPlayers: Number >= 2, <= 6,
 		maxPlayers: Number >= 2, <= 6,
-		players: Number >= 0
+		playerIds: [ playerId ]
 	},
 	...
 }
@@ -31,13 +31,34 @@ const byId = handleActions(
 		}, {} ),
 
 		[ types.UPDATE_ROOM ]: ( state, { payload } ) =>
-			Object.keys( state ).reduce( (newState, id ) => {
+			Object.keys( state ).reduce( ( newState, id ) => {
 				return ( id == payload.id ) ?
 					{ ...newState, [ id ]: { ...state[ id ], ...payload } } :
 					{ ...newState, [ id ]: { ...state[ id ] } }
 		}, {} ),
 
-		[ types.CLEAR_ROOMS ]: () => ( {} )
+		[ types.CLEAR_ROOMS ]: () => ( {} ),
+
+		[ types.ROOM_ADD_PLAYER ]: ( state, { payload } ) => 
+			Object.keys( state ).reduce( ( newState, id ) => {
+				return ( id == payload.roomId ) ?
+					{ ...newState, [ id ]: { ...state[ id ], playerIds: [ ...state[ id ].playerIds, payload.playerId ] } } :
+					{ ...newState, [ id ]: { ...state[ id ], playerIds: [ ...state[ id ].playerIds ] } }
+		}, {} ),
+
+		[ types.ROOM_REMOVE_PLAYER ]: ( state, { payload } ) => 
+			Object.keys( state ).reduce( ( newState, id ) => {
+				return ( id == payload.roomId ) ?
+					{ ...newState, [ id ]: { ...state[ id ], playerIds: state[ id ].playerIds.filter( id => id != payload.playerId ) } } :
+					{ ...newState, [ id ]: { ...state[ id ], playerIds: [ ...state[ id ].playerIds ] } }
+		}, {} ),
+
+		[ types.ROOM_CLEAR_PLAYERS ]: ( state, { payload } ) => 
+			Object.keys( state ).reduce( ( newState, id ) => {
+				return ( id == payload.roomId ) ?
+					{ ...newState, [ id ]: { ...state[ id ], playerIds: [] } } :
+					{ ...newState, [ id ]: { ...state[ id ], playerIds: [ ...state[ id ].playerIds ] } }
+		}, {} )
 	},
 
 	{} // initial state

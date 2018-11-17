@@ -34,8 +34,11 @@ const canJoinRoom = room => (!room.started || room.freeJoin ) && room.players < 
 
 const getJoinableRooms = state => getRooms( state ).filter( canJoinRoom );
 
+const getRoomPlayerCount = ( state, id ) => getRoomById( state, id ).playerIds.length;
+
 export {
 	getRooms,
 	getRoomById,
-	getJoinableRooms
+	getJoinableRooms,
+	getRoomPlayerCount
 };

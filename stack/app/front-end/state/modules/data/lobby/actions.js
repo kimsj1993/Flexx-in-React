@@ -3,8 +3,8 @@ import { createAction } from 'redux-actions';
 
 const addRoom = createAction(
 	types.ADD_ROOM,
-	( { id, host, created, started, freeJoin, minPlayers, maxPlayers, players, password } ) => 
-		( { id, host, created, started, freeJoin, minPlayers, maxPlayers, players, password } )
+	( { id, host, created, started, freeJoin, minPlayers, maxPlayers, playerIds, password } ) => 
+		( { id, host, created, started, freeJoin, minPlayers, maxPlayers, playerIds, password } )
 );
 
 const removeRoom = createAction(
@@ -20,9 +20,27 @@ const updateRoom = createAction(
 
 const clearRooms = createAction( types.CLEAR_ROOMS );
 
+const roomAddPlayer = createAction(
+	types.ROOM_ADD_PLAYER,
+	( { roomId, playerId } ) => ( { roomId, playerId } )
+);
+
+const roomRemovePlayer = createAction(
+	types.ROOM_REMOVE_PLAYER,
+	( { roomId, playerId } ) => ( { roomId, playerId } )
+);
+
+const roomClearPlayers = createAction(
+	types.ROOM_CLEAR_PLAYERS,
+	( { roomId } ) => roomId
+);
+
 export {
 	addRoom,
 	removeRoom,
 	updateRoom,
-	clearRooms
+	clearRooms,
+	roomAddPlayer,
+	roomRemovePlayer,
+	roomClearPlayers
 };

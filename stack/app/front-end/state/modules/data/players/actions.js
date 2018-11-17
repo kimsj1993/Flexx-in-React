@@ -18,6 +18,11 @@ const updatePlayer = createAction(
 		( { id, cards, tempCards, playsLeft, tempPlaysLeft, keeperIds, position } )
 );
 
+const resetPlayer = createAction(
+	types.RESET_PLAYER,
+	( { id } ) => id
+);
+
 const clearPlayers = createAction(
 	types.CLEAR_PLAYERS
 );
@@ -26,5 +31,6 @@ export {
 	addPlayer,
 	removePlayer,
 	updatePlayer,
+	resetPlayer,
 	clearPlayers
 };

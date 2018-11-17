@@ -1,87 +1,46 @@
-import { cardsOperations, cardsSelectors } from '../state/modules/data/cards';
-import { gameOperations, gameSelectors } from '../state/modules/data/game';
-import { handOperations, handSelectors } from '../state/modules/data/hand';
-import { lobbyOperations, lobbySelectors } from '../state/modules/data/lobby';
-import { playersOperations, playersSelectors } from '../state/modules/data/players';
-import { roomOperations, roomSelectors } from '../state/modules/data/room';
-import { tableOperations, tableSelectors } from '../state/modules/data/table';
-import { userOperations, userSelectors } from '../state/modules/data/user';
-import { usersOperations, usersSelectors } from '../state/modules/data/users';
+import { socketOperations } from '../state/modules/socket';
 
 export const onSocketConnection = ( { state, dispatch } ) => socket => {
 	socket.on('global', data => {
 		switch ( data.e ) {
 
 			case 'GAME_CREATE':
-				dispatch( lobbyOperations.addRoom( {
-					id: data.game.id,
-					host: data.game.host_id,
-					created: data.game.created,
-					started: data.game.started,
-					freeJoin: data.game.free_join,
-					password: data.game.has_password,
-					players: data.game.player_ids.length,
-					maxPlayers: data.game.max_players,
-					minPlayers: data.game.min_players
-				} ) );
+				dispatch( socketOperations.globalGameCreate( { game: data.game } ) );
 				break;
 
 			case 'GAME_REMOVE':
-				dispatch( lobbyOperations.removeRoom( {
-					id: data.game_id
-				} ) );
+				dispatch( socketOperations.globalGameRemove( { game_id: data.game_id } ) );
 				break;
 
 			case 'GAME_START':
-				dispatch( lobbyOperations.updateRoom( {
-					id: data.game_id,
-					started: data.game.started
-				} ) );
+				dispatch( socketOperations.globalGameStart( { game_id: data.game_id, started: data.started } ) );
 				break;
 
+			case 'GAME_RESET':
+				dispatch( socketOperations.globalGameReset( { game: data.game } ) );
 
 			case 'GAME_UPDATE':
-				const update = { id: data.game.id };
-				if (data.game.host_id) update.host = data.game.host_id;
-				dispatch( lobbyOperations.updateRoom( {
-					id: data.game.id,
-					room: update
-				} ) );
+				dispatch( socketOperations.globalGameUpdate( { game: data.game } ) );
 				break;
 
 			case 'GAME_USER_JOIN':
-				dispatch( lobbyOperations.roomUserJoined( {
-					userId: data.user_id,
-					roomId: data.game_id
-				} ) );
+				dispatch( socketOperations.globalGameUserJoin( { game_id: data.game_id, user_id: data.user_id } ) );
 				break;
 
 			case 'GAME_USER_LEAVE':
-				dispatch( lobbyOperations.roomUserLeft( {
-					userId: data.user_id,
-					roomId: data.game_id
-				} ) );
+				dispatch( socketOperations.globalGameUserLeave( { game_id: data.game_id, user_id: data.user_id } ) );
 				break;
 
 			case 'USER_LOGIN':
-				dispatch( usersOperations.addUser( {
-					id: data.user.id,
-					username: data.user.username
-				} ) );
+				dispatch( socketOperations.globalUserLogin( { user: data.user } ) );
 				break;
 
 			case 'USER_LOGOUT':
-				dispatch( usersOperations.removeUser( {
-					id: data.user_id
-				} ) );
+				dispatch( socketOperations.globalUserLogout( { user_id: data.user_id } ) );
 				break;
 
 			case 'USER_UPDATE':
-				dispatch( usersOperations.updateUser( {
-					id: data.user.id,
-					username: data.user.username
-				} ) );
-
+				dispatch( socketOperations.globalUserUpdate( { user: data.user } ) );
 			default: break;
 		};
 	});
@@ -89,12 +48,36 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 	socket.on('game', data => {
 		switch ( data.e ) {
 			case 'CARD_DISCARD':
-				const discards = tableSelectors.getDiscardIds( state );
-				const newDiscards = [ ...discards, card_id ];
-				dispatch( tableOperations.updateDiscardPile( {
-					discards: newDiscards
-				} ) );
+				dispatch( socketOperations.gameCardDiscard( { card_id: data.card_id, gane_id: data.game_id, player_id: data.player_id } ) );
 			case 'CARD_PLAY':
+				dispatch( socketOperations.gameCardPlay( { 
+					card_id: data.card_id, from_location: data.from, from_player: data.from_player, 
+					game_id: data.game_id, player_id: data.game_id, to_location: data.to
+				} ) );
+				break;
+			case 'CARDS_DRAWN':
+				dispatch( socketOperations.gameCardsDrawn( { game_id: data.game_id, player_id: data.player_id, num_drawn: data.num_drawn } ) );
+				break;
+			case 'DECK_RECYCLE':
+				dispatch( socketOperations.gameDeckRecycle( { game_id: data.game_id, draw_pile_size: data.draw_pile_size } ) );
+				break;
+			case 'DISCARD_REMOVE':
+				dispatch( socketOperations.gameDiscardRemove( { card_id: data.card_id, game_id: data.game_id } ) );
+				break;
+			case 'GOAL_UPDATE':
+				dispatch( socketOperations.gameGoalUpdate( { game_id: data.game_id, goals: data.goals } ) );
+				break;
+			case 'LIMITS_OVER':
+				dispatch( socketOperations.gameLimitsOver( { game_id: data.game_id, hand_over: data.hand_over, keepers_over: data.keepers_over } ) );
+				break;
+			case 'PLAYER_UPDATE':
+				dispatch( socketOperations.gamePlayerUpdate( { game_id: data.game_id, player: data.player } ) );
+				break;
+			case 'RULES_UPDATE':
+				dispatch( socketOperations.gameRulesUpdate( { game_id: data.game_id, rules: data.rules } ) );
+				break;
+			case 'TURN_BEGIN':
+				dispatch( socketOperations.gameTurnBegin( { game_id: data.game_id, player_id: data.player_id, plays_remaining: data.plays_remaining } ) );
 				break;
 			default: break;
 		};
@@ -103,129 +86,13 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 	socket.on('user', data => {
 		switch ( data.e ) {
 			case 'GAME_SYNC':
-				console.log(data)
-				dispatch( gameOperations.initGame( {
-					id: data.game.id
-				} ) );
-
-				dispatch( gameOperations.updateGame( {
-					turn: data.game.current_player_id
-				} ) );
-
-				dispatch( lobbyOperations.updateRoom( {
-					id: data.game.id,
-					host: data.game.host_id,
-					created: data.game.created,
-					started: data.game.started
-				} ) );
-
-				dispatch( playersOperations.addPlayers( {
-					players: data.game.player_states.map( state => ( {
-						id: state.player_id,
-						cards: state.hand_size,
-						tempCards: state.temp_hand_size,
-						playsLeft: state.plays_left,
-						tempPlaysLeft: state.plays_left_t,
-						keeperIds: state.keepers,
-						position: state.position
-					} ) )
-				} ) );
-
-				dispatch( tableOperations.replaceDiscards( {
-					ids: data.game.discard_pile
-				} ) );
-
-				dispatch( tableOperations.updateDeck( {
-					count: data.game.draw_pile_size
-				} ) );
-
-				dispatch( tableOperations.addGoals( {
-					ids: data.game.goals
-				} ) );
-
-				dispatch( tableOperations.updateDrawRule( {
-					count: data.game.draw_num
-				} ) );
-
-				dispatch( tableOperations.updatePlayRule( {
-					count: data.game.play_num
-				} ) );
-
-				dispatch( tableOperations.updateHandLimit( {
-					limit: data.game.hand_limit
-				} ) );
-
-				dispatch( tableOperations.updateKeeperLimit( {
-					limit: data.game.keeper_limit
-				} ) );
-
-				dispatch( tableOperations.addRules( {
-					ids: data.game.rules
-				} ) );
-
-				dispatch( handOperations.replaceHand( {
-					ids: data.state.hand
-				} ) );
-
-				dispatch( handOperations.replaceTempHand( {
-					ids: data.state.temp_hand
-				} ) );
-
+				dispatch( socketOperations.userGameSync( { game: data.game, state: data.state } ) );
 				break;
 			case 'HAND_UPDATE':
-
-				dispatch( handOperations.replaceHand( {
-					hand: data.hand
-				} ) );
-
-				dispatch( handOperations.replaceTempHand( {
-					hand: data.temp_hand
-				} ) );
+				dispatch( socketOperations.userHandUpdate( { game_id: data.game_id, hand: data.hand, temp_hand: data.temp_hand } ) );
 				break;
-
 			case 'HELLO':
-				console.log(data)
-				const types = {
-					KEEPER: 'keeper',
-					GOAL: 'goal',
-					NEW_RULE: 'rule',
-					ACTION: 'action'
-				};
-				const cards = data.cards.map( card => ( {
-					id: card.id,
-					name: card.name,
-					type: types[ card.type ],
-					subtype: card.subtype && card.subtype.toLowerCase()
-				} ) );
-				dispatch( cardsOperations.addCards( {
-					cards
-				} ) );
-
-				const users = data.users.map( user => ( {
-					id: user.id,
-					username: user.username
-				} ) );
-
-				dispatch( usersOperations.replaceUsers( {
-					users: users
-				} ) );
-
-				const rooms = data.games.map( game => ( {
-					id: game.id,
-					host: game.host_id,
-					created: game.created,
-					started: game.started,
-					freeJoin: game.free_join,
-					password: game.has_password,
-					players: game.player_ids.length,
-					maxPlayers: game.max_players,
-					minPlayers: game.min_players
-				} ) );
-
-				dispatch( lobbyOperations.replaceRooms( {
-					rooms: rooms
-				} ) );
-
+				dispatch( socketOperations.userHello( { cards: data.cards, games: data.games, users: data.users } ) );
 				break;
 			default: break;
 		}
