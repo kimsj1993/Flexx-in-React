@@ -34,7 +34,7 @@ const Lobby = ( { classes, rooms, joinGame, createGame } ) => (
                 { rooms && rooms.map( room => (
                     <TableRow key={ room.id }>
                         <TableCell>
-                            { room.playerCount }
+                            { room.playerIds.length }
                         </TableCell>
                         <TableCell>
                             { room.maxPlayers }

@@ -30,7 +30,7 @@ const getRooms = state => {
 
 const getRoomById = ( state, id ) => state.data.lobby.byId[ id ];
 
-const canJoinRoom = room => (!room.started || room.freeJoin ) && room.players < room.maxPlayers && !room.password;
+const canJoinRoom = room => (!room.started || room.freeJoin ) && room.playerIds.length < room.maxPlayers && !room.password;
 
 const getJoinableRooms = state => getRooms( state ).filter( canJoinRoom );
 

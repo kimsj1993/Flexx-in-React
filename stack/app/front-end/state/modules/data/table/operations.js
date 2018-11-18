@@ -50,7 +50,7 @@ const removeGoals = ( { ids } ) => dispatch =>
 
 const replaceGoals = ( { ids } ) => dispatch => {
 	dispatch( clearGoals() );
-	dispatch( addRules( { ids } ) );
+	dispatch( addGoals( { ids } ) );
 };
 
 const clearDeck = () => dispatch =>

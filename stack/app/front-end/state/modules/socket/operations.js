@@ -130,6 +130,16 @@ const globalGameUserLeave = ( { game_id, user_id } ) => ( dispatch, getState ) =
 
 		dispatch( playersOperations.removePlayer( { id: user_id } ) );
 
+		if ( user_id == userSelectors.getUserId( state ) ) {
+
+			dispatch( gameOperations.leaveGame() );
+			dispatch( handOperations.clearHand() );
+			dispatch( handOperations.clearTempHand() );
+			dispatch( playersOperations.clearPlayers() );
+			dispatch( tableOperations.resetTable() );
+			
+		}
+
 	}
 };
 

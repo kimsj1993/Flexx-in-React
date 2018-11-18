@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 	const keeperLimit = tableSelectors.getKeeperLimit( state );
 	const goalIds = tableSelectors.getGoalIds( state );
 
-	const goals = goalIds.map( id => cardsSelectors.getCardById( id ) );
+	const goals = goalIds.map( id => cardsSelectors.getCardById( state, id ) );
 
 	return {
 		drawRule,
