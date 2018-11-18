@@ -23,14 +23,13 @@ const resetPlayer = createAction(
 	( { id } ) => id
 );
 
-const clearPlayers = createAction(
-	types.CLEAR_PLAYERS
-);
+const clearPlayers = createAction( types.CLEAR_PLAYERS );
 
 export {
 	addPlayer,
 	removePlayer,
 	updatePlayer,
 	resetPlayer,
-	clearPlayers
+	clearPlayers,
+	playerAddCards
 };

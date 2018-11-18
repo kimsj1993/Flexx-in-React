@@ -184,6 +184,8 @@ const gameCardPlay = ( { card_id, from_location, from_player, game_id, player_id
 
 const gameCardsDrawn = ( { game_id, player_id, num_drawn } ) => ( dispatch, getState ) => {
 	console.log('game socket event: CARDS_DRAWN, with data: ', game_id, player_id, num_drawn );
+
+	dispatch( playersOperations.playerAddCards( { id: player_id, count: num_drawn } ) );
 };
 
 const gameDeckRecycle = ( { game_id, draw_pile_size } ) => ( dispatch, getState ) => {

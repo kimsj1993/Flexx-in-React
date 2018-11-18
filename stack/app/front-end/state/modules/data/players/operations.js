@@ -35,6 +35,14 @@ const replacePlayers = ( { players } ) => dispatch => {
 	dispatch( addPlayers( { players } ) );
 };
 
+const playerAddCards = ( { id, count } ) => ( dispatch, getState ) => {
+	const state = getState();
+
+	const cards = state.data.players.byId[ id ].cards;
+
+	dispatch( updatePlayer( { id, cards: count + cards } ) );
+}
+
 export {
 	addPlayer,
 	removePlayer,
@@ -45,5 +53,6 @@ export {
 	removePlayers,
 	updatePlayers,
 	resetPlayers,
-	replacePlayers
+	replacePlayers,
+	playerAddCards
 };
