@@ -77,7 +77,7 @@ export const onSocketConnection = ( { state, dispatch } ) => socket => {
 				dispatch( socketOperations.gameRulesUpdate( { game_id: data.game_id, rules: data.rules } ) );
 				break;
 			case 'TURN_BEGIN':
-				dispatch( socketOperations.gameTurnBegin( { game_id: data.game_id, player_id: data.player_id, plays_remaining: data.plays_remaining } ) );
+				dispatch( socketOperations.gameTurnBegin( { game_id: data.game_id, player_id: data.player_id, plays_remaining: data.plays_left } ) );
 				break;
 			default: break;
 		};
