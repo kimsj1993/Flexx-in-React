@@ -8,6 +8,13 @@ const leaveGame = actions.leaveGame;
 const replaceGame = ( { id } ) => dispatch => {
 	dispatch( leaveGame() );
 	dispatch( initGame( { id } ) );
+};
+
+const endTurn = () => dispatch => {
+	fetch('https://fluxx.d.calebj.io/api/games/@current?end_turn', {
+		method: 'POST',
+		credentials: 'include'
+	});
 }
 
 export {
@@ -15,5 +22,6 @@ export {
 	updateGame,
 	resetGame,
 	leaveGame,
-	replaceGame
+	replaceGame,
+	endTurn
 };

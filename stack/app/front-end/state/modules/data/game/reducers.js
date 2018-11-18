@@ -46,7 +46,7 @@ const won = handleActions(
 
 const turn = handleActions(
 	{
-		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.won,
+		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.turn,
 
 		[ types.RESET_GAME ]: () => null,
 
@@ -58,7 +58,7 @@ const turn = handleActions(
 
 const winner = handleActions(
 	{
-		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.won,
+		[ types.UPDATE_GAME ]: ( state, { payload } ) => payload.winner,
 
 		[ types.RESET_GAME ]: () => null,
 

@@ -19,9 +19,9 @@ const styles = theme => ({
     }
 });
 
-const Lobby = ( { classes, rooms, joinHandlerCreator, createHandler } ) => (
+const Lobby = ( { classes, rooms, joinGame, createGame } ) => (
     <Paper className={ classes.root } >
-        <Button variant='contained' color='primary' onClick={ createHandler } >Create Game</Button>
+        <Button variant='contained' color='primary' onClick={ createGame } >Create Game</Button>
         <Table className={ classes.table } >
             <TableHead>
                 <TableRow>
@@ -43,7 +43,7 @@ const Lobby = ( { classes, rooms, joinHandlerCreator, createHandler } ) => (
                             <Button 
                                 variant='contained' 
                                 color='primary' 
-                                onClick={ joinHandlerCreator( room.id ) } 
+                                onClick={ joinGame( room.id ) } 
                             >
                                 Join
                             </Button>

@@ -16,12 +16,11 @@ import { onSocketConnection, onSocketDisconnect } from '../utils/connectSocketAn
 
 const mapStateToProps = ( state, ownProps ) => {
 	const activeGame = state.data.game.active;
-	const gameStarted = activeGame && state.data.lobby.byId[ state.data.game.id ].started;
+	const gameStarted = activeGame && state.data.lobby.byId[ state.data.game.id ] && state.data.lobby.byId[ state.data.game.id ].started;
 
 	return {
 		activeGame,
-		gameStarted,
-		state
+		gameStarted
 	}
 };
 

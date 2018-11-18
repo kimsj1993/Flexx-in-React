@@ -39,7 +39,7 @@ const byId = handleActions(
 					{ ...newState, [ id ]: { ...state[ id ] } }
 		} ),
 
-		[ types.CLEAR_PLAYERS ]: () => {}
+		[ types.CLEAR_PLAYERS ]: () => ( {} )
 	},
 
 	{} // initial state

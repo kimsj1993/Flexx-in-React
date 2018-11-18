@@ -38,10 +38,10 @@ const createGame = () => dispatch => {
 	fetch('https://fluxx.d.calebj.io/api/games', {
 		method: 'POST',
 		credentials: 'include',
-		body: {
+		body: JSON.stringify( {
 			free_join: false,
 			max_players: 6
-		}
+		} )
 	});
 };
 

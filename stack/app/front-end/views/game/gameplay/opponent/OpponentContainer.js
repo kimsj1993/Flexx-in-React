@@ -9,13 +9,13 @@ import { gameSelectors } from '../../../../state/modules/data/game';
 const mapStateToProps = (state, ownProps) => {
 	const { opponentId } = ownProps;
 
-	const name = usersSelectors.getUserById( state, opponentId ).username;
+	const name = usersSelectors.getUserById( state, opponentId ) && usersSelectors.getUserById( state, opponentId ).username;
 
 	const isTurn = gameSelectors.isPlayerTurn( state, opponentId );
 
-	const playsRemaining = playersSelectors.getPlayerById( state, opponentId ).playsLeft;
+	const playsRemaining = playersSelectors.getPlayerById( state, opponentId ) && playersSelectors.getPlayerById( state, opponentId ).playsLeft;
 
-	const cardCount = playersSelectors.getPlayerById( state, opponentId ).cards;
+	const cardCount = playersSelectors.getPlayerById( state, opponentId ) && playersSelectors.getPlayerById( state, opponentId ).cards;
 
 	const keeperIds = playersSelectors.getPlayerKeeperIds( state, opponentId );
 

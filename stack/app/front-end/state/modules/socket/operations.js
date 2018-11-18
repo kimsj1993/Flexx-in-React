@@ -12,11 +12,11 @@ const globalGameCreate = ( { game } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_CREATE, with data: ', game );
 
 	const { id, host_id, created, started, free_join, 
-		has_password, min_players, max_players, player_states } = game;
+		has_password, min_players, max_players, player_ids } = game;
 
 	dispatch( lobbyOperations.addRoom( { id, host: host_id, created, started, 
 		freeJoin: free_join, minPlayers: min_players, maxPlayers: max_players,
-		password: has_password, playerIds: player_states.map( state => state.id ) } ) );
+		password: has_password, playerIds: player_ids } ) );
 };
 
 const globalGameRemove = ( { game_id } ) => ( dispatch, getState ) => {
@@ -227,6 +227,7 @@ const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	dispatch( gameOperations.updateGame( { turn: game.current_player_id } ) );
 
 	dispatch( tableOperations.replaceDiscards( { ids: game.discard_pile } ) );
+	dispatch( tableOperations.updateDeck( { count: game.draw_pile_size } ) );
 	dispatch( tableOperations.replaceGoals( { ids: game.goals } ) );
 	dispatch( tableOperations.updatePlayRule( { count: game.play_num } ) );
 	dispatch( tableOperations.replaceRules( { ids: game.rules } ) );
@@ -234,14 +235,16 @@ const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
 	dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
 
+	dispatch( playersOperations.clearPlayers() );
+
 	game.player_states.forEach( player => dispatch( playersOperations.addPlayer( {
 		id: player.player_id, keeperIds: player.keepers, playsLeft: player.plays_left,
 		tempPlaysLeft: player.plays_left_t, position: player.position, cards: player.hand_size,
 		tempCards: player.temp_hand_size
 	} ) ) );
 
-	dispatch( handOperations.addHandCards( { ids: state.hand } ) );
-	dispatch( handOperations.addTempHandCards( { ids: state.temp_hand } ) );
+	dispatch( handOperations.replaceHand( { ids: state.hand } ) );
+	dispatch( handOperations.replaceTempHand( { ids: state.temp_hand } ) );
 };
 
 const userHandUpdate = ( { game_id, hand, temp_hand } ) => ( dispatch, getState ) => {
@@ -268,7 +271,7 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		subtype: card.subtype && card.subtype.toLowerCase()
 	} ) ) } ) );
 
-	dispatch( lobbyOperations.addRooms( { rooms: games.map( room => ( {
+	dispatch( lobbyOperations.replaceRooms( { rooms: games.map( room => ( {
 		id: room.id,
 		host: room.host_id,
 		created: room.created,
@@ -280,7 +283,7 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		playerIds: room.player_ids
 	} ) ) } ) );
 
-	dispatch( usersOperations.addUsers( { users } ) );
+	dispatch( usersOperations.replaceUsers( { users } ) );
 }
 
 export {

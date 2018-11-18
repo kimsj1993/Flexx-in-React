@@ -5,6 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
+import LeaveButton from '../LeaveButton';
+
 const styles = theme => ({
 	root: {
 		flexGrow: 1
@@ -33,6 +35,7 @@ const Header = ({ classes }) => (
 	<div className={ classes.root } >
 		<AppBar position='static' classes={{ root: classes.appBarRoot }}>
 			<Toolbar classes={{ root: classes.toolbarRoot }}>
+				<LeaveButton />
 				<div className={ classes.grow } />
 				<Button classes={{ root: classes.buttonRoot }} variant='contained' color='secondary'>Help</Button>
 			</Toolbar>

@@ -4,7 +4,7 @@ import { playersSelectors } from '../../../../state/modules/data/players';
 import { userSelectors } from '../../../../state/modules/data/user';
 import { usersSelectors } from '../../../../state/modules/data/users';
 import { tableSelectors } from '../../../../state/modules/data/table';
-import { gameSelectors } from '../../../../state/modules/data/game';
+import { gameSelectors, gameOperations } from '../../../../state/modules/data/game';
 
 import PlayerTurnCard from './PlayerTurnCard';
 
@@ -30,10 +30,15 @@ const mapStateToProps = (state, ownProps) => {
 	};
 };
 
+const mapDispatchToProps = dispatch => ( {
+	endTurn: () => dispatch( gameOperations.endTurn() )
+} );
+
 const PlayerTurnCardContainer = (props) => (
 	<PlayerTurnCard {...props} />
 );
 
 export default connect(
-	mapStateToProps
+	mapStateToProps,
+	mapDispatchToProps
 )(PlayerTurnCardContainer);
