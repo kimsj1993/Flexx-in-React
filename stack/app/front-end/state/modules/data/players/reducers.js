@@ -32,7 +32,7 @@ const byId = handleActions(
 				return ( id == payload.id ) ?
 					assign( {}, newState, { [ id ] : assign( {}, state[ id ], payload ) } ) :
 					{ ...newState, [ id ]: { ...state[ id ] } }
-		} ),
+		}, {} ),
 
 		[ types.RESET_PLAYER ]: ( state, { payload } ) =>
 			Object.keys( state ).reduce( (newState, id ) => {

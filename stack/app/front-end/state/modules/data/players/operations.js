@@ -38,7 +38,7 @@ const replacePlayers = ( { players } ) => dispatch => {
 const playerAddCards = ( { id, count } ) => ( dispatch, getState ) => {
 	const state = getState();
 
-	const cards = state.data.players.byId[ id ].cards;
+	const cards = ( state.data.players.byId[ id ] && state.data.players.byId[ id ].cards ) || 0;
 
 	dispatch( updatePlayer( { id, cards: count + cards } ) );
 }
