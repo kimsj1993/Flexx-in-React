@@ -2,6 +2,8 @@ import * as types from "./types";
 import { handleActions } from 'redux-actions';
 import { combineReducers } from "redux";
 
+import assign from '../../../../utils/assign';
+
 /* State Shape
 {
     player_id: {
@@ -28,7 +30,7 @@ const byId = handleActions(
 		[ types.UPDATE_PLAYER ]: ( state, { payload } ) =>
 			Object.keys( state ).reduce( (newState, id ) => {
 				return ( id == payload.id ) ?
-					{ ...newState, [ id ]: { ...state[ id ], ...payload } } :
+					assign( {}, newState, { [ id ] : assign( {}, state[ id ], payload ) } ) :
 					{ ...newState, [ id ]: { ...state[ id ] } }
 		} ),
 

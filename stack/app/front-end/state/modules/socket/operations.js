@@ -117,6 +117,14 @@ const globalGameUserJoin = ( { game_id, user_id } ) => ( dispatch, getState ) =>
 
 	dispatch( lobbyOperations.roomAddPlayer( { roomId: game_id, playerId: user_id } ) );
 
+	const state = getState();
+
+	if ( game_id == gameSelectors.getGameId( state ) ) {
+
+		dispatch( playersOperations.addPlayer( { id: user_id } ) );
+
+	}
+
 };
 
 const globalGameUserLeave = ( { game_id, user_id } ) => ( dispatch, getState ) => {
@@ -137,7 +145,7 @@ const globalGameUserLeave = ( { game_id, user_id } ) => ( dispatch, getState ) =
 			dispatch( handOperations.clearTempHand() );
 			dispatch( playersOperations.clearPlayers() );
 			dispatch( tableOperations.resetTable() );
-			
+
 		}
 
 	}

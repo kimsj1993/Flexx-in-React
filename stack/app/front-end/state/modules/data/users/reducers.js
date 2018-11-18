@@ -2,6 +2,8 @@ import { combineReducers } from "redux";
 import { handleActions } from 'redux-actions';
 import * as types from "./types";
 
+import assign from '../../../../utils/assign';
+
 /* State Shape
 {
     [userId]: {
@@ -27,8 +29,8 @@ const byId = handleActions(
 		[ types.UPDATE_USER ]: ( state, { payload } ) =>
 			Object.keys( state ).reduce( (newState, id ) => {
 				return ( id == payload.id ) ?
-					( { ...newState, [ id ]: { ...state[ id ], ...payload } } ) :
-					( { ...newState, [ id ]: { ...state[ id ] } } )
+					assign( {}, newState, { [ id ] : assign( {}, state[ id ], payload ) } ) :
+					{ ...newState, [ id ]: { ...state[ id ] } }
 		}, {} ),
 
 		[ types.CLEAR_USERS ]: () => ( {} )
