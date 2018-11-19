@@ -25,7 +25,7 @@ class Main extends Component {
 	handleLogin = () => {
 		const { login, value } = this.props;
 
-		login(value);
+		login( value );
 	}
 
 	render () {

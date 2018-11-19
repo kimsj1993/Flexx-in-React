@@ -26,6 +26,7 @@ class LoginProvider extends Component {
 
 	login = (username) => {
 		const { dispatch } = this.props;
+		console.log('Logging in with username', username);
 		fetch('https://fluxx.d.calebj.io/api/session?username=' + username, {
 			method: 'POST',
 			credentials: 'include'
@@ -73,6 +74,7 @@ class LoginProvider extends Component {
 					});
 					dispatch( userOperations.initUser( { id: json.user.id } ) );
 					dispatch( usersOperations.addUser( json.user ) );
+					console.log('Logging in with username', json.user.username);
 					Router.pushRoute('/game');
 				}
 			});

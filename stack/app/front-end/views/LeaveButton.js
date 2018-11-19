@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux';
+import withLogin from '../utils/withLogin';
 
 import { roomOperations } from '../state/modules/data/room';
 
@@ -21,14 +22,15 @@ const mapDispatchToProps = dispatch => ( {
 	deleteGame: () => dispatch( roomOperations.deleteGame() )
 } );
 
-const LeaveButton = ( { activeGame, gameStarted, isHost, leaveGame, deleteGame } ) => (
+const LeaveButton = ( { activeGame, gameStarted, isHost, leaveGame, deleteGame, logout } ) => (
 	<div>
 	{ activeGame && isHost && ( <Button color='primary' variant='contained' onClick={ deleteGame }>Delete Game</Button> ) }
 	{ activeGame && !isHost && ( <Button color='primary' variant='contained' onClick={ leaveGame }>Leave Game</Button> ) }
+	{ !activeGame && ( <Button color='primary' variant='contained' onClick={ logout }>Log Out</Button> ) }
 	</div>
 );
 
-export default connect(
+export default withLogin(connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(LeaveButton);
+)(LeaveButton));

@@ -39,12 +39,22 @@ const styles = theme => ({
 		maxWidth: 128-36,
 		fontFamily: "'Roboto Condensed', sans-serif",
 		padding: 8
+	},
+	sashText: {
+		fontFamily: "'Roboto Condensed', sans-serif",
+		fontWeight: 'bold',
+		transform: 'rotate(90deg)',
+		color: 'white'
 	}
 });
 
 const Card = ({ classes, name, type }) => (
 	<Paper classes={{ root: classes.root }} >
-		<div className={classes[type]} />
+		<div className={classes[type]}>
+			<div className={ classes.sashText } >
+				{ type.toUpperCase() }
+			</div>
+		</div>
 		<div className={ classes.cardInfo } >
 			{ name }
 		</div>

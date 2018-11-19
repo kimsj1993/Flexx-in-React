@@ -18,7 +18,6 @@ const mapDispatchToProps = dispatch => ( {
 } )
 
 const LobbyContainer = ( props ) => {
-	console.log(props)
 	return (<Lobby { ...props } />)
 };
 
