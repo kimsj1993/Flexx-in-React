@@ -50,7 +50,6 @@ class LoginProvider extends Component {
 			credentials: 'include'
 		}).then(() => {
 			dispatch( userOperations.clearUser() );
-			socketConnection.disconnect();
 			Router.pushRoute('/');
 		});
 	}
