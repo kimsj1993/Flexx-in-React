@@ -25,6 +25,7 @@ const styles = theme => ({
 	content: {
 		height: 292,
 		maxHeight: 292,
+		maxWidth: 416,
 		overflow: 'scroll'
 	}
 });
