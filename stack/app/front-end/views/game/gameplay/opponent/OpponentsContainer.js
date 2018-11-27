@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 
 import { playersSelectors } from '../../../../state/modules/data/players';
-import { userSelectors } from '../../../../state/modules/data/user';
+import { userSelectors } from '../../../../state/modules/user';
 
 import OpponentContainer from './OpponentContainer';
 

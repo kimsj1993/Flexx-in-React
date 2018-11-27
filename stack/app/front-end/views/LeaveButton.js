@@ -8,7 +8,7 @@ import { roomOperations } from '../state/modules/data/room';
 const mapStateToProps = state => {
 	const activeGame = state.data.game.active;
 	const gameStarted = activeGame && state.data.lobby.byId[ state.data.game.id ] && state.data.lobby.byId[ state.data.game.id ].started;
-	const isHost = state.data.user.id == ( state.data.lobby.byId[ state.data.game.id ] && state.data.lobby.byId[ state.data.game.id ].host );
+	const isHost = state.user.id == ( state.data.lobby.byId[ state.data.game.id ] && state.data.lobby.byId[ state.data.game.id ].host );
 
 	return {
 		activeGame,

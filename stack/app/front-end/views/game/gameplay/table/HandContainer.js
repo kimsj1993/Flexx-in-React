@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { handSelectors, handOperations } from '../../../../state/modules/data/hand';
-import { userSelectors } from '../../../../state/modules/data/user';
+import { userSelectors } from '../../../../state/modules/user';
 import { cardsSelectors } from '../../../../state/modules/data/cards';
 
 import Hand from './Hand';

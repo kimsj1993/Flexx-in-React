@@ -1,13 +1,14 @@
 import * as actions from "./actions";
 
 import { cardsOperations, cardsSelectors } from '../data/cards';
+import { chatOperations, chatSelectors } from '../data/chat';
 import { gameOperations, gameSelectors } from '../data/game';
 import { handOperations, handSelectors } from '../data/hand';
 import { lobbyOperations, lobbySelectors } from '../data/lobby';
 import { playersOperations, playersSelectors } from '../data/players';
 import { roomOperations, roomSelectors } from '../data/room';
 import { tableOperations, tableSelectors } from '../data/table';
-import { userOperations, userSelectors } from '../data/user';
+import { userOperations, userSelectors } from '../user';
 import { usersOperations, usersSelectors } from '../data/users';
 
 const socketConnect = actions.socketConnect;
@@ -39,6 +40,7 @@ const globalGameRemove = ( { game_id } ) => ( dispatch, getState ) => {
 		dispatch( handOperations.clearTempHand() );
 		dispatch( playersOperations.clearPlayers() );
 		dispatch( tableOperations.resetTable() );
+		dispatch( chatOperations.clearMessages() );
 
 	}
 };
@@ -151,6 +153,7 @@ const globalGameUserLeave = ( { game_id, user_id } ) => ( dispatch, getState ) =
 			dispatch( handOperations.clearTempHand() );
 			dispatch( playersOperations.clearPlayers() );
 			dispatch( tableOperations.resetTable() );
+			dispatch( chatOperations.clearMessages() );
 
 		}
 
@@ -193,6 +196,12 @@ const gameCardsDrawn = ( { game_id, player_id, num_drawn } ) => ( dispatch, getS
 
 	dispatch( playersOperations.playerAddCards( { id: player_id, count: num_drawn } ) );
 };
+
+const gameChatMessage = ( { game_id, player_id, message } ) => ( dispatch, getState ) => {
+	console.log('game socket event: CHAT_MESSAGE, with data: ', game_id, player_id, message );
+
+	dispatch( chatOperations.addMessage( { userId: player_id, message } ) );
+}
 
 const gameDeckRecycle = ( { game_id, draw_pile_size } ) => ( dispatch, getState ) => {
 	console.log('game socket event: DECK_RECYCLE, with data: ', game_id, draw_pile_size );

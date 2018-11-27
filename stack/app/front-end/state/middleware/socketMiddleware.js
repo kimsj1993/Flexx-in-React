@@ -40,7 +40,11 @@ const createSocketMiddleware = url => {
 			case socketTypes.SOCKET_EMIT:
 				if ( connected ) {
 
-					// todo
+					const { channel, event, ...args } = action.payload;
+
+					console.log( 'Emitting ' + channel + ' event ' + event + ' with payload: ', args );
+
+					socket.emit( channel, { e: event, ...args } );
 
 				}
 

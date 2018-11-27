@@ -88,4 +88,6 @@ class LoginProvider extends Component {
 	}
 }
 
-export default connect()(LoginProvider);
+export default connect(
+	
+)(LoginProvider);

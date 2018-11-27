@@ -5,7 +5,8 @@ import Paper from '@material-ui/core/Paper';
 import Typography from "@material-ui/core/Typography/Typography";
 import Participant from'./Participant'
 import Button from '@material-ui/core/Button';
-import GameChat from '../gameplay/gameStateCard/gameChatTab/GameChat'
+
+import ChatContainer from '../chat/ChatContainer';
 
 const styles = theme => ({
     root: {
@@ -52,7 +53,7 @@ const styles = theme => ({
 
 });
 
-const Room = ({ classes, players, startGameHandler, deleteGameHandler }) => (
+const Room = ({ classes, players, startGameHandler }) => (
     <Paper classes={{ root: classes.root }} >
         <div className={classes.currentUserContainer}>
             <div className={classes.userImageContainer}>
@@ -70,13 +71,6 @@ const Room = ({ classes, players, startGameHandler, deleteGameHandler }) => (
                 <Button variant="contained" color="secondary" className={classes.button}>
                     Invite
                 </Button>
-                <Button 
-                    variant="contained" 
-                    className={classes.button}
-                    onClick={ deleteGameHandler }
-                >
-                    Exit
-                </Button>
             </div>
 
         </div>
@@ -92,7 +86,7 @@ const Room = ({ classes, players, startGameHandler, deleteGameHandler }) => (
         </div>
 
         <div className={classes.roomChat}>
-            <GameChat />
+            <ChatContainer />
         </div>
 
     </Paper>

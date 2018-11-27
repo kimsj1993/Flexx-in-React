@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 
 import GameSummaryTabContainer from './gameSummaryTab/GameSummaryTabContainer';
 import GameRulesTabContainer from './gameRulesTab/GameRulesTabContainer';
-import GameChat from './gameChatTab/GameChat';
+import ChatContainer from '../../chat/ChatContainer';
 
 const styles = theme => ({
 	root: {
@@ -48,7 +48,7 @@ const GameStateCard = ({ classes, theme, tabIndex, changeTab }) => (
 		<div className={ classes.content } >
 			{ tabIndex == 0 && <GameSummaryTabContainer /> }
 			{ tabIndex == 1 && <GameRulesTabContainer /> }
-			{ tabIndex == 2 && <GameChat /> }
+			{ tabIndex == 2 && <ChatContainer /> }
 		</div>
 	</div>
 );

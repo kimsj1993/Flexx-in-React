@@ -58,6 +58,9 @@ export const onSocketConnect = dispatch => socket => {
 			case 'CARDS_DRAWN':
 				dispatch( socketOperations.gameCardsDrawn( { game_id: data.game_id, player_id: data.player_id, num_drawn: data.num_drawn } ) );
 				break;
+			case 'CHAT_MESSAGE':
+				dispatch( socketOperations.gameChatMessage( { game_id: data.game_id, player_id: data.player_id, message: data.message } ) );
+				break;
 			case 'DECK_RECYCLE':
 				dispatch( socketOperations.gameDeckRecycle( { game_id: data.game_id, draw_pile_size: data.draw_pile_size } ) );
 				break;

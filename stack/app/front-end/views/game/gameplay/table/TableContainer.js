@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { userSelectors } from '../../../../state/modules/data/user';
+import { userSelectors } from '../../../../state/modules/user';
 import { playersSelectors } from '../../../../state/modules/data/players';
 
 import Table from './Table';

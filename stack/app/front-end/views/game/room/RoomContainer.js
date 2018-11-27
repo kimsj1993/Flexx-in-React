@@ -23,12 +23,6 @@ const mapDispatchToProps = dispatch => bindActionCreators( {
 		const gameId = gameSelectors.getGameId( state );
 
 		dispatch(roomOperations.startGame( { id: gameId } ) );
-	},
-	deleteGameHandler: () => ( _, getState ) => {
-		const state = getState();
-		const gameId = gameSelectors.getGameId( state );
-
-		dispatch( lobbyOperations.deleteGame( { id: gameId } ) );
 	}
 }, dispatch );
 

@@ -12,47 +12,55 @@ import Paper from '@material-ui/core/Paper';
 const styles = theme => ({
     root: {
         minWidth: '800px',
-        marginTop: 48
+        marginTop: 48,
+        maxWidth: 600,
+        marginLeft: 'auto',
+        marginRight: 'auto'
     },
     table: {
         width: '100%'
+    },
+    button: {
+        marginBottom: 16
     }
 });
 
 const Lobby = ( { classes, rooms, joinGame, createGame } ) => (
-    <Paper className={ classes.root } >
-        <Button variant='contained' color='primary' onClick={ createGame } >Create Game</Button>
-        <Table className={ classes.table } >
-            <TableHead>
-                <TableRow>
-                    <TableCell>Players</TableCell>
-                    <TableCell>Max Players</TableCell>
-                    <TableCell />
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                { rooms && rooms.map( room => (
-                    <TableRow key={ room.id }>
-                        <TableCell>
-                            { room.playerIds.length }
-                        </TableCell>
-                        <TableCell>
-                            { room.maxPlayers }
-                        </TableCell>
-                        <TableCell>
-                            <Button 
-                                variant='contained' 
-                                color='primary' 
-                                onClick={ joinGame( room.id ) } 
-                            >
-                                Join
-                            </Button>
-                        </TableCell>
+    <div className={ classes.root } >
+        <Button className={ classes.button } variant='contained' color='primary' onClick={ createGame } >Create Game</Button>
+        <Paper>
+            <Table className={ classes.table } >
+                <TableHead>
+                    <TableRow>
+                        <TableCell>Players</TableCell>
+                        <TableCell>Max Players</TableCell>
+                        <TableCell />
                     </TableRow>
-                ) ) || '' }
-            </TableBody>
-        </Table>
-    </Paper>
+                </TableHead>
+                <TableBody>
+                    { rooms && rooms.map( room => (
+                        <TableRow key={ room.id }>
+                            <TableCell>
+                                { room.playerIds.length }
+                            </TableCell>
+                            <TableCell>
+                                { room.maxPlayers }
+                            </TableCell>
+                            <TableCell>
+                                <Button 
+                                    variant='contained' 
+                                    color='primary' 
+                                    onClick={ joinGame( room.id ) } 
+                                >
+                                    Join
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+                    ) ) || '' }
+                </TableBody>
+            </Table>
+        </Paper>
+    </div>
 );
 
 

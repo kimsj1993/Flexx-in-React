@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import { playersSelectors } from '../../../../state/modules/data/players';
-import { userSelectors } from '../../../../state/modules/data/user';
+import { userSelectors } from '../../../../state/modules/user';
 import { usersSelectors } from '../../../../state/modules/data/users';
 import { tableSelectors } from '../../../../state/modules/data/table';
 import { gameSelectors, gameOperations } from '../../../../state/modules/data/game';

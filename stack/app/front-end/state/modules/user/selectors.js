@@ -1,7 +1,7 @@
 import createCachedSelector from 're-reselect';
 import { createSelector } from 'reselect';
 
-import { usersSelectors } from '../users';
+import { usersSelectors } from '../data/users';
 
 // const loggedIn = createSelector(
 // 	state => state.data.user,
@@ -19,9 +19,9 @@ import { usersSelectors } from '../users';
 // 	( state, id ) => usersSelectors.getUserById( state, id )
 // );
 
-const loggedIn = state => state.data.user.loggedIn;
+const loggedIn = state => state.user.loggedIn;
 
-const getUserId = state => state.data.user.id;
+const getUserId = state => state.user.id;
 
 const getUsername = state => usersSelectors.getUserById( getUserId( state ) ).username;
 
