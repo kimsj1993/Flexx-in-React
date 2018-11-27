@@ -20,12 +20,13 @@ const styles = theme => ({
         alignItems: 'center'
     },
     chatBox: {
-        Height: '400',
+        height: '400',
         width: '300',
         paddingBottom: '30px',
         display: 'flex',
         justifyContent: 'start',
-        position: 'relative'
+        position: 'relative',
+        overflowY: 'scroll'
     },
     chatMessage: {
         width: '300',
@@ -43,18 +44,20 @@ const Chat = ({ classes, messages, sendMessage, value, handleChange }) => (
     <Paper classes={{ root: classes.root }} >
         <div className={ classes.chatBox }>
             <ul className={ classes.messages }>
-                { messages.map( obj => <li><strong>{ obj.username }</strong>: { obj.message }</li>)}
+                { messages.map( ( obj, index ) => ( <li key={ index } ><strong>{ obj.username }</strong>: { obj.message }</li> ))}
             </ul>
             <div className={classes.chatMessage}>
-                <TextField  
-                	placeholder="Send a message ...."
-                	type="text" 
-                	value={ value }
-                	onChange={ handleChange }
-                />
-                <Button variant="contained" color="primary" onClick={ sendMessage( 'test' ) }>
-                    send
-                </Button>
+                <form onSubmit={ sendMessage( value ) } >
+                    <TextField  
+                    	placeholder="Send a message ...."
+                    	type="text" 
+                    	value={ value }
+                    	onChange={ handleChange }
+                    />
+                    <Button variant="contained" color="primary" type='submit' >
+                        send
+                    </Button>
+                </form>
             </div>
         </div>
     </Paper>

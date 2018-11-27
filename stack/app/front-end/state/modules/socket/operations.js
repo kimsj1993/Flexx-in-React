@@ -338,6 +338,7 @@ export {
 	gameCardDiscard,
 	gameCardPlay,
 	gameCardsDrawn,
+	gameChatMessage,
 	gameDeckRecycle,
 	gameDiscardRemove,
 	gameGoalUpdate,

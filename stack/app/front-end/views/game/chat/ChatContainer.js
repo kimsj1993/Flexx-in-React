@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
 	const { id } = ownProps;
 
 	const messages = chatSelectors.getMessages( state )
-		.map( obj => ( { username: usersSelectors.getUserById( state, obj.userId ), message: obj.message } ) );
+		.map( obj => ( { username: usersSelectors.getUserById( state, obj.userId ).username, message: obj.message } ) );
 
 	const value = chatUISelectors.getValue( state );
 
@@ -21,7 +21,8 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ( {
-	sendMessage: message => () => {
+	sendMessage: message => e => {
+		e.preventDefault();
 		dispatch( chatOperations.sendMessage( { message } ) );
 		dispatch( chatUIOperations.clearChatMessageField() );
 	},
