@@ -5,7 +5,7 @@ import fetch from 'cross-fetch';
 
 import { connect } from 'react-redux';
 
-import { userOperations } from '../state/modules/data/user';
+import { userOperations } from '../state/modules/user';
 import { usersOperations } from '../state/modules/data/users';
 import { gameOperations } from '../state/modules/data/game';
 
