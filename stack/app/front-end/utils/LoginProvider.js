@@ -9,9 +9,7 @@ import { userOperations } from '../state/modules/data/user';
 import { usersOperations } from '../state/modules/data/users';
 import { gameOperations } from '../state/modules/data/game';
 
-import { Router } from '../routes'
-
-import withSocket from './withSocket';
+import { Router } from '../routes';
 
 class LoginProvider extends Component {
 	constructor(props) {
@@ -43,7 +41,7 @@ class LoginProvider extends Component {
 	};
 
 	logout = () => {
-		const { socketConnection, dispatch } = this.props;
+		const { dispatch } = this.props;
 
 		fetch('https://fluxx.d.calebj.io/api/session', {
 			method: 'DELETE',
@@ -90,4 +88,4 @@ class LoginProvider extends Component {
 	}
 }
 
-export default withSocket(connect()(LoginProvider));
+export default connect()(LoginProvider);

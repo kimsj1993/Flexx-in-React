@@ -1,5 +1,7 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
+
 import thunkMiddleware from 'redux-thunk';
+import { createSocketMiddleware } from './middleware/socketMiddleware';
 import { createLogger } from 'redux-logger';
 
 import * as reducers from './modules';
@@ -16,6 +18,7 @@ export default function configureStore( initialState ) {
 		initialState,
 		applyMiddleware(
 			thunkMiddleware,
+			createSocketMiddleware( 'https://fluxx.d.calebj.io' ),
 			logger
 		)
 	);

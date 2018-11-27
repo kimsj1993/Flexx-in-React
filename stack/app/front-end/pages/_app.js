@@ -13,9 +13,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../utils/getPageContext';
 
-import LoginProvider from '../utils/LoginProvider';
+import { socketOperations } from '../state/modules/socket';
 
-import SocketProvider from '../utils/SocketProvider';
+import LoginProvider from '../utils/LoginProvider';
 
 class MyApp extends App {
   constructor(props) {
@@ -29,6 +29,19 @@ class MyApp extends App {
     if (jssStyles && jssStyles.parentNode) {
       jssStyles.parentNode.removeChild(jssStyles);
     }
+
+    const { store } = this.props;
+
+    store.dispatch( socketOperations.socketConnect() );
+
+  }
+
+  componentWillUnmount() {
+
+    const { store } = this.props;
+
+    store.dispatch( socketOperations.socketDisconnect() );
+    
   }
 
   
@@ -60,11 +73,7 @@ class MyApp extends App {
 
               <LoginProvider>
 
-                <SocketProvider>
-
-                  <Component pageContext={this.pageContext} {...pageProps} />
-
-                </SocketProvider>
+                <Component pageContext={this.pageContext} {...pageProps} />
 
               </LoginProvider>
               

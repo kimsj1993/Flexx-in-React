@@ -1,3 +1,5 @@
+import * as actions from "./actions";
+
 import { cardsOperations, cardsSelectors } from '../data/cards';
 import { gameOperations, gameSelectors } from '../data/game';
 import { handOperations, handSelectors } from '../data/hand';
@@ -7,6 +9,10 @@ import { roomOperations, roomSelectors } from '../data/room';
 import { tableOperations, tableSelectors } from '../data/table';
 import { userOperations, userSelectors } from '../data/user';
 import { usersOperations, usersSelectors } from '../data/users';
+
+const socketConnect = actions.socketConnect;
+const socketDisconnect = actions.socketDisconnect;
+const socketEmit = actions.socketEmit;
 
 const globalGameCreate = ( { game } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_CREATE, with data: ', game );
@@ -307,6 +313,9 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 }
 
 export {
+	socketConnect,
+	socketDisconnect,
+	socketEmit,
 	globalGameCreate,
 	globalGameRemove,
 	globalGameStart,

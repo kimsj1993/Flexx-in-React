@@ -1,6 +1,6 @@
-import { socketOperations } from '../state/modules/socket';
+import { socketOperations } from '../modules/socket';
 
-export const onSocketConnection = ( { state, dispatch } ) => socket => {
+export const onSocketConnect = dispatch => socket => {
 	socket.on('global', data => {
 		switch ( data.e ) {
 
