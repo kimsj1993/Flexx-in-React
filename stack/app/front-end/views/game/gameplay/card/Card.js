@@ -43,7 +43,8 @@ const styles = theme => ({
 	sashText: {
 		fontFamily: "'Roboto Condensed', sans-serif",
 		fontWeight: 'bold',
-		transform: 'rotate(90deg)',
+		textAlign: 'right',
+		transform: 'rotate(90deg) translateX(16px)',
 		color: 'white'
 	}
 });
