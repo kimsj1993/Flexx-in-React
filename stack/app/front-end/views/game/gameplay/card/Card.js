@@ -49,7 +49,7 @@ const styles = theme => ({
 	}
 });
 
-const Card = ({ classes, name, type }) => (
+const Card = ({ classes, name, type, subtype }) => (
 	<Paper classes={{ root: classes.root }} >
 		<div className={classes[type]}>
 			<div className={ classes.sashText } >
