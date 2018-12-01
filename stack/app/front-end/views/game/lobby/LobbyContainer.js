@@ -1,20 +1,18 @@
 import { connect } from 'react-redux';
 
+import { lobbyUISelectors, lobbyUIOperations } from '../../../state/modules/ui/lobby';
+
 import { lobbyOperations, lobbySelectors } from '../../../state/modules/data/lobby';
+
+import { createGameModalUIOperations } from '../../../state/modules/ui/create-game-modal';
 
 import Lobby from './Lobby';
 
-const mapStateToProps = ( state, { dispatch } ) => {
-	const rooms = lobbySelectors.getJoinableRooms( state );
-
-	return {
-		rooms
-	};
-};
-
 const mapDispatchToProps = dispatch => ( {
 	createGame: () => dispatch( lobbyOperations.createGame() ),
-	joinGame: id => () => dispatch( lobbyOperations.joinGame( { id } ) )
+	showCreateGameDialog: () => dispatch( createGameModalUIOperations.showDialog() ),
+	joinGame: id => () => dispatch( lobbyOperations.joinGame( { id } ) ),
+	changePage: ( e, page ) => dispatch( lobbyUIOperations.changePage( { page } ) )
 } )
 
 const LobbyContainer = ( props ) => {
@@ -22,6 +20,6 @@ const LobbyContainer = ( props ) => {
 };
 
 export default connect(
-	mapStateToProps,
+	lobbyUISelectors.getProps,
 	mapDispatchToProps
 )( LobbyContainer );

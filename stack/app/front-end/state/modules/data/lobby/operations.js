@@ -34,18 +34,19 @@ const roomReplacePlayers = ( { roomId, playerIds } ) => dispatch => {
 	dispatch( roomAddPlayers( { roomId, playerIds } ) );
 };
 
-const createGame = () => dispatch => {
+const createGame = ( { maxPlayers, freeJoin, hasPassword, password } ) => dispatch => {
 	fetch('https://fluxx.d.calebj.io/api/games', {
 		method: 'POST',
 		credentials: 'include',
 		body: JSON.stringify( {
-			free_join: false,
-			max_players: 6
+			free_join: freeJoin,
+			max_players: maxPlayers,
+			password: hasPassword ? password : null
 		} )
 	});
 };
 
-const joinGame = ( { id } ) => dispatch => {
+const joinGame = ( { id, password } ) => dispatch => {
 	fetch('https://fluxx.d.calebj.io/api/games/' + id + '?join', {
 		method: 'POST',
 		credentials: 'include'
