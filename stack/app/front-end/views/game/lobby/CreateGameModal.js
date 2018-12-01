@@ -45,7 +45,12 @@ const createGameModal = ( { show, maxPlayersSelectValue, freeJoinSwitchValue,
 
 		<DialogTitle>Create Game</DialogTitle>
 
-		<form onSubmit={ null } >
+		<form onSubmit={ createGame( { 
+							freeJoin: freeJoinSwitchValue, 
+							maxPlayers: maxPlayersSelectValue, 
+							hasPassword: passwordSwitchValue,
+							password: passwordTextFieldValue
+						} )  } >
 
 			<DialogContent>
 
@@ -125,15 +130,7 @@ const createGameModal = ( { show, maxPlayersSelectValue, freeJoinSwitchValue,
 				</Button>
 				<Button 
 					type='submit' 
-					color='primary' 
-					onClick={ 
-						createGame( { 
-							freeJoin: freeJoinSwitchValue, 
-							maxPlayers: maxPlayersSelectValue, 
-							hasPassword: passwordSwitchValue,
-							password: passwordTextFieldValue
-						} ) 
-					} 
+					color='primary'
 				>
 					Create Game
 				</Button>
