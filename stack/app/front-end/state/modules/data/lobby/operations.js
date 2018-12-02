@@ -51,7 +51,9 @@ const createGame = ( { maxPlayers, freeJoin, hasPassword, password } ) => dispat
 };
 
 const joinGame = ( { id, password } ) => dispatch => {
-	fetch('https://fluxx.d.calebj.io/api/games/' + id + '?join', {
+	const passwordString = password ? '&password=' + password : '';
+
+	fetch('https://fluxx.d.calebj.io/api/games/' + id + '?join' + passwordString, {
 		method: 'POST',
 		credentials: 'include'
 	});

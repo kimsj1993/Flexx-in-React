@@ -18,7 +18,10 @@ const Transition = props => <Slide direction='down' { ...props } />;
 
 const mapDispatchToProps = dispatch => ( {
 	handleClose: () => dispatch( passwordModalUIOperations.hideModal() ),
-	joinGame: ( { id, password }) => () => dispatch( lobbyOperations.joinGame( { id, password } ) ),
+	joinGame: ( { id, password }) => e => {
+		e.preventDefault();
+		dispatch( lobbyOperations.joinGame( { id, password } ) );
+	},
 	handleInputChange: e => dispatch( passwordModalUIOperations.updateTextField( { value: e.target.value } ) )
 } );
 
