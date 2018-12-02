@@ -1,0 +1,1 @@
+const CHECK_ROUTE = 'app/modules/router/CHECK_ROUTE';

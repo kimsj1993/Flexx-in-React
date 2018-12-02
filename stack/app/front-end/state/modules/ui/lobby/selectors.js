@@ -22,7 +22,7 @@ const getProps = state => ( {
 			},
 
 			created: new Date( room.created ).toLocaleTimeString(),
-			started: room.started ? new Date( room.started ).toLocaleTimeString() : 'No',
+			started: room.started ? 'Yes' : 'No',
 
 			freeJoin: room.freeJoin ? 'Yes' : 'No',
 			hasPassword: room.password,
