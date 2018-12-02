@@ -257,6 +257,14 @@ const gameTurnBegin = ( { game_id, player_id, plays_remaining } ) => ( dispatch,
 const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	console.log('user socket event: GAME_SYNC, with data: ', game, state );
 
+	dispatch( playersOperations.clearPlayers() );
+
+	game.player_states.forEach( player => dispatch( playersOperations.addPlayer( {
+		id: player.player_id, keeperIds: player.keepers, playsLeft: player.plays_left,
+		tempPlaysLeft: player.plays_left_t, position: player.position, cards: player.hand_size,
+		tempCards: player.temp_hand_size
+	} ) ) );
+
 	dispatch( gameOperations.initGame( { id: game.id } ) );
 
 	dispatch( gameOperations.updateGame( { turn: game.current_player_id } ) );
@@ -269,14 +277,6 @@ const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	dispatch( tableOperations.updateDrawRule( { count: game.draw_num } ) );
 	dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
 	dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
-
-	dispatch( playersOperations.clearPlayers() );
-
-	game.player_states.forEach( player => dispatch( playersOperations.addPlayer( {
-		id: player.player_id, keeperIds: player.keepers, playsLeft: player.plays_left,
-		tempPlaysLeft: player.plays_left_t, position: player.position, cards: player.hand_size,
-		tempCards: player.temp_hand_size
-	} ) ) );
 
 	dispatch( handOperations.replaceHand( { ids: state.hand } ) );
 	dispatch( handOperations.replaceTempHand( { ids: state.temp_hand } ) );
@@ -299,6 +299,8 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		KEEPER: 'keeper'
 	};
 
+	dispatch( usersOperations.replaceUsers( { users } ) );
+
 	dispatch( cardsOperations.addCards( { cards: cards.map( card => ( {
 		id: card.id,
 		name: card.name,
@@ -317,8 +319,6 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		maxPlayers: room.max_players,
 		playerIds: room.player_ids
 	} ) ) } ) );
-
-	dispatch( usersOperations.replaceUsers( { users } ) );
 }
 
 export {

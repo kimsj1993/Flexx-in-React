@@ -3,11 +3,17 @@ import { combineReducers } from 'redux';
 import { default as login } from './login';
 import { default as gameInfoTab } from './game-info-tab';
 import { default as chat } from './chat';
+import { default as lobby } from './lobby';
+import { default as passwordModal } from './password-modal';
+import { default as createGameModal } from './create-game-modal';
 
 const reducer = combineReducers( {
 	login,
 	gameInfoTab,
-	chat
+	chat,
+	lobby,
+	passwordModal,
+	createGameModal
 } );
 
 export default reducer;
