@@ -24,9 +24,9 @@ const mapDispatchToProps = dispatch => ( {
 
 const LeaveButton = ( { activeGame, gameStarted, isHost, leaveGame, deleteGame, logout } ) => (
 	<div>
-	{ activeGame && isHost && ( <Button color='primary' variant='contained' onClick={ deleteGame }>Delete Game</Button> ) }
-	{ activeGame && !isHost && ( <Button color='primary' variant='contained' onClick={ leaveGame }>Leave Game</Button> ) }
-	{ !activeGame && ( <Button color='primary' variant='contained' onClick={ logout }>Log Out</Button> ) }
+	{ activeGame && isHost && ( <Button color='secondary' variant='contained' onClick={ deleteGame }>Delete Game</Button> ) }
+	{ activeGame && !isHost && ( <Button color='secondary' variant='contained' onClick={ leaveGame }>Leave Game</Button> ) }
+	{ !activeGame && ( <Button color='secondary' variant='contained' onClick={ logout }>Log Out</Button> ) }
 	</div>
 );
 

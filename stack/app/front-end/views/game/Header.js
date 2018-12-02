@@ -37,7 +37,6 @@ const Header = ({ classes }) => (
 			<Toolbar classes={{ root: classes.toolbarRoot }}>
 				<LeaveButton />
 				<div className={ classes.grow } />
-				<Button classes={{ root: classes.buttonRoot }} variant='contained' color='secondary'>Help</Button>
 			</Toolbar>
 		</AppBar>
 	</div>
