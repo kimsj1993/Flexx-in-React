@@ -42,7 +42,11 @@ const createGame = ( { maxPlayers, freeJoin, hasPassword, password } ) => dispat
 			free_join: freeJoin,
 			max_players: maxPlayers,
 			password: hasPassword ? password : null
-		} )
+		} ),
+		headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json'
+		},
 	});
 };
 
