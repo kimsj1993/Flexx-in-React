@@ -10,6 +10,7 @@ import { roomOperations, roomSelectors } from '../data/room';
 import { tableOperations, tableSelectors } from '../data/table';
 import { userOperations, userSelectors } from '../user';
 import { usersOperations, usersSelectors } from '../data/users';
+import { appUIOperations } from '../ui/app';
 
 const socketConnect = actions.socketConnect;
 const socketDisconnect = actions.socketDisconnect;
@@ -257,6 +258,8 @@ const gameTurnBegin = ( { game_id, player_id, plays_remaining } ) => ( dispatch,
 const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	console.log('user socket event: GAME_SYNC, with data: ', game, state );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( playersOperations.clearPlayers() );
 
 	game.player_states.forEach( player => dispatch( playersOperations.addPlayer( {
@@ -280,6 +283,8 @@ const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 
 	dispatch( handOperations.replaceHand( { ids: state.hand } ) );
 	dispatch( handOperations.replaceTempHand( { ids: state.temp_hand } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const userHandUpdate = ( { game_id, hand, temp_hand } ) => ( dispatch, getState ) => {
@@ -291,6 +296,8 @@ const userHandUpdate = ( { game_id, hand, temp_hand } ) => ( dispatch, getState 
 
 const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 	console.log('user socket event: HELLO, with data: ', cards, games, users );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	const typeMapping = {
 		NEW_RULE: 'rule',
@@ -319,6 +326,8 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		maxPlayers: room.max_players,
 		playerIds: room.player_ids
 	} ) ) } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 }
 
 export {

@@ -6,8 +6,6 @@ import withRedux from "next-redux-wrapper";
 
 import { ConnectedRouter } from 'connected-next-router';
 
-//import withReduxStore from '../utils/with-redux-store';
-
 import configureStore from '../state/store.js';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -15,9 +13,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../utils/getPageContext';
 
+import { routerOperations } from '../state/modules/router';
 import { socketOperations } from '../state/modules/socket';
-
-import LoginProvider from '../utils/LoginProvider';
 
 class MyApp extends App {
   constructor(props) {
@@ -34,7 +31,7 @@ class MyApp extends App {
 
     const { store } = this.props;
 
-    store.dispatch( socketOperations.socketConnect() );
+    store.dispatch( routerOperations.checkRoute() );
 
   }
 
@@ -74,11 +71,7 @@ class MyApp extends App {
                 {/* Pass pageContext to the _document though the renderPage enhancer
                     to render collected styles on server side. */}
 
-                <LoginProvider>
-
-                  <Component pageContext={this.pageContext} {...pageProps} />
-
-                </LoginProvider>
+                <Component pageContext={this.pageContext} {...pageProps} />
                 
               </MuiThemeProvider>
               

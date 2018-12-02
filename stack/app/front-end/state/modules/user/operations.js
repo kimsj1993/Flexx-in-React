@@ -1,11 +1,9 @@
 import * as actions from "./actions";
 
-const initUser = actions.initUser;
-const updateUser = actions.updateUser;
-const clearUser = actions.clearUser;
+const login = actions.login;
+const logout = actions.logout;
 
 export {
-	initUser,
-	updateUser,
-	clearUser
+	login,
+	logout
 };
