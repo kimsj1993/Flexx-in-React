@@ -6,8 +6,8 @@ import * as types from "./types";
 {
 	show: Boolean,
 	value: String,
-	error: Boolean,
-	errorText: String,
+	loading: Boolean,
+	error: String || null,
 	id: gameId || null
 }
 */
@@ -34,22 +34,28 @@ const value = handleActions(
 
 const error = handleActions(
 	{
-		[ types.INPUT_ERROR ]: () => true,
+		[ types.JOIN_GAME_ERROR ]: ( state, { payload } ) => payload.response.message,
+
+		[ types.HIDE_MODAL ]: () => null,
+
+		[ types.UPDATE_TEXT_FIELD ]: () => null,
+
+		[ types.JOIN_GAME_LOADING ]: () => null
+	},
+
+	null
+);
+
+const loading = handleActions(
+	{
+		[ types.JOIN_GAME_LOADING ]: () => true,
+
+		[ types.JOIN_GAME_ERROR ]: () => false,
 
 		[ types.HIDE_MODAL ]: () => false
 	},
 
 	false
-);
-
-const errorText = handleActions(
-	{
-		[ types.INPUT_ERROR ]: ( state, { payload } ) => payload,
-
-		[ types.HIDE_MODAL ]: () => ''
-	},
-
-	''
 );
 
 const id = handleActions(
@@ -66,7 +72,7 @@ const reducer = combineReducers( {
 	show,
 	value,
 	error,
-	errorText,
+	loading,
 	id
 } );
 

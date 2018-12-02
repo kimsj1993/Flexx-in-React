@@ -8,7 +8,9 @@ import * as types from "./types";
 	maxPlayersSelectValue: Number,
 	freeJoinSwitchValue: Boolean,
 	passwordSwitchValue: Boolean,
-	passwordTextFieldValue: String
+	passwordTextFieldValue: String,
+	loading: Boolean,
+	error: String || null
 }
 */
 
@@ -64,12 +66,46 @@ const passwordTextFieldValue = handleActions(
 	''
 );
 
+const loading = handleActions(
+	{
+		[ types.CREATE_GAME_LOADING ]: () => true,
+
+		[ types.HIDE_DIALOG ]: () => false,
+
+		[ types.CREATE_GAME_ERROR ]: () => false
+	},
+
+	false
+);
+
+const error = handleActions(
+	{
+		[ types.CREATE_GAME_ERROR ]: ( state, { payload } ) => payload.message,
+
+		[ types.HIDE_DIALOG ]: () => null,
+
+		[ types.UPDATE_MAX_PLAYERS_SELECT ]: () => null,
+
+		[ types.UPDATE_FREE_JOIN_SWITCH ]: () => null,
+
+		[ types.UPDATE_PASSWORD_SWITCH ]: () => null,
+
+		[ types.UPDATE_PASSWORD_TEXT_FIELD ]: () => null,
+
+		[ types.CREATE_GAME_LOADING ]: () => null
+	},
+
+	null
+);
+
 const reducer = combineReducers( {
 	show,
 	maxPlayersSelectValue,
 	freeJoinSwitchValue,
 	passwordSwitchValue,
-	passwordTextFieldValue
+	passwordTextFieldValue,
+	loading,
+	error
 } );
 
 export default reducer;

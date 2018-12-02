@@ -8,12 +8,18 @@ const getPasswordSwitchValue = state => state.ui.createGameModal.passwordSwitchV
 
 const getPasswordTextFieldValue = state => state.ui.createGameModal.passwordTextFieldValue;
 
+const getError = state => state.ui.createGameModal.error;
+
+const getLoading = state => state.ui.createGameModal.loading;
+
 const getProps = state => ( {
 	show: isVisible( state ),
 	maxPlayersSelectValue: getMaxPlayersSelectValue( state ),
 	freeJoinSwitchValue: getFreeJoinSwitchValue( state ),
 	passwordSwitchValue: getPasswordSwitchValue( state ),
-	passwordTextFieldValue: getPasswordTextFieldValue( state )
+	passwordTextFieldValue: getPasswordTextFieldValue( state ),
+	error: getError( state ),
+	loading: getLoading( state )
 } );
 
 export {

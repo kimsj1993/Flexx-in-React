@@ -3,6 +3,7 @@ import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { createSocketMiddleware } from './middleware/socketMiddleware';
 import { createRouterMiddleware, initialRouterState } from 'connected-next-router';
+import { apiMiddleware } from 'redux-api-middleware';
 import { createLogger } from 'redux-logger';
 
 import * as reducers from './modules';
@@ -27,6 +28,7 @@ export default function configureStore( initialState = {}, options ) {
 		rootReducer,
 		initialState,
 		applyMiddleware(
+			apiMiddleware,
 			thunkMiddleware,
 			createSocketMiddleware( 'https://fluxx.d.calebj.io' ),
 			routerMiddleware,

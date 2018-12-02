@@ -5,6 +5,7 @@ import { createGameModalUISelectors, createGameModalUIOperations } from '../../.
 import { lobbyOperations } from '../../../state/modules/data/lobby';
 
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Collapse from '@material-ui/core/Collapse';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -32,116 +33,134 @@ const mapDispatchToProps = dispatch => ( {
 	handlePasswordTextFieldChange: e => dispatch( createGameModalUIOperations.updatePasswordTextField( { value: e.target.value } ) ),
 	createGame: ( { freeJoin, maxPlayers, hasPassword, password } ) => e => {
 		e.preventDefault();
-		dispatch( lobbyOperations.createGame( { freeJoin, maxPlayers, hasPassword, password } ) );
+		dispatch( createGameModalUIOperations.createGame( { freeJoin, maxPlayers, hasPassword, password } ) );
 	}
 } );
 
-const createGameModal = ( { show, maxPlayersSelectValue, freeJoinSwitchValue,
-	passwordSwitchValue, passwordTextFieldValue, handleClose, 
+const CreateGameForm = ( { maxPlayersSelectValue, freeJoinSwitchValue,
+	passwordSwitchValue, passwordTextFieldValue, 
 	handleMaxPlayersSelectChange, handleFreeJoinSwitchChange,
-	handlePasswordSwitchChange, handlePasswordTextFieldChange, createGame
+	handlePasswordSwitchChange, handlePasswordTextFieldChange, createGame,
+	error, handleClose
+} ) => (
+	<>
+	<DialogTitle>Create Game</DialogTitle>
+
+	<form onSubmit={ createGame( { 
+						freeJoin: freeJoinSwitchValue, 
+						maxPlayers: maxPlayersSelectValue, 
+						hasPassword: passwordSwitchValue,
+						password: passwordTextFieldValue
+					} )  } >
+
+		<DialogContent>
+
+			<TextField
+				select
+				label='Maximum Players'
+				value={ maxPlayersSelectValue }
+				onChange={ handleMaxPlayersSelectChange }
+				helperText='Please select the maximum number of players allowed in this game.'
+				fullWidth
+				required
+			>
+
+				<MenuItem key={ 2 } value={ 2 } > 2 </MenuItem>
+				<MenuItem key={ 3 } value={ 3 } > 3 </MenuItem>
+				<MenuItem key={ 4 } value={ 4 } > 4 </MenuItem>
+				<MenuItem key={ 5 } value={ 5 } > 5 </MenuItem>
+				<MenuItem key={ 6 } value={ 6 } > 6 </MenuItem>
+
+			</TextField>
+
+			<FormControl>
+
+				<FormGroup>
+
+					<FormControlLabel
+						control={
+							<Switch
+								checked={ freeJoinSwitchValue }
+								onChange={ handleFreeJoinSwitchChange }
+								value={ freeJoinSwitchValue }
+							/>
+						}
+						label='Free Join?'
+					/>
+
+				</FormGroup>
+
+				<FormHelperText> Select whether players can join after the game has started. </FormHelperText>
+
+				<FormGroup>
+
+					<FormControlLabel
+						control={
+							<Switch
+								checked={ passwordSwitchValue }
+								onChange={ handlePasswordSwitchChange }
+								value={ passwordSwitchValue }
+							/>
+						}
+						label='Require Password'
+					/>
+
+				</FormGroup>
+
+				<FormHelperText> Select whether a password is required to join this game. </FormHelperText>
+
+			</FormControl>
+
+			<Collapse in={ passwordSwitchValue }>
+				<TextField
+					label='Password'
+					value={ passwordTextFieldValue }
+					onChange={ handlePasswordTextFieldChange }
+					helperText='Input a password.'
+					fullWidth
+					required={ passwordSwitchValue }
+					disabled={ !passwordSwitchValue }
+				/>
+			</Collapse>
+
+		</DialogContent>
+
+		<DialogActions>
+			<Button onClick={ handleClose }>
+				Cancel
+			</Button>
+			<Button 
+				type='submit' 
+				color='primary'
+			>
+				Create Game
+			</Button>
+		</DialogActions>
+
+	</form>
+	</>
+);
+
+const styles = theme => ( {
+	loadingRoot: {
+		margin: 64
+	}
+} );
+
+let CreateGameModal = ( { classes, show, loading, handleClose, ...rest
 }) => (
 	<Dialog open={ show } onClose={ handleClose } TransitionComponent={ SlideTransition } >
 
-		<DialogTitle>Create Game</DialogTitle>
-
-		<form onSubmit={ createGame( { 
-							freeJoin: freeJoinSwitchValue, 
-							maxPlayers: maxPlayersSelectValue, 
-							hasPassword: passwordSwitchValue,
-							password: passwordTextFieldValue
-						} )  } >
-
-			<DialogContent>
-
-				<TextField
-					select
-					label='Maximum Players'
-					value={ maxPlayersSelectValue }
-					onChange={ handleMaxPlayersSelectChange }
-					helperText='Please select the maximum number of players allowed in this game.'
-					fullWidth
-					required
-				>
-
-					<MenuItem key={ 2 } value={ 2 } > 2 </MenuItem>
-					<MenuItem key={ 3 } value={ 3 } > 3 </MenuItem>
-					<MenuItem key={ 4 } value={ 4 } > 4 </MenuItem>
-					<MenuItem key={ 5 } value={ 5 } > 5 </MenuItem>
-					<MenuItem key={ 6 } value={ 6 } > 6 </MenuItem>
-
-				</TextField>
-
-				<FormControl>
-
-					<FormGroup>
-
-						<FormControlLabel
-							control={
-								<Switch
-									checked={ freeJoinSwitchValue }
-									onChange={ handleFreeJoinSwitchChange }
-									value={ freeJoinSwitchValue }
-								/>
-							}
-							label='Free Join?'
-						/>
-
-					</FormGroup>
-
-					<FormHelperText> Select whether players can join after the game has started. </FormHelperText>
-
-					<FormGroup>
-
-						<FormControlLabel
-							control={
-								<Switch
-									checked={ passwordSwitchValue }
-									onChange={ handlePasswordSwitchChange }
-									value={ passwordSwitchValue }
-								/>
-							}
-							label='Require Password'
-						/>
-
-					</FormGroup>
-
-					<FormHelperText> Select whether a password is required to join this game. </FormHelperText>
-
-				</FormControl>
-
-				<Collapse in={ passwordSwitchValue }>
-					<TextField
-						label='Password'
-						value={ passwordTextFieldValue }
-						onChange={ handlePasswordTextFieldChange }
-						helperText='Input a password.'
-						fullWidth
-						required={ passwordSwitchValue }
-						disabled={ !passwordSwitchValue }
-					/>
-				</Collapse>
-
-			</DialogContent>
-
-			<DialogActions>
-				<Button onClick={ handleClose }>
-					Cancel
-				</Button>
-				<Button 
-					type='submit' 
-					color='primary'
-				>
-					Create Game
-				</Button>
-			</DialogActions>
-
-		</form>
+		{ loading ? 
+			<CircularProgress color='primary' classes={ { root: classes.loadingRoot } } /> : 
+			<CreateGameForm { ...rest } handleClose={ handleClose } /> }
 
 	</Dialog>
 );
 
+CreateGameModal = withStyles( styles )( CreateGameModal );
+
 export default connect(
 	createGameModalUISelectors.getProps,
 	mapDispatchToProps
-)( createGameModal );
+)( CreateGameModal );

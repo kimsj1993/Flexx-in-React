@@ -1,5 +1,6 @@
 import * as types from './types';
 import { createAction } from 'redux-actions';
+import { createApiAction } from '../../../utils/redux-api-middleware-utils';
 
 const showDialog = createAction( types.SHOW_DIALOG );
 const hideDialog = createAction( types.HIDE_DIALOG );
@@ -24,11 +25,34 @@ const updatePasswordTextField = createAction(
 	( { value } ) => value
 );
 
+const createGame = createApiAction(
+	{
+		endpoint: 'https://fluxx.d.calebj.io/api/games',
+		method: 'POST',
+		credentials: 'include',
+		headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json'
+		},
+		types: [
+			types.CREATE_GAME_LOADING, types.HIDE_DIALOG, types.CREATE_GAME_ERROR
+		]
+	},
+	( rsaa, { maxPlayers, freeJoin, hasPassword, password } ) => ( {
+		body: JSON.stringify( {
+			free_join: freeJoin,
+			max_players: maxPlayers,
+			password: hasPassword ? password : null
+		} )
+	} )
+);
+
 export {
 	showDialog,
 	hideDialog,
 	updateMaxPlayersSelect,
 	updateFreeJoinSwitch,
 	updatePasswordSwitch,
-	updatePasswordTextField
+	updatePasswordTextField,
+	createGame
 };
