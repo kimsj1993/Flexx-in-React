@@ -2,10 +2,12 @@ import * as types from "./types";
 import { createApiAction } from '../../utils/redux-api-middleware-utils';
 
 import { userOperations } from '../user';
+import { routerOperations } from '../router';
 
 const getSession = ( args ) => ( {
 	onSuccess: payload => dispatch => {
-		dispatch( userOperations.login( { id: payload.user.id } ) )
+		if ( Object.keys( payload.user || {} ).length )
+			dispatch( userOperations.login( { id: payload.user.id } ) )
 	},
 	...( createApiAction(
 		{
@@ -21,7 +23,8 @@ const getSession = ( args ) => ( {
 
 const createSession = ( args ) => ( {
 	onSuccess: payload => dispatch => {
-		userOperations.login( { id: payload.user.id } )
+		dispatch( userOperations.login( { id: payload.user.id } ) ),
+		dispatch( routerOperations.checkRoute() );
 	},
 	... ( createApiAction(
 		{
@@ -60,16 +63,22 @@ const updateSession = createApiAction(
 	} )
 );
 
-const deleteSession = createApiAction(
-	{
-		endpoint: 'https://fluxx.d.calebj.io/api/session',
-		method: 'DELETE',
-		credentials: 'include'
+const deleteSession = ( args ) => ( {
+	onSuccess: payload => dispatch => {
+		dispatch( userOperations.logout() );
+		dispatch( routerOperations.checkRoute() );
 	},
-	( rsaa, { types } ) => ( {
-		types
-	} )
-);
+	...( createApiAction(
+		{
+			endpoint: 'https://fluxx.d.calebj.io/api/session',
+			method: 'DELETE',
+			credentials: 'include'
+		},
+		( rsaa, { types } ) => ( {
+			types
+		} )
+	)( args ) )
+} );
 
 const createGame = createApiAction(
 	{

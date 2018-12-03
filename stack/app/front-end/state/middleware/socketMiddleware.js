@@ -31,10 +31,10 @@ const createSocketMiddleware = url => {
 
 					socket.close();
 
+					onSocketDisconnect( socket );
+
 					socket = null;
 					connected = false;
-
-					onSocketDisconnect( socket );
 
 				}
 

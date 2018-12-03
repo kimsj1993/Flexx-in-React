@@ -6,11 +6,7 @@ const apiMiddlewareWrapper = ( { getState, dispatch } ) => next => action => {
 		return next( action );
 	}
 
-	console.log( action )
-
 	const { onSuccess, onFailure, ...rsaaAction } = action;
-
-	console.log ( rsaaAction, isValidRSAA( rsaaAction ) );
 
 	if ( !onSuccess && !onFailure ) {
 		return next( rsaaAction );
@@ -22,7 +18,7 @@ const apiMiddlewareWrapper = ( { getState, dispatch } ) => next => action => {
 
 			dispatch( onFailure( response.error ) )
 
-		} else if ( onSuccess ) {
+		} else if ( !response.error && onSuccess ) {
 
 			dispatch( onSuccess( response.payload ) );
 

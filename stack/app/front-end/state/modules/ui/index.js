@@ -7,6 +7,7 @@ import { default as lobby } from './lobby';
 import { default as passwordModal } from './password-modal';
 import { default as createGameModal } from './create-game-modal';
 import { default as app } from './app';
+import { default as logoutModal } from './logout-modal';
 
 const reducer = combineReducers( {
 	login,
@@ -15,7 +16,8 @@ const reducer = combineReducers( {
 	lobby,
 	passwordModal,
 	createGameModal,
-	app
+	app,
+	logoutModal
 } );
 
 export default reducer;

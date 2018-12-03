@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { loginSelectors, loginOperations } from '../state/modules/ui/login';
+import { loginSelectors, loginOperations, loginTypes } from '../state/modules/ui/login';
 
 import { Router } from '../routes';
 
@@ -11,9 +11,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { appUISelectors } from '../state/modules/ui/app';
 
+import { apiOperations } from '../state/modules/api';
+
 const mapStateToProps = ( state ) => ( {
-	value: loginSelectors.getValue( state ),
-	...appUISelectors.getProps( state )
+	...appUISelectors.getProps( state ),
+	...loginSelectors.getProps( state )
 } );
 
 class Main extends Component {
@@ -26,11 +28,26 @@ class Main extends Component {
 		dispatch( loginOperations.updateLoginForm( e.target.value ) );
 	}
 
+	handleLogin = e => {
+		e.preventDefault();
+
+		const { dispatch } = this.props;
+
+		dispatch( apiOperations.createSession( {
+			types: [
+				loginTypes.LOGIN_REQUEST,
+				loginTypes.LOGIN_SUCCESS,
+				loginTypes.LOGIN_ERROR
+			],
+			username: this.props.value
+		} ) );
+	}
+
 	render () {
-		const { value, loading } = this.props;
+		const { value, loading, error } = this.props;
 
 		return (
-			loading ? <CircularProgress /> : <LoginForm value={ value } handleChange={ this.handleChange } handleLogin={ this.handleLogin } />
+			loading ? <CircularProgress /> : <LoginForm { ...this.props } handleChange={ this.handleChange } handleLogin={ this.handleLogin } />
 		);
 	};
 }

@@ -12,6 +12,8 @@ import LobbyContainer from '../views/game/lobby/LobbyContainer';
 import RoomContainer from '../views/game/room/RoomContainer';
 import Header from '../views/game/Header';
 
+import LogoutModal from '../views/LogoutModal';
+
 const mapStateToProps = ( state, ownProps ) => {
 	const activeGame = state.data.game.active;
 	const gameStarted = activeGame && state.data.lobby.byId[ state.data.game.id ] && state.data.lobby.byId[ state.data.game.id ].started;
@@ -39,6 +41,7 @@ class Game extends Component {
 
 		return (
 			<div>
+				<LogoutModal />
 				{ loading ? <CircularProgress /> : <GameScreen activeGame={ activeGame } gameStarted={ gameStarted } /> }
 			</div>
 		);
