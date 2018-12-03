@@ -6,6 +6,8 @@ const value = (state = '', action) => {
 	switch(action.type) {
 		case types.UPDATE_LOGIN_FORM:
 			return action.payload;
+		case types.LOGIN_SUCCESS:
+			return '';
 		default: return state;
 	};
 };
