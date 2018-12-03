@@ -11,6 +11,7 @@ import Gameplay from '../views/game/gameplay/Gameplay';
 import LobbyContainer from '../views/game/lobby/LobbyContainer';
 import RoomContainer from '../views/game/room/RoomContainer';
 import Header from '../views/game/Header';
+import WinModal from '../views/game/WinModal';
 
 import LogoutModal from '../views/LogoutModal';
 
@@ -28,6 +29,7 @@ const mapStateToProps = ( state, ownProps ) => {
 const GameScreen = ( { activeGame, gameStarted } ) => (
 	<>
 		<Header />
+		<WinModal />
 		{ !activeGame && <LobbyContainer /> }
 		{ activeGame && !gameStarted && <RoomContainer /> }
 		{ gameStarted && <Gameplay /> }

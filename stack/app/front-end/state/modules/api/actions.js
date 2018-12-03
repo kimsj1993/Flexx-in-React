@@ -224,7 +224,7 @@ const gameInvokeAction = createApiAction(
 
 const gameDiscardCard = createApiAction(
 	{
-		endpoint: id => `https://fluxx.d.calebj.io/api/games/${id}`,
+		endpoint: id => `https://fluxx.d.calebj.io/api/games/${id}?discard`,
 		method: 'POST',
 		credentials: 'include',
 		headers: {

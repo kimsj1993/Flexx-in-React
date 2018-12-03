@@ -31,6 +31,10 @@ export const onSocketConnect = dispatch => socket => {
 				dispatch( socketOperations.globalGameUserLeave( { game_id: data.game_id, user_id: data.user_id } ) );
 				break;
 
+			case 'GAME_VICTORY':
+				dispatch( socketOperations.globalGameVictory( { game_id: data.game_id, user_id: data.user_id } ) );
+				break;
+
 			case 'USER_LOGIN':
 				dispatch( socketOperations.globalUserLogin( { user: data.user } ) );
 				break;
@@ -66,6 +70,9 @@ export const onSocketConnect = dispatch => socket => {
 				break;
 			case 'DISCARD_REMOVE':
 				dispatch( socketOperations.gameDiscardRemove( { card_id: data.card_id, game_id: data.game_id } ) );
+				break;
+			case 'GAME_UPDATE':
+				dispatch( socketOperations.gameGameUpdate( { game: data.game } ) );
 				break;
 			case 'GOAL_UPDATE':
 				dispatch( socketOperations.gameGoalUpdate( { game_id: data.game_id, goals: data.goals } ) );

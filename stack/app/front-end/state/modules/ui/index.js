@@ -8,6 +8,9 @@ import { default as passwordModal } from './password-modal';
 import { default as createGameModal } from './create-game-modal';
 import { default as app } from './app';
 import { default as logoutModal } from './logout-modal';
+import { default as actionModeSelects } from './action-mode-selects';
+import { default as discardCardsModal } from './discard-cards-modal';
+import { default as winModal } from './win-modal';
 
 const reducer = combineReducers( {
 	login,
@@ -17,7 +20,10 @@ const reducer = combineReducers( {
 	passwordModal,
 	createGameModal,
 	app,
-	logoutModal
+	logoutModal,
+	actionModeSelects,
+	discardCardsModal,
+	winModal
 } );
 
 export default reducer;

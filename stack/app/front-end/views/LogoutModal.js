@@ -35,7 +35,6 @@ const LogoutForm = ( {
 	value, error, handleClose, id, logout
 } ) => (
 	<>
-	<DialogTitle>Join Game</DialogTitle>
 	<form onSubmit={ logout } >
 		<DialogContent>
 

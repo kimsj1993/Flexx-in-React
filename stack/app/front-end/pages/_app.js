@@ -13,6 +13,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../utils/getPageContext';
 
+import { SnackbarProvider } from 'notistack';
+
 import { routerOperations } from '../state/modules/router';
 import { socketOperations } from '../state/modules/socket';
 
@@ -51,33 +53,35 @@ class MyApp extends App {
       <Container>
 
         <Provider store={ store }>
-          <ConnectedRouter>
+          <SnackbarProvider>
+            <ConnectedRouter>
 
-            {/* Wrap every page in Jss and Theme providers */}
-            <JssProvider
-              registry={this.pageContext.sheetsRegistry}
-              generateClassName={this.pageContext.generateClassName}
-            >
-              
-              {/* MuiThemeProvider makes the theme available down the React
-                  tree thanks to React context. */}
-              <MuiThemeProvider
-                theme={this.pageContext.theme}
-                sheetsManager={this.pageContext.sheetsManager}
+              {/* Wrap every page in Jss and Theme providers */}
+              <JssProvider
+                registry={this.pageContext.sheetsRegistry}
+                generateClassName={this.pageContext.generateClassName}
               >
-
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                {/* Pass pageContext to the _document though the renderPage enhancer
-                    to render collected styles on server side. */}
-
-                <Component pageContext={this.pageContext} {...pageProps} />
                 
-              </MuiThemeProvider>
-              
-            </JssProvider>
+                {/* MuiThemeProvider makes the theme available down the React
+                    tree thanks to React context. */}
+                <MuiThemeProvider
+                  theme={this.pageContext.theme}
+                  sheetsManager={this.pageContext.sheetsManager}
+                >
 
-          </ConnectedRouter>
+                  {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                  <CssBaseline />
+                  {/* Pass pageContext to the _document though the renderPage enhancer
+                      to render collected styles on server side. */}
+
+                  <Component pageContext={this.pageContext} {...pageProps} />
+                  
+                </MuiThemeProvider>
+                
+              </JssProvider>
+
+            </ConnectedRouter>
+          </SnackbarProvider>
 
         </Provider>
 
