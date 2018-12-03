@@ -12,6 +12,9 @@ const createSocketMiddleware = url => {
 		switch( action.type ) {
 
 			case socketTypes.SOCKET_CONNECT:
+
+				console.log( 'connecting ');
+
 				if ( !connected ) {
 
 					socket = io( url );
@@ -28,10 +31,10 @@ const createSocketMiddleware = url => {
 
 					socket.close();
 
+					onSocketDisconnect( socket );
+
 					socket = null;
 					connected = false;
-
-					onSocketDisconnect( socket );
 
 				}
 

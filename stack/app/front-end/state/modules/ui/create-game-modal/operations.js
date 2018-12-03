@@ -6,6 +6,7 @@ const updateMaxPlayersSelect = actions.updateMaxPlayersSelect;
 const updateFreeJoinSwitch = actions.updateFreeJoinSwitch;
 const updatePasswordSwitch = actions.updatePasswordSwitch;
 const updatePasswordTextField = actions.updatePasswordTextField;
+const createGame = actions.createGame;
 
 export {
 	showDialog,
@@ -13,5 +14,6 @@ export {
 	updateMaxPlayersSelect,
 	updateFreeJoinSwitch,
 	updatePasswordSwitch,
-	updatePasswordTextField
+	updatePasswordTextField,
+	createGame
 };

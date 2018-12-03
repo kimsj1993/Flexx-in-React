@@ -35,8 +35,9 @@ const Header = ({ classes }) => (
 	<div className={ classes.root } >
 		<AppBar position='static' classes={{ root: classes.appBarRoot }}>
 			<Toolbar classes={{ root: classes.toolbarRoot }}>
-				<LeaveButton />
+				
 				<div className={ classes.grow } />
+				<LeaveButton />
 			</Toolbar>
 		</AppBar>
 	</div>

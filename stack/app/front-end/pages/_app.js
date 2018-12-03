@@ -6,8 +6,6 @@ import withRedux from "next-redux-wrapper";
 
 import { ConnectedRouter } from 'connected-next-router';
 
-//import withReduxStore from '../utils/with-redux-store';
-
 import configureStore from '../state/store.js';
 
 import { MuiThemeProvider } from '@material-ui/core/styles';
@@ -15,9 +13,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import JssProvider from 'react-jss/lib/JssProvider';
 import getPageContext from '../utils/getPageContext';
 
-import { socketOperations } from '../state/modules/socket';
+import { SnackbarProvider } from 'notistack';
 
-import LoginProvider from '../utils/LoginProvider';
+import { routerOperations } from '../state/modules/router';
+import { socketOperations } from '../state/modules/socket';
 
 class MyApp extends App {
   constructor(props) {
@@ -34,7 +33,7 @@ class MyApp extends App {
 
     const { store } = this.props;
 
-    store.dispatch( socketOperations.socketConnect() );
+    store.dispatch( routerOperations.checkRoute() );
 
   }
 
@@ -54,37 +53,35 @@ class MyApp extends App {
       <Container>
 
         <Provider store={ store }>
-          <ConnectedRouter>
+          <SnackbarProvider>
+            <ConnectedRouter>
 
-            {/* Wrap every page in Jss and Theme providers */}
-            <JssProvider
-              registry={this.pageContext.sheetsRegistry}
-              generateClassName={this.pageContext.generateClassName}
-            >
-              
-              {/* MuiThemeProvider makes the theme available down the React
-                  tree thanks to React context. */}
-              <MuiThemeProvider
-                theme={this.pageContext.theme}
-                sheetsManager={this.pageContext.sheetsManager}
+              {/* Wrap every page in Jss and Theme providers */}
+              <JssProvider
+                registry={this.pageContext.sheetsRegistry}
+                generateClassName={this.pageContext.generateClassName}
               >
+                
+                {/* MuiThemeProvider makes the theme available down the React
+                    tree thanks to React context. */}
+                <MuiThemeProvider
+                  theme={this.pageContext.theme}
+                  sheetsManager={this.pageContext.sheetsManager}
+                >
 
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                {/* Pass pageContext to the _document though the renderPage enhancer
-                    to render collected styles on server side. */}
-
-                <LoginProvider>
+                  {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                  <CssBaseline />
+                  {/* Pass pageContext to the _document though the renderPage enhancer
+                      to render collected styles on server side. */}
 
                   <Component pageContext={this.pageContext} {...pageProps} />
-
-                </LoginProvider>
+                  
+                </MuiThemeProvider>
                 
-              </MuiThemeProvider>
-              
-            </JssProvider>
+              </JssProvider>
 
-          </ConnectedRouter>
+            </ConnectedRouter>
+          </SnackbarProvider>
 
         </Provider>
 

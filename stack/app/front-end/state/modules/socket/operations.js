@@ -10,6 +10,10 @@ import { roomOperations, roomSelectors } from '../data/room';
 import { tableOperations, tableSelectors } from '../data/table';
 import { userOperations, userSelectors } from '../user';
 import { usersOperations, usersSelectors } from '../data/users';
+import { appUIOperations } from '../ui/app';
+import { discardCardsModalUIOperations } from '../ui/discard-cards-modal';
+import { actionModeSelectsUISelectors, actionModeSelectsUIOperations } from '../ui/action-mode-selects';
+import { winModalUIOperations } from '../ui/win-modal';
 
 const socketConnect = actions.socketConnect;
 const socketDisconnect = actions.socketDisconnect;
@@ -18,16 +22,22 @@ const socketEmit = actions.socketEmit;
 const globalGameCreate = ( { game } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_CREATE, with data: ', game );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	const { id, host_id, created, started, free_join, 
 		has_password, min_players, max_players, player_ids } = game;
 
 	dispatch( lobbyOperations.addRoom( { id, host: host_id, created, started, 
 		freeJoin: free_join, minPlayers: min_players, maxPlayers: max_players,
 		password: has_password, playerIds: player_ids } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const globalGameRemove = ( { game_id } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_REMOVE, with data: ', game_id );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	dispatch( lobbyOperations.removeRoom( { id: game_id } ) );
 
@@ -43,18 +53,24 @@ const globalGameRemove = ( { game_id } ) => ( dispatch, getState ) => {
 		dispatch( chatOperations.clearMessages() );
 
 	}
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const globalGameStart = ( { game_id, started } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_START, with data: ', game_id, started );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( lobbyOperations.updateRoom( { id: game_id, started } ) );
 
-	const state = getState();
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const globalGameReset = ( { game } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_RESET, with data: ', game );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	const { id, host_id, created, started, free_join, 
 		has_password, min_players, max_players, player_states } = game;
@@ -74,12 +90,16 @@ const globalGameReset = ( { game } ) => ( dispatch, getState ) => {
 
 	}
 
+	dispatch( appUIOperations.appLoadSuccess() );
+
 };
 
 const globalGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_UPDATE, with data: ', game );
 
-	const updatedRoom = { id: game_id };
+	dispatch( appUIOperations.appLoadRequest() );
+
+	const updatedRoom = { id: game.id };
 
 	if ( game.host_id ) updatedRoom.host = game.host_id;
 	if ( game.created ) updatedRoom.created = game.created;
@@ -92,9 +112,9 @@ const globalGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 
 	const state = getState();
 
-	if ( game_id == gameSelectors.getGameId( state ) ) {
+	if ( game.id == gameSelectors.getGameId( state ) ) {
 
-		const updatedGame = { id: game_id };
+		const updatedGame = { id: game.id };
 
 		if ( game.current_player_id ) updatedGame.turn = game.current_player_id;
 
@@ -112,16 +132,20 @@ const globalGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 
 		if ( game.keeper_limit ) dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
 
-		if ( hame.hand_limit ) dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
+		if ( game.hand_limit ) dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
 
 	}
 
 	dispatch( lobbyOperations.updateRoom( updatedRoom ) );
 
+	dispatch( appUIOperations.appLoadSuccess() );
+
 };
 
 const globalGameUserJoin = ( { game_id, user_id } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_USER_JOIN, with data: ', game_id, user_id );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	dispatch( lobbyOperations.roomAddPlayer( { roomId: game_id, playerId: user_id } ) );
 
@@ -133,10 +157,14 @@ const globalGameUserJoin = ( { game_id, user_id } ) => ( dispatch, getState ) =>
 
 	}
 
+	dispatch( appUIOperations.appLoadSuccess() );
+
 };
 
 const globalGameUserLeave = ( { game_id, user_id } ) => ( dispatch, getState ) => {
 	console.log('global socket event: GAME_USER_LEAVE, with data: ', game_id, user_id );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	dispatch( lobbyOperations.roomRemovePlayer( { roomId: game_id, playerId: user_id } ) );
 
@@ -158,33 +186,61 @@ const globalGameUserLeave = ( { game_id, user_id } ) => ( dispatch, getState ) =
 		}
 
 	}
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const globalUserLogin = ( { user } ) => ( dispatch, getState ) => {
 	console.log('global socket event: USER_LOGIN, with data: ', user );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( usersOperations.addUser( user ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 
 };
 
 const globalUserLogout = ( { user_id } ) => ( dispatch, getState ) => {
 	console.log('global socket event: USER_LOGOUT, with data: ', user_id );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( usersOperations.removeUser( { id: user_id } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 	
 };
 
 const globalUserUpdate = ( { user } ) => ( dispatch, getState ) => {
 	console.log('global socket event: USER_UPDATE, with data: ', user );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( usersOperations.updateUser( user ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 	
+};
+
+const globalGameVictory = ( { game_id, user_id } ) => ( dispatch, getState ) => {
+	console.log('global socket event: GAME_VICTORY, with data: ', game_id, user_id );
+
+	dispatch( appUIOperations.appLoadRequest() );
+
+	dispatch( winModalUIOperations.showDialog( { winnerId: user_id } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const gameCardDiscard = ( { card_id, game_id, player_id } ) => ( dispatch, getState ) => {
 	console.log('game socket event: CARD_DISCARD, with data: ', card_id, game_id, player_id );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( tableOperations.addDiscard( { id: card_id } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const gameCardPlay = ( { card_id, from_location, from_player, game_id, player_id, to_location } ) => ( dispatch, getState ) => {
@@ -194,40 +250,116 @@ const gameCardPlay = ( { card_id, from_location, from_player, game_id, player_id
 const gameCardsDrawn = ( { game_id, player_id, num_drawn } ) => ( dispatch, getState ) => {
 	console.log('game socket event: CARDS_DRAWN, with data: ', game_id, player_id, num_drawn );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( playersOperations.playerAddCards( { id: player_id, count: num_drawn } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const gameChatMessage = ( { game_id, player_id, message } ) => ( dispatch, getState ) => {
 	console.log('game socket event: CHAT_MESSAGE, with data: ', game_id, player_id, message );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( chatOperations.addMessage( { userId: player_id, message } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 }
 
 const gameDeckRecycle = ( { game_id, draw_pile_size } ) => ( dispatch, getState ) => {
 	console.log('game socket event: DECK_RECYCLE, with data: ', game_id, draw_pile_size );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( tableOperations.clearDiscards() );
 	dispatch( tableOperations.updateDeck( { count: draw_pile_size } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const gameDiscardRemove = ( { card_id, game_id } ) => ( dispatch, getState ) => {
 	console.log('game socket event: DISCARD_REMOVE, with data: ', card_id, game_id );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( tableOperations.removeDiscard( { id: card_id } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
+};
+
+const gameGameUpdate = ( { game } ) => ( dispatch, getState ) => {
+	console.log('global socket event: GAME_UPDATE, with data: ', game );
+
+	dispatch( appUIOperations.appLoadRequest() );
+
+	const updatedRoom = { id: game.id };
+
+	if ( game.host_id ) updatedRoom.host = game.host_id;
+	if ( game.created ) updatedRoom.created = game.created;
+	if ( game.started ) updatedRoom.started = game.started;
+	if ( game.free_join ) updatedRoom.freeJoin = game.free_join;
+	if ( game.has_password ) updatedRoom.password = game.has_password;
+	if ( game.min_players ) updatedRoom.minPlayers = game.min_players;
+	if ( game.max_players ) updatedRoom.maxPlayers = game.max_players;
+	if ( game.player_ids ) updatedRoom.playerIds = game.player_ids;
+
+	const state = getState();
+
+	const updatedGame = { id: game.id };
+
+	if ( game.current_player_id ) updatedGame.turn = game.current_player_id;
+
+	dispatch( gameOperations.updateGame( updatedGame ) );
+
+	if ( game.discard_pile ) dispatch( tableOperations.replaceDiscards( { ids: game.discard_pile } ) );
+
+	if ( game.goals ) dispatch( tableOperations.replaceGoals( { ids: game.goals } ) );
+
+	if ( game.play_num ) dispatch( tableOperations.updatePlayRule( { count: game.play_num } ) );
+
+	if ( game.rules ) dispatch( tableOperations.replaceRules( { ids: game.rules } ) );
+
+	if ( game.draw_num ) dispatch( tableOperations.updateDrawRule( { count: game.draw_num } ) );
+
+	if ( game.keeper_limit ) dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
+
+	if ( game.hand_limit ) dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
+
+	dispatch( lobbyOperations.updateRoom( updatedRoom ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
+
 };
 
 const gameGoalUpdate = ( { game_id, goals } ) => ( dispatch, getState ) => {
 	console.log('game socket event: GOAL_UPDATE, with data: ', game_id, goals );
 
-	dispatch( tableOperations.replaceGoals( { ids: goals } ) );
+	dispatch( appUIOperations.appLoadRequest() );
+
+	dispatch( tableOperations.replaceGoals( { ids: Array.isArray( goals ) ? goals : [ goals ] } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
-const gameLimitsOver = ( { game_id, hand_over, keepers_over } ) => ( dispatch, getState ) => {
+const gameLimitsOver = ( { game_id, hand_over = [], keepers_over = [] } ) => ( dispatch, getState ) => {
 	console.log('game socket event: LIMITS_OVER, with data: ', game_id, hand_over, keepers_over );
+
+	const state = getState();
+
+	const userId = userSelectors.getUserId( state );
+
+	if ( hand_over.includes( userId ) || keepers_over.includes( userId ) ) {
+
+		dispatch( discardCardsModalUIOperations.showDialog() );
+
+	}
 };
 
 const gamePlayerUpdate = ( { game_id, player } ) => ( dispatch, getState ) => {
 	console.log('game socket event: PLAYER_UPDATE, with data: ', game_id, player );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	const updatedPlayer = { id: player.player_id };
 
@@ -239,23 +371,35 @@ const gamePlayerUpdate = ( { game_id, player } ) => ( dispatch, getState ) => {
 	if ( player.temp_hand_size ) updatedPlayer.tempCards = player.temp_hand_size;
 
 	dispatch( playersOperations.updatePlayer( updatedPlayer ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const gameRulesUpdate = ( { game_id, rules } ) => ( dispatch, getState ) => {
 	console.log('game socket event: RULES_UPDATE, with data: ', game_id, rules );
 
-	dispatch( tableOperations.replaceRules( { ids: rules } ) );
+	dispatch( appUIOperations.appLoadRequest() );
+
+	dispatch( tableOperations.replaceRules( { ids: Array.isArray( rules ) ? rules : [ rules ] } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const gameTurnBegin = ( { game_id, player_id, plays_remaining } ) => ( dispatch, getState ) => {
 	console.log('game socket event: TURN_BEGIN, with data: ', game_id, player_id, plays_remaining );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( gameOperations.updateGame( { turn: player_id } ) );
 	dispatch( playersOperations.updatePlayer( { id: player_id, playsLeft: plays_remaining } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	console.log('user socket event: GAME_SYNC, with data: ', game, state );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	dispatch( playersOperations.clearPlayers() );
 
@@ -280,17 +424,25 @@ const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 
 	dispatch( handOperations.replaceHand( { ids: state.hand } ) );
 	dispatch( handOperations.replaceTempHand( { ids: state.temp_hand } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const userHandUpdate = ( { game_id, hand, temp_hand } ) => ( dispatch, getState ) => {
 	console.log('user socket event: HAND_UPDATE, with data: ', game_id, hand, temp_hand );
 
+	dispatch( appUIOperations.appLoadRequest() );
+
 	dispatch( handOperations.replaceHand( { ids: hand } ) );
 	dispatch( handOperations.replaceTempHand( { ids: temp_hand } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 };
 
 const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 	console.log('user socket event: HELLO, with data: ', cards, games, users );
+
+	dispatch( appUIOperations.appLoadRequest() );
 
 	const typeMapping = {
 		NEW_RULE: 'rule',
@@ -305,7 +457,9 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		id: card.id,
 		name: card.name,
 		type: typeMapping[ card.type ],
-		subtype: card.subtype && card.subtype.toLowerCase()
+		subtype: card.subtype && card.subtype.toLowerCase(),
+		precondition: card.precondition,
+		description: card.description
 	} ) ) } ) );
 
 	dispatch( lobbyOperations.replaceRooms( { rooms: games.map( room => ( {
@@ -319,6 +473,8 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		maxPlayers: room.max_players,
 		playerIds: room.player_ids
 	} ) ) } ) );
+
+	dispatch( appUIOperations.appLoadSuccess() );
 }
 
 export {
@@ -335,6 +491,7 @@ export {
 	globalUserLogin,
 	globalUserLogout,
 	globalUserUpdate,
+	globalGameVictory,
 	gameCardDiscard,
 	gameCardPlay,
 	gameCardsDrawn,
@@ -342,6 +499,7 @@ export {
 	gameDeckRecycle,
 	gameDiscardRemove,
 	gameGoalUpdate,
+	gameGameUpdate,
 	gameLimitsOver,
 	gamePlayerUpdate,
 	gameRulesUpdate,

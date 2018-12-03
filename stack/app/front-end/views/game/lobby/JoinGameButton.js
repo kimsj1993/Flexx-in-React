@@ -13,8 +13,15 @@ const mapDispatchToProps = dispatch => ( {
     showPasswordModal: id => () => dispatch( passwordModalUIOperations.showModal( { id } ) )
 } );
 
-const JoinOpenGameButton = ( { joinGame, id } ) => (
+const joinOpenGameButtonStyles = theme => ( {
+    buttonRoot: {
+        width: 128
+    }
+} );
+
+let JoinOpenGameButton = ( { classes, joinGame, id } ) => (
     <Button 
+        classes={ { root: classes.buttonRoot } }
         variant='outlined' 
         color='primary'
         onClick={ joinGame( id ) }
@@ -23,18 +30,21 @@ const JoinOpenGameButton = ( { joinGame, id } ) => (
     </Button>
 );
 
+JoinOpenGameButton = withStyles( joinOpenGameButtonStyles )( JoinOpenGameButton );
+
 const joinProtectedGameButtonStyles = theme => ( {
     iconRoot: {
         fontSize: '16px',
         marginRight: 4
     },
     buttonRoot: {
-        paddingRight: 24
+        paddingRight: 24,
+        width: 128
     }
 } );
 
 let JoinProtectedGameButton = ( { classes, showPasswordModal, id } ) => (
-    <Tooltip title='This game is password protected' >
+    <Tooltip title='This game requires a password to join.' >
         <Button 
             classes={ { root: classes.buttonRoot } } 
             variant='outlined' 

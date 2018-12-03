@@ -1,9 +1,7 @@
-const INIT_USER = 'app/modules/data/user/INIT_USER';
-const UPDATE_USER = 'app/modules/data/user/UPDATE_USER';
-const CLEAR_USER = 'app/modules/data/user/CLEAR_USER';
+const LOG_IN = 'app/modules/data/auth/LOG_IN';
+const LOG_OUT = 'app/modules/data/auth/LOG_OUT';
 
 export {
-	INIT_USER,
-	UPDATE_USER,
-	CLEAR_USER
+	LOG_IN,
+	LOG_OUT
 };

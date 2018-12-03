@@ -34,7 +34,7 @@ const styles = theme => ({
 	}
 });
 
-const SummaryGoal = ({ classes, imageUrl, name, requirements }) => (
+const SummaryGoal = ({ classes, imageUrl, name, description }) => (
 	<div className={ classes.root } >
 		<div className={ classes.iconContainer } >
 			<Avatar src={ imageUrl } classes={{ root: classes.iconRoot }} />
@@ -43,7 +43,7 @@ const SummaryGoal = ({ classes, imageUrl, name, requirements }) => (
 			{ name }
 		</Typography>
 		<Typography classes={{ root: classes.reqRoot }} variant='h6' align='center'>
-			{ requirements }
+			{ description }
 		</Typography>
 	</div>
 );

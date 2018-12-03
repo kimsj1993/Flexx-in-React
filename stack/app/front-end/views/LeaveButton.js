@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import withLogin from '../utils/withLogin';
 
 import { roomOperations } from '../state/modules/data/room';
+import { logoutModalUIOperations } from '../state/modules/ui/logout-modal';
 
 const mapStateToProps = state => {
 	const activeGame = state.data.game.active;
@@ -19,7 +20,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ( {
 	leaveGame: () => dispatch( roomOperations.leaveGame() ),
-	deleteGame: () => dispatch( roomOperations.deleteGame() )
+	deleteGame: () => dispatch( roomOperations.deleteGame() ),
+	logout: () => dispatch( logoutModalUIOperations.showDialog() )
 } );
 
 const LeaveButton = ( { activeGame, gameStarted, isHost, leaveGame, deleteGame, logout } ) => (

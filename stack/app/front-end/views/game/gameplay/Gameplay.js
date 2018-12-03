@@ -8,6 +8,8 @@ import GameStateCardContainer from './gameStateCard/GameStateCardContainer';
 import TableContainer from './table/TableContainer';
 import Paper from '@material-ui/core/Paper';
 
+import DiscardCardsModal from './DiscardCardsModal';
+
 import Header from '../Header';
 
 
@@ -49,6 +51,7 @@ const Gameplay = ({ classes }) => (
 				<TableContainer />
 			</section>
 		</section>
+		<DiscardCardsModal />
 	</section>
 );
 

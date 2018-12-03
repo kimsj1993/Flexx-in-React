@@ -1,6 +1,10 @@
 (async () => {
 
 
+// Note: redux-api-middleware requires
+// a fetch function in the global scope
+global.fetch = require('cross-fetch');
+
 const express = require('express');
 const next = require('next');
 

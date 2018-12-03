@@ -4,33 +4,21 @@ import * as types from "./types";
 
 /* State Shape
 {
-	loggedIn: Bool,
-	id: userId
+	id: userId || null
 }
 */
 
-const loggedIn = handleActions(
-	{
-		[ types.INIT_USER ]: () => true,
-
-		[ types.CLEAR_USER ]: () => false
-	},
-
-	false // initial state
-);
-
 const id = handleActions(
 	{
-		[ types.INIT_USER ]: ( state, { payload } ) => payload.id,
+		[ types.LOG_IN ]: ( state, { payload } ) => payload,
 
-		[ types.CLEAR_USER ]: () => null
+		[ types.LOG_OUT ]: () => null
 	},
 
 	null // initial state
 );
 
 const reducer = combineReducers( {
-	loggedIn,
 	id
 } );
 

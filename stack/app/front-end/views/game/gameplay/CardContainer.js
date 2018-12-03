@@ -7,7 +7,7 @@ import Card from './Card';
 const mapStateToProps = (state, ownProps) => {
 	const { id } = ownProps;
 
-	const { type, name } = cardsSelectors.getCardById( id );
+	const { type, name } = cardsSelectors.getCardById( state, id );
 	
 	return { type, name };
 };

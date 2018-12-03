@@ -26,6 +26,9 @@ const toolbarStyles = theme => ( {
     },
     spacer: {
         flexGrow: 1
+    },
+    buttonRoot: {
+        width: 128
     }
 } );
 
@@ -35,7 +38,7 @@ let TableToolbar = ( { classes, createGame, showCreateGameDialog } ) => (
             Available Rooms
         </Typography>
         <div className={ classes.spacer } />
-        <Button className={ classes.button } variant='contained' color='primary' onClick={ showCreateGameDialog } >Create Game</Button>
+        <Button classes={ { root: classes.buttonRoot } } variant='contained' color='primary' onClick={ showCreateGameDialog } >Create Game</Button>
     </Toolbar>
 );
 
@@ -66,7 +69,7 @@ let LobbyTableHead = ( { classes } ) => (
                 </Tooltip>
             </TableCell>
             <TableCell> Players </TableCell>
-            <TableCell> Max Players </TableCell>
+            <TableCell numeric > Max Players </TableCell>
             <TableCell>  </TableCell>
 
         </TableRow>
@@ -99,7 +102,7 @@ const LobbyTableRow = ( { id, host, created, started, freeJoin, hasPassword,
 
         <TableCell>{ players.map( ( player, index ) => <PlayerIcon key={ index } player={ player } /> ) }</TableCell>
 
-        <TableCell>{ maxPlayers }</TableCell>
+        <TableCell numeric >{ maxPlayers }</TableCell>
 
         <TableCell numeric ><JoinGameButton id={ id } hasPassword={ hasPassword } /></TableCell>
 
@@ -157,9 +160,6 @@ const mainStyles = theme => ({
     },
     table: {
         width: '100%'
-    },
-    button: {
-        marginBottom: 16
     }
 });
 
