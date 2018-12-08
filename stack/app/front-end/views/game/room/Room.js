@@ -28,15 +28,10 @@ const styles = theme => ({
         gridRowStart: '1',
         gridRowEnd: '5'
     },
-    userImageContainer: {
-        gridColumnStart: '1',
-        gridColumnEnd: '2',
-        backgroundColor: '#FFC0CB',
-        border: '1px solid',
-    },
+
 
     buttonsContainer: {
-        gridColumnStart: '2',
+        gridColumnStart: '1',
         gridColumnEnd:'3',
         display: 'flex',
         flexDirection: 'column',
@@ -56,9 +51,6 @@ const styles = theme => ({
 const Room = ({ classes, players, startGameHandler }) => (
     <Paper classes={{ root: classes.root }} >
         <div className={classes.currentUserContainer}>
-            <div className={classes.userImageContainer}>
-
-            </div>
             <div className={classes.buttonsContainer}>
                 <Button 
                     variant="contained" 
