@@ -28,6 +28,8 @@ import HandContainer from './table/HandContainer';
 
 import EndTurnButton from './EndTurnButton';
 
+import Notifier from './Notifier';
+
 import { gameSelectors, gameOperations } from '../../../state/modules/data/game';
 import * as userSelectors from "../../../state/modules/user/selectors";
 
@@ -102,6 +104,7 @@ let Gameplay = ( { classes, isTurn } ) => (
 			<section>
 				<GameSummaryCard />
 				<EndTurnButton/>
+				<Notifier />
 			</section>
 		</Paper>
 		<DiscardCardsModal />

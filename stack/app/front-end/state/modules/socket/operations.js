@@ -14,6 +14,7 @@ import { appUIOperations } from '../ui/app';
 import { discardCardsModalUIOperations } from '../ui/discard-cards-modal';
 import { actionModeSelectsUISelectors, actionModeSelectsUIOperations } from '../ui/action-mode-selects';
 import { winModalUIOperations } from '../ui/win-modal';
+import { notifierOperations } from '../notifier';
 
 const socketConnect = actions.socketConnect;
 const socketDisconnect = actions.socketDisconnect;
@@ -241,10 +242,26 @@ const gameCardDiscard = ( { card_id, game_id, player_id } ) => ( dispatch, getSt
 	dispatch( tableOperations.addDiscard( { id: card_id } ) );
 
 	dispatch( appUIOperations.appLoadSuccess() );
+
+	const state = getState();
+
+	const card = state.data.cards.byId[ card_id ];
+
+	dispatch( notifierOperations.enqueueMessage( {
+		message: `The ${ card.type } card "${ card.name }" was discarded.`
+	} ) );
 };
 
 const gameCardPlay = ( { card_id, from_location, from_player, game_id, player_id, to_location } ) => ( dispatch, getState ) => {
 	console.log('game socket event: CARD_PLAY, with data: ', card_id, from_location, from_player, game_id, player_id, to_location );
+
+	const state = getState();
+
+	const card = state.data.cards.byId[ card_id ];
+
+	dispatch( notifierOperations.enqueueMessage( {
+		message: `The ${ card.type } card "${ card.name }" was played.`
+	} ) );
 };
 
 const gameCardsDrawn = ( { game_id, player_id, num_drawn } ) => ( dispatch, getState ) => {

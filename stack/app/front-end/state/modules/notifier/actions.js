@@ -4,7 +4,7 @@ import { createAction } from 'redux-actions';
 const enqueueMessage = createAction(
 	types.ENQUEUE_MESSAGE,
 	( { message = '', 
-		options = {} 
+		options = {} ,
 		key = new Date().getTime() + Math.random()
 	} ) => ( { message, options, key } )
 );
