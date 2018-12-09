@@ -1,8 +1,11 @@
 import { withStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
+
 import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
+
+
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const styles = theme => ( {
 	root: {
