@@ -8,8 +8,7 @@ const initGame = createAction(
 );
 
 const updateGame = createAction(
-	types.UPDATE_GAME,
-	( { won, turn, winner } ) => ( assign( {}, { won, turn, winner } ) )
+	types.UPDATE_GAME
 );
 
 const resetGame = createAction( types.RESET_GAME );

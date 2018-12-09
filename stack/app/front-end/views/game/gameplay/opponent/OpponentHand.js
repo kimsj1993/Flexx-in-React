@@ -4,7 +4,9 @@ const styles = theme => ({
 	root: {
 		display: 'flex',
 		justifyContent: 'flex-start',
-		marginBottom: 8
+		marginBottom: 8,
+		maxWidth: 256,
+		overflowX: 'scroll'
 	},
 	card: {
 		height: 48,
