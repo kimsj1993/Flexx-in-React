@@ -10,7 +10,7 @@ const styles = theme => ( {
 	}
 } );
 
-let Component = ( { classes, draw = 1, play = 1, handLimit = '—', keeperLimit = '—', 
+let Component = ( { classes, draw = 1, play = 1, handLimit, keeperLimit, 
 	showDrawInfo = () => {}, showPlayInfo = () => {}, showLimitsInfo = () => {} } ) => (
 	<div className={ classes.root } >
 		<Rule count={ draw } label='Draw' showInfo={ showDrawInfo } />

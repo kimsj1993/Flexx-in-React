@@ -46,7 +46,7 @@ const styles = theme => ( {
 	}
 } );
 
-let Rule = ( { classes, count = '—', label, showInfo = () => {} } ) => (
+let Rule = ( { classes, count, label, showInfo = () => {} } ) => (
 	<div className={ classes.root } >
 
 		<Typography classes={ {
@@ -55,7 +55,7 @@ let Rule = ( { classes, count = '—', label, showInfo = () => {} } ) => (
 
 		<Typography classes={ {
 			root: classNames( classes.text, classes.count )
-		} } > { count } </Typography>
+		} } > { count || '—' } </Typography>
 
 		<IconButton classes={ { 
 			root: classNames( classes.text, classes.info )

@@ -64,7 +64,7 @@ const removeDiscards = ( { ids } ) => dispatch =>
 
 const replaceDiscards = ( { ids } ) => dispatch => {
 	dispatch( clearDiscards() );
-	dispatch( addRules( { ids } ) );
+	dispatch( addDiscards( { ids } ) );
 };
 
 const resetTable = () => dispatch => {
