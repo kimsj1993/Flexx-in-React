@@ -7,6 +7,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import MainRules from './main-rules';
@@ -33,6 +34,14 @@ const styles = theme => ( {
 		top: 16,
 		right: 16,
 		padding: 0
+	},
+	appbar: {
+		backgroundColor: theme.palette.common.white,
+
+		'& button': {
+			maxWidth: '144px',
+			minWidth: 144
+		}
 	}
 } );
 
@@ -43,15 +52,17 @@ let Component = ( { classes, showInfo = () => {}, tab = 0, changeTab = () => {} 
 
 			<Typography classes={ { root: classes.title } } > Game Summary </Typography>
 
+			<Tooltip title='info' >
 			<IconButton classes={ { root: classes.info } } onClick={ showInfo } >
 				<InfoIcon />
 			</IconButton>
+			</Tooltip>
 
 			<MainRules />
 
 		</header>
 
-		<AppBar>
+		<AppBar elevation={ 0 } position='static' classes={ { root: classes.appbar } } >
 
 			<Tabs
 				value={ tab }
