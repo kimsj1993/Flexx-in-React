@@ -2,43 +2,53 @@ import { combineReducers } from "redux";
 import { handleActions } from 'redux-actions';
 import * as types from "./types";
 
-const createCanSubmit = count => {
+const id = handleActions(
+	{
+		[ types.ADD_CARD_ID ]: ( state, { payload } ) => payload,
+
+		[ types.CLEAR_CARD_ID ]: () => null
+	},
+
+	null
+);
+
+const createCanSubmit = ( count, selectedLength ) => {
 
 	if ( typeof count == 'number' ) {
 
-		return selectedLength => selectedLength == count;
+		return () => selectedLength == count;
 
 	} else if ( count.value ) {
 
 		if ( count.op == '>' )
 
-			return selectedLength => selectedLength > count.value;
+			return () => selectedLength > count.value;
 
 		if ( count.op == '<' )
 
-			return selectedLength => selectedLength < count.value;
+			return () => selectedLength < count.value;
 
 		if ( count.op == '>=' )
 
-			return selectedLength => selectedLength >= count.value;
+			return () => selectedLength >= count.value;
 
 		if ( count.op == '<=' )
 
-			return selectedLength => selectedLength <= count.value;
+			return () => selectedLength <= count.value;
 
 		if ( count.op == '==' )
 
-			return selectedLength => selectedLength == count.value;
+			return () => selectedLength == count.value;
 
 		if ( count.op == '!=' )
 
-			return selectedLength => selectedLength != count.value;
+			return () => selectedLength != count.value;
 
 	} else if ( count.share ) {
 
 		if ( count.op == '>' )
 
-			return ( selectedLength, collectionLength ) => {
+			return collectionLength => {
 
 				const ratio = selectedLength / collectionLength;
 
@@ -52,7 +62,7 @@ const createCanSubmit = count => {
 
 		if ( count.op == '<' )
 
-			return ( selectedLength, collectionLength ) => {
+			return collectionLength => {
 
 				const ratio = selectedLength / collectionLength;
 
@@ -66,7 +76,7 @@ const createCanSubmit = count => {
 
 		if ( count.op == '>=' )
 
-			return ( selectedLength, collectionLength ) => {
+			return collectionLength => {
 
 				const ratio = selectedLength / collectionLength;
 
@@ -76,7 +86,7 @@ const createCanSubmit = count => {
 
 		if ( count.op == '<=' )
 
-			return ( selectedLength, collectionLength ) => {
+			return collectionLength => {
 
 				const ratio = selectedLength / collectionLength;
 
@@ -86,7 +96,7 @@ const createCanSubmit = count => {
 
 		if ( count.op == '==' )
 
-			return ( selectedLength, collectionLength ) => {
+			return collectionLength => {
 
 				const ratio = selectedLength / collectionLength;
 
@@ -96,7 +106,7 @@ const createCanSubmit = count => {
 
 		if ( count.op == '!=' )
 
-			return ( selectedLength, collectionLength ) => {
+			return collectionLength => {
 
 				const ratio = selectedLength / collectionLength;
 
@@ -106,34 +116,58 @@ const createCanSubmit = count => {
 
 	}
 
-	return selectedLength => selectedLength == 1;
+	return () => selectedLength == 1;
 };
+
+const show = handleActions(
+	{
+		[ types.SHOW_DIALOG ]: () => true,
+
+		[ types.HIDE_DIALOG ]: () => false
+	},
+
+	false
+);
+
+const selected = handleActions(
+	{
+		[ types.ADD_SELECTION ]: ( state, { payload } ) => [
+			...state,
+			payload.selection
+		],
+
+		[ types.REMOVE_SELECTION ]: ( state, { payload } ) =>
+			state.filter( s => s != payload.selection )
+	},
+
+	[]
+);
 
 const select = handleActions(
 	{
-		[ types.ADD_SELECT ]: ( state, { payload } ) => ( {
-			...payload,
-			selected: [],
-			canSubmit: createCanSubmit( payload.count )
+		[ types.ADD_SELECT ]: ( state, action ) => ( {
+			...action.payload,
+			selected: selected( undefined, action ),
+			canSubmit: createCanSubmit( action.payload.pick.count, state.selected.length )
 		} ),
 
-		[ types.ADD_SELECTION ]: ( state, { payload } ) => ( {
+		[ types.ADD_SELECTION ]: ( state, action ) => ( {
 			...state,
-			selected: [
-				...state.selected,
-				payload.selection
-			]
+			selected: selected( state.selected, action ),
+			canSubmit: createCanSubmit( action.payload.pick.count, state.selected.length )
 		} ),
 
-		[ types.REMOVE_SELECTION ]: ( state, { payload } ) => ( {
+		[ types.REMOVE_SELECTION ]: ( state, action ) => ( {
 			...state,
-			selected: state.selected.filter( s => s != payload.selection )
+			selected: selected( state.selected, action ),
+			canSubmit: createCanSubmit( action.payload.pick.count, state.selected.length )
 		} )
 	},
 
 	{
-		selected: [],
 		canSubmit: () => true,
+		selected: [],
+		pick: {}
 	}
 );
 
@@ -163,6 +197,8 @@ const selects = handleActions(
 );
 
 const reducer = combineReducers( {
+	show,
+	id,
 	selects
 } );
 

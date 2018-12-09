@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
 import CardContainer from './card/CardContainer';
+import CardBack from './CardBack';
 
 const styles = theme => ( {
 	root: {
@@ -21,9 +22,10 @@ const styles = theme => ( {
 	}
 } )
 
-const CardSelect = ( { classes, cardId, selected, handleClick } ) => (
+const CardSelect = ( { classes, cardId, selected, handleClick, index } ) => (
 	<Paper classes={ { root: selected ? classes.selectedRoot: classes.root } } elevation={ selected ? 8 : 0 } >
-		<CardContainer id={ cardId } />
+		{ !index && <CardContainer id={ cardId } /> }
+		{ index && <CardBack /> }
 	</Paper>
 );
 

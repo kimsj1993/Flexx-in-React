@@ -3,11 +3,18 @@ import { createAction } from 'redux-actions';
 
 const addSelect = createAction( 
 	types.ADD_SELECT,
-	( { kind, cardType, collection, self, optional, index, count, mapFrom, mapKind } ) =>
-		( { kind, cardType, collection, self, optional, index, count, mapFrom, mapKind } )
+	( { pick } ) =>
+		( { pick } )
 );
 
 const clearSelects = createAction( types.CLEAR_SELECTS );
+
+const addCardId = createAction(
+	types.ADD_CARD_ID,
+	( { id } ) => id
+);
+
+const clearCardId = createAction( types.CLEAR_CARD_ID );
 
 const addSelection = createAction(
 	types.ADD_SELECTION,
@@ -19,9 +26,17 @@ const removeSelection = createAction(
 	( { selection, index } ) => ( { selection, index } )
 );
 
+const showDialog = createAction( types.SHOW_DIALOG );
+
+const hideDialog = createAction( types.HIDE_DIALOG );
+
 export {
 	addSelect,
 	clearSelects,
+	addCardId,
+	clearCardId,
 	addSelection,
-	removeSelection
+	removeSelection,
+	showDialog,
+	hideDialog
 };

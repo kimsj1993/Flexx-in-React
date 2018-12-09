@@ -14,6 +14,7 @@ import Header from '../Header';
 
 import GameSummaryCard from './game-summary-card';
 import PlayerActions from './player-actions';
+import ActionModeSelectsDialog from './action-mode-modal';
 
 
 const styles = theme => ({
@@ -41,6 +42,7 @@ const styles = theme => ({
 
 const Gameplay = ({ classes }) => (
 	<section className={ classes.root } >
+		<ActionModeSelectsDialog />
 		<Paper square classes={{ root: classes.opponentsRoot }}>
 			<OpponentsContainer />
 		</Paper>
