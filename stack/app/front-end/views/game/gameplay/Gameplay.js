@@ -12,6 +12,8 @@ import DiscardCardsModal from './DiscardCardsModal';
 
 import Header from '../Header';
 
+import GameSummaryCard from './game-summary-card';
+
 
 const styles = theme => ({
 	root: {
@@ -45,7 +47,7 @@ const Gameplay = ({ classes }) => (
 			<section className={ classes.gameInfo } >
 				<PlayerTurnCardContainer />
 				<div className={ classes.spacer } />
-				<GameStateCardContainer />
+				<GameSummaryCard />
 			</section>
 			<section>
 				<TableContainer />
