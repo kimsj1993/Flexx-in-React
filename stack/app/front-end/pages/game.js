@@ -28,7 +28,6 @@ const mapStateToProps = ( state, ownProps ) => {
 
 const GameScreen = ( { activeGame, gameStarted } ) => (
 	<>
-		<Header />
 		<WinModal />
 		{ !activeGame && <LobbyContainer /> }
 		{ activeGame && !gameStarted && <RoomContainer /> }

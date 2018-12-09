@@ -7,14 +7,15 @@ import InfoIcon from '@material-ui/icons/Info';
 import Paper from '@material-ui/core/Paper';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
+import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import MainRules from './main-rules';
+import CurrentGoals from './current-goals';
 
 const styles = theme => ( {
 	root: {
 		width: 432,
-		height: 430,
 		position: 'relative'
 	},
 	header: {
@@ -23,16 +24,25 @@ const styles = theme => ( {
 	title: {
 		height: 24,
 		fontSize: '14px',
-		fontWeight: 'medium',
+		fontWeight: 500,
 		marginBottom: 16,
 		width: '100%',
-		textAlign: 'center'
+		textAlign: 'center',
+		color: theme.palette.grey[ 800 ]
 	},
 	info: {
 		position: 'absolute',
 		top: 16,
 		right: 16,
 		padding: 0
+	},
+	appbar: {
+		backgroundColor: theme.palette.common.white,
+
+		'& button': {
+			maxWidth: '144px',
+			minWidth: 144
+		}
 	}
 } );
 
@@ -43,15 +53,17 @@ let Component = ( { classes, showInfo = () => {}, tab = 0, changeTab = () => {} 
 
 			<Typography classes={ { root: classes.title } } > Game Summary </Typography>
 
-			<IconButton classes={ { root: classes.info } } onClick={ showInfo } >
-				<InfoIcon />
-			</IconButton>
+			<Tooltip title='More Info' >
+				<IconButton classes={ { root: classes.info } } onClick={ showInfo } >
+					<InfoIcon />
+				</IconButton>
+			</Tooltip>
 
 			<MainRules />
 
 		</header>
 
-		<AppBar>
+		<AppBar elevation={ 0 } position='static' classes={ { root: classes.appbar } } >
 
 			<Tabs
 				value={ tab }
@@ -68,6 +80,8 @@ let Component = ( { classes, showInfo = () => {}, tab = 0, changeTab = () => {} 
 			</Tabs>
 
 		</AppBar>
+
+		{ tab == 0 && <CurrentGoals /> }
 
 	</Paper>
 );
