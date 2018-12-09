@@ -13,6 +13,7 @@ import DiscardCardsModal from './DiscardCardsModal';
 import Header from '../Header';
 
 import GameSummaryCard from './game-summary-card';
+import PlayerActions from './player-actions';
 
 
 const styles = theme => ({
@@ -45,7 +46,7 @@ const Gameplay = ({ classes }) => (
 		</Paper>
 		<section className={ classes.playerArea } >
 			<section className={ classes.gameInfo } >
-				<PlayerTurnCardContainer />
+				<PlayerActions />
 				<div className={ classes.spacer } />
 				<GameSummaryCard />
 			</section>
