@@ -57,8 +57,9 @@ const styles = theme => ({
 		padding: '16px',
 		backgroundColor: theme.palette.background.default,
 		display: 'grid',
-		gridTemplateColumns: '416px 1fr 432px',
-		minHeight: 'calc( 100% - 368px )'
+		gridTemplateColumns: '416px minmax( 0px, 1fr ) 432px',
+		minHeight: 'calc( 100% - 368px )',
+		maxWidth: '100vw'
 	},
 	turn: {
 		backgroundColor: '#EFE7EF'
@@ -75,6 +76,12 @@ const styles = theme => ({
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'flex-end'
+	},
+	hand: {
+
+	},
+	handTurn: {
+		
 	},
 	right: {
 
@@ -99,7 +106,9 @@ let Gameplay = ( { classes, isTurn } ) => (
 				</div>
 			</section>
 			<section className={ classes.center } >
-				<HandContainer/>
+				<div className={ isTurn ? classes.handTurn : classes.hand } >
+					<HandContainer/>
+				</div>
 			</section>
 			<section>
 				<GameSummaryCard />

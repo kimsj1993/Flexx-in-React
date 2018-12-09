@@ -67,7 +67,7 @@ const styles = theme => ({
 		marginLeft: 14-8
 	},
 	nameText: {
-		height: 16,
+		minHeight: 16,
 		fontSize: '12px',
 		fontWeight: 500,
 		marginTop: 4,

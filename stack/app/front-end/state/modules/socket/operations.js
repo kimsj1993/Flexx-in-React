@@ -111,32 +111,6 @@ const globalGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 	if ( game.max_players ) updatedRoom.maxPlayers = game.max_players;
 	if ( game.player_ids ) updatedRoom.playerIds = game.player_ids;
 
-	const state = getState();
-
-	if ( game.id == gameSelectors.getGameId( state ) ) {
-
-		const updatedGame = { id: game.id };
-
-		if ( game.current_player_id ) updatedGame.turn = game.current_player_id;
-
-		dispatch( gameOperations.updateGame( updatedGame ) );
-
-		if ( game.discard_pile ) dispatch( tableOperations.replaceDiscards( { ids: game.discard_pile } ) );
-
-		if ( game.goals ) dispatch( tableOperations.replaceGoals( { ids: game.goals } ) );
-
-		if ( game.play_num ) dispatch( tableOperations.updatePlayRule( { count: game.play_num } ) );
-
-		if ( game.rules ) dispatch( tableOperations.replaceRules( { ids: game.rules } ) );
-
-		if ( game.draw_num ) dispatch( tableOperations.updateDrawRule( { count: game.draw_num } ) );
-
-		if ( game.keeper_limit ) dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
-
-		if ( game.hand_limit ) dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
-
-	}
-
 	dispatch( lobbyOperations.updateRoom( updatedRoom ) );
 
 	dispatch( appUIOperations.appLoadSuccess() );
@@ -306,7 +280,7 @@ const gameDiscardRemove = ( { card_id, game_id } ) => ( dispatch, getState ) => 
 };
 
 const gameGameUpdate = ( { game } ) => ( dispatch, getState ) => {
-	console.log('global socket event: GAME_UPDATE, with data: ', game );
+	console.log('game socket event: GAME_UPDATE, with data: ', game );
 
 	dispatch( appUIOperations.appLoadRequest() );
 
@@ -397,7 +371,9 @@ const gameRulesUpdate = ( { game_id, rules } ) => ( dispatch, getState ) => {
 
 	dispatch( appUIOperations.appLoadRequest() );
 
-	dispatch( tableOperations.replaceRules( { ids: Array.isArray( rules ) ? rules : [ rules ] } ) );
+	const rulesArr = ( Array.isArray( rules ) ? rules : [ rules ] ).filter( rule => typeof rule === 'string' );
+
+	dispatch( tableOperations.replaceRules( { ids: rulesArr } ) );
 
 	dispatch( appUIOperations.appLoadSuccess() );
 };

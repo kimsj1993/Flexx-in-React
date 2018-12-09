@@ -1,5 +1,6 @@
 import * as types from "./types";
 import { createAction } from 'redux-actions';
+import assign from '../../../../utils/assign';
 
 const initGame = createAction(
 	types.INIT_GAME,
@@ -8,7 +9,7 @@ const initGame = createAction(
 
 const updateGame = createAction(
 	types.UPDATE_GAME,
-	( { won, turn, winner } ) => ( { won, turn, winner } )
+	( { won, turn, winner } ) => ( assign( {}, { won, turn, winner } ) )
 );
 
 const resetGame = createAction( types.RESET_GAME );
