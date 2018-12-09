@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
 import OpponentsContainer from './opponent/OpponentsContainer';
-import PlayerTurnCardContainer from './playerTurnCard/PlayerTurnCardContainer';
+import PlayerTurnCardContainer from './playerTurnCard/AvailableActionContainer';
 import CardContainer from './card/CardContainer';
 import GameStateCardContainer from './gameStateCard/GameStateCardContainer';
 import TableContainer from './table/TableContainer';
