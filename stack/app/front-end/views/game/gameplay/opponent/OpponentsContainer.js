@@ -8,9 +8,13 @@ import OpponentContainer from './OpponentContainer';
 import UserContainer from './UserContainer';
 const styles = theme => ({
 	root: {
-		display: 'grid',
-		gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr',
-		width: '100%'
+		display: 'flex',
+		width: '100%',
+		height: 368
+	},
+	opponents: {
+		display: 'flex',
+		overflowX: 'scroll'
 	}
 });
 
@@ -24,7 +28,9 @@ const mapStateToProps = (state, ownProps) => {
 const OpponentsContainer = ({ classes, opponentIds, userId }) => (
 	<div className={ classes.root } >
 		<UserContainer userId = {userId}  key = {userId}/>
-		{opponentIds.map((id, index) => (<OpponentContainer opponentId={ id } key={ index } />))}
+		<div className={ classes.opponents } >
+			{opponentIds.map((id, index) => (<OpponentContainer opponentId={ id } key={ index } />))}
+		</div>
 	</div>
 );
 

@@ -12,6 +12,9 @@ import Typography from '@material-ui/core/Typography';
 
 import MainRules from './main-rules';
 import CurrentGoals from './current-goals';
+import CurrentRules from './current-rules';
+
+import ChatContainer from '../../chat/ChatContainer';
 
 const styles = theme => ( {
 	root: {
@@ -19,7 +22,8 @@ const styles = theme => ( {
 		position: 'relative'
 	},
 	header: {
-		padding: 16
+		padding: 16,
+		borderBottom: '1px solid ' + theme.palette.divider
 	},
 	title: {
 		height: 24,
@@ -82,6 +86,8 @@ let Component = ( { classes, showInfo = () => {}, tab = 0, changeTab = () => {} 
 		</AppBar>
 
 		{ tab == 0 && <CurrentGoals /> }
+		{ tab == 1 && <CurrentRules /> }
+		{ tab == 2 && <ChatContainer /> }
 
 	</Paper>
 );

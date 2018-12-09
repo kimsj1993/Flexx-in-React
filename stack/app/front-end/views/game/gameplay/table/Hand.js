@@ -4,10 +4,18 @@ import Card from '../card/Card';
 
 const styles = theme => ({
 	root: {
-		display: 'flex'
+		display: 'flex',
+		width: '100%',
+		maxWidth: '100%',
+		overflowX: 'scroll',
+		justifyContent: 'center'
 	},
 	card: {
 		marginRight: -92,
+
+		'&:last-child': {
+			marginRight: 0
+		},
 
 		'&:hover': {
 			marginRight: 0

@@ -11,7 +11,6 @@ const mapStateToProps = (state, ownProps) => {
 
 
     const userId = userSelectors.getUserId( state );
-    console.log(userId)
 
     const user = usersSelectors.getUserById( state, userId );
 

@@ -1,4 +1,6 @@
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+
 import Avatar from '@material-ui/core/Avatar';
 
 import Paper from '@material-ui/core/Paper';
@@ -9,10 +11,11 @@ import KeepersContainer from '../KeepersContainer';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: 288,
     height: '100%',
-      backgroundColor: '#926496'
-
+    backgroundColor: '#926496',
+    paddingLeft: 16,
+    paddingRight: 16
   },
   opponentHighlight: {
     backgroundColor: theme.palette.primary.light
@@ -37,20 +40,20 @@ const styles = theme => ({
 });
 
 const Opponent = ({ classes, name, playsRemaining, isTurn, cardCount, keeperIds }) => (
-  <div className={ (isTurn) ? classes.opponentHighlight : '' } >
-    <div className={ classes.root } >
-        <Paper classes={{ root: classes.userInfoRoot }} >
-          { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
-          <UserInfo 
-            name={ name } 
-            playsRemaining={ playsRemaining }
-            isTurn={ isTurn }
-          />
-        </Paper>
-        <OpponentHand count={ cardCount } />
-        <KeepersContainer keeperIds={ keeperIds } />
-      </div>
-  </div>
+  <div className={ 
+    classNames( classes.root, { [ classes.opponentHighlight ]: isTurn } )
+  } >
+      <Paper classes={{ root: classes.userInfoRoot }} >
+        { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
+        <UserInfo 
+          name={ name } 
+          playsRemaining={ playsRemaining }
+          isTurn={ isTurn }
+        />
+      </Paper>
+      <OpponentHand count={ cardCount } />
+      <KeepersContainer keeperIds={ keeperIds } />
+    </div>
 );
 
 

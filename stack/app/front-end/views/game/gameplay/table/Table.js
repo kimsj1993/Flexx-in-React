@@ -56,7 +56,7 @@ const Table = ({ classes, isTurn, canEndTurn, endTurn }) => (
 			</div>
 		</div>
 		<div className={classes.buttonsContainer}>
-            { (isTurn) ? (<Fab variant='extended' color='primary'  className={classes.buttonItem} disabled={ !canEndTurn } onClick={ endTurn } >End Turn</Fab>) : ''}
+            { isTurn ? (<Fab variant='extended' color='primary'  className={classes.buttonItem} disabled={ !canEndTurn } onClick={ endTurn } >End Turn</Fab>) : ''}
 		</div>
 	</div>
 );

@@ -1,4 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 
 import Paper from '@material-ui/core/Paper';
 
@@ -9,20 +10,26 @@ import LeaveButton from "../../../LeaveButton";
 const styles = theme => ({
     root: {
         height: '100%',
-        width: '100%',
+        width: 288,
         paddingLeft: 16,
         paddingRight: 16,
-        backgroundColor: "#EFE7EF"
+        backgroundColor: theme.palette.background.default
     },
-    opponentHighlight: {
-        backgroundColor: theme.palette.primary.light
+    turnHighlight: {
+        backgroundColor: '#EFE7EF'
     },
     userInfoRoot: {
         marginTop: 16,
         width: '100%',
+        marginBottom: 16,
+        height: 112
+    },
+    userInfoContent: {
+        width: '100%',
         padding: 8,
-        marginBottom: 8,
-        display: 'flex'
+        display: 'flex',
+        marginBottom: 6,
+        borderBottom: '1px solid ' + theme.palette.divider
     },
     userInfoHighlight: {
         width: 8,
@@ -31,26 +38,39 @@ const styles = theme => ({
         marginLeft: -8,
         marginTop: -8,
         marginBottom: -8,
-        borderRadius: '4px 0 0 4px',
+        borderRadius: '4px 0 0 0px',
         backgroundColor: theme.palette.secondary.main
+    },
+    actions: {
+        display: 'flex',
+        width: '100%',
+        justifyContent: 'flex-end',
+        paddingRight: 6
     }
 });
 
 const User = ({ classes, name, playsRemaining, isTurn,  keeperIds }) => (
-    <div className={ (isTurn) ? classes.opponentHighlight : '' } >
-        <div className={ classes.root } >
-            <Paper classes={{ root: classes.userInfoRoot }} >
-                { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
-                <UserInfo
-                    name={ name }
-                    playsRemaining={ playsRemaining }
-                    isTurn={ isTurn }
-                />
-            </Paper>
-            <LeaveButton />
+    <Paper square elevation={ 2 } classes={ { 
+        root: classNames( classes.root, { [ classes.turnHighlight ]: isTurn } )
+    } } >
+        <Paper classes={ { root: classes.userInfoRoot } } >
+            <div className={ classes.userInfoContent } >
+            { (isTurn) ? <div className={ classes.userInfoHighlight } /> : '' }
+            <UserInfo
+                name={ name }
+                playsRemaining={ playsRemaining }
+                isTurn={ isTurn }
+            />
+            </div>
+            <div className={ classes.actions } >
+                <LeaveButton text />
+            </div>
+        </Paper>
+        
             <KeepersContainer keeperIds={ keeperIds } />
-        </div>
-    </div>
+        
+
+    </Paper>
 );
 
 

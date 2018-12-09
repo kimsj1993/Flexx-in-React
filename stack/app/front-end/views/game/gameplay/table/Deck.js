@@ -9,13 +9,26 @@ const styles = theme => ({
 		width: 128,
 		borderRadius: 8,
 		border: '8px solid white',
-		backgroundColor: theme.palette.primary.dark
+		backgroundColor: theme.palette.primary.dark,
+		position: 'relative'
 	},
 	count: {
 		height: 20,
-		marginTop: 22,
-		width: 64,
-		color: theme.palette.common.white
+		width: 20,
+		top: 16,
+		left: 16,
+		fontFamily: "'Roboto Condensed', sans-serif",
+		fontSize: 20,
+		fontWeight: 600,
+		color: theme.palette.common.white,
+		position: 'absolute'
+	},
+	label: {
+		position: 'absolute',
+		top: 72,
+		width: '100%',
+		textAlign: 'center',
+		color: '#805184'
 	}
 });
 
@@ -23,6 +36,10 @@ const Deck = ({ classes, count }) => (
 	<Paper classes={{ root: classes.root }} >
 		<Typography classes={{ root: classes.count }} variant='subtitle2' align='center'>
 			{ count }
+		</Typography>
+
+		<Typography variant='h6' classes={ { root: classes.label } } >
+			DECK
 		</Typography>
 	</Paper>
 );

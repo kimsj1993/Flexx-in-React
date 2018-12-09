@@ -24,11 +24,11 @@ const mapDispatchToProps = dispatch => ( {
 	logout: () => dispatch( logoutModalUIOperations.showDialog() )
 } );
 
-const LeaveButton = ( { activeGame, gameStarted, isHost, leaveGame, deleteGame, logout } ) => (
+const LeaveButton = ( { activeGame, gameStarted, isHost, leaveGame, deleteGame, logout, text } ) => (
 	<div>
-	{ activeGame && isHost && ( <Button color='secondary' variant='contained' onClick={ deleteGame }>Delete Game</Button> ) }
-	{ activeGame && !isHost && ( <Button color='secondary' variant='contained' onClick={ leaveGame }>Leave Game</Button> ) }
-	{ !activeGame && ( <Button color='secondary' variant='contained' onClick={ logout }>Log Out</Button> ) }
+	{ activeGame && isHost && ( <Button color={ text ? 'primary' : 'secondary' } variant={ text ? 'text' : 'contained' } onClick={ deleteGame }>Delete Game</Button> ) }
+	{ activeGame && !isHost && ( <Button color={ text ? 'primary' : 'secondary' } variant={ text ? 'text' : 'contained' } onClick={ leaveGame }>Leave Game</Button> ) }
+	{ !activeGame && ( <Button color={ text ? 'primary' : 'secondary' } variant={ text ? 'text' : 'contained' } onClick={ logout }>Log Out</Button> ) }
 	</div>
 );
 

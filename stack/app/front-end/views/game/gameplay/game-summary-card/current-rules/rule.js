@@ -9,12 +9,10 @@ const styles = theme => ( {
 	root: {
 		borderRadius: 4,
 		position: 'relative',
-		padding: 16,
-		height: 128,
-		width: 128,
+		padding: 8,
 
 		'&:hover': {
-			backgroundColor: theme.palette.cards.action
+			backgroundColor: theme.palette.primary.main
 		},
 
 		'&:hover $text': {
@@ -23,49 +21,27 @@ const styles = theme => ( {
 
 		'&:hover $icon': {
 			backgroundColor: theme.palette.common.white
-		},
-
-		'&:first-child': {
-			borderRight: '1px solid #efe7ef',
-			borderBottom: '1px solid #efe7ef'
-
-		},
-
-		'&:nth-child( 2 )': {
-			borderRight: '1px solid #fbe3f0',
-			borderBottom: '1px solid #efe7ef'
-		},
-
-		'&:nth-child( 3 )': {
-			borderBottom: '1px solid #efe7ef'
-		},
-
-		'&:nth-child( 4 )': {
-			borderRight: '1px solid #efe7ef'
-		},
-
-		'&:nth-child( 5 )': {
-			borderRight: '1px solid #efe7ef'
 		}
 	},
 	icon: {
 		borderRadius: '50%',
-		backgroundColor: theme.palette.cards.action,
-		height: 40,
-		width: 40,
-		marginTop: 24 - 16,
+		backgroundColor: theme.palette.primary.main,
+		height: 32,
+		width: 32,
+		marginTop: 4,
 		marginLeft: 'auto',
 		marginRight: 'auto'
 	},
 	label: {
-		marginTop: 4,
-		fontSize: '14px',
+		marginTop: 8,
+		fontSize: '12px',
 		fontWeight: 500
 	},
 	text: {
 		textAlign: 'center',
+		height: 20,
 		width: '100%',
-		color: theme.palette.cards.action
+		color: theme.palette.primary.main
 	},
 	info: {
 		position: 'absolute',
@@ -78,14 +54,14 @@ const styles = theme => ( {
 	}
 } );
 
-let Action = ( { classes, label, showInfo = () => {}, invoke = () => {} } ) => (
-	<div className={ classes.root } onClick={ invoke } >
+const Rule = ( { classes, name, showInfo = () => {} } ) => (
+	<div className={ classes.root } >
 
 		<div className={ classes.icon } />
 
 		<Typography classes={ {
 			root: classNames( classes.text, classes.label )
-		} } > { label } </Typography>
+		} } > { name } </Typography>
 
 		<IconButton classes={ { 
 			root: classNames( classes.text, classes.info )
@@ -96,4 +72,4 @@ let Action = ( { classes, label, showInfo = () => {}, invoke = () => {} } ) => (
 	</div>
 );
 
-export default withStyles( styles )( Action );
+export default withStyles( styles )( Rule );

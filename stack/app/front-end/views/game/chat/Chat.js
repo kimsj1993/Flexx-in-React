@@ -24,7 +24,7 @@ const styles = theme => ({
     },
     messages: {
         listStyleType: 'none',
-        height: 292-48,
+        height: 160,
         padding: 16,
         margin: 0,
         overflowY: 'scroll'

@@ -6,11 +6,11 @@ import { cardsSelectors } from '../../../../state/modules/data/cards';
 import Discard from './Discard';
 
 const mapStateToProps = (state, ownProps) => {
-	const discardIds = tableSelectors.getDiscardIds( state );
+	const ids = tableSelectors.getDiscardIds( state );
 
-	const cards = discardIds.map( id => cardsSelectors.getCardById( state, id ) );
+	const cards = ids.map( id => cardsSelectors.getCardById( state, id ) );
 	
-	return { cards };
+	return { ids, cards };
 };
 
 const DiscardContainer = (props) => (

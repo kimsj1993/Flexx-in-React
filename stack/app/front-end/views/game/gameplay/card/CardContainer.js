@@ -12,7 +12,8 @@ const mapStateToProps = (state, ownProps) => {
 	return {
 		type,
 		name,
-		subtype
+		subtype,
+		id
 	};
 }
 
