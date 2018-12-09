@@ -63,8 +63,8 @@ let DiscardCardsModal = ( { classes, show, loading, handleClose, keepers, hand, 
 	handLimit, selectedKeepers, selectedHand, selectHand, selectKeeper, discardCards, error
 } ) => {
 
-	const overKeeperLimit = keepers.length > keeperLimit;
-	const overHandLimit = hand.length > handLimit;
+	const overKeeperLimit = keeperLimit !== null && keepers.length > keeperLimit;
+	const overHandLimit = handLimit !== null && hand.length > handLimit;
 
 	const keeperLimitMet = !overKeeperLimit || selectedKeepers.length == keepers.length - keeperLimit;
 	const handLimitMet = !overHandLimit || selectedHand.length == hand.length - handLimit;
@@ -106,7 +106,7 @@ let DiscardCardsModal = ( { classes, show, loading, handleClose, keepers, hand, 
 
 						<Paper classes={ { root: classes.cardSelectWell } } elevation={ 0 } >
 
-							{ hand.map( id => 
+							{ keepers.map( id => 
 								<div onClick={ selectKeeper( selectedKeepers.includes( id ), id ) } >
 								<CardSelect 
 									cardId={ id } 
