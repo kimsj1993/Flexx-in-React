@@ -45,7 +45,6 @@ const styles = theme => ({
         margin: '30px'
     }
 
-
 });
 
 const Room = ({ classes, players, startGameHandler }) => (

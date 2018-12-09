@@ -2,37 +2,73 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 
 import UserInfo from '../UserInfo';
 
 const styles = theme => ({
-	root: {
-		padding: 8,
-		backgroundColor: theme.palette.common.white,
-		display: 'flex',
-		width: 416
-	},
-	spacer: {
-		flexGrow: 1
-	},
-	userInfoHighlight: {
-		width: 8,
-	    height: 64,
-	    marginRight: 8,
-	    marginLeft: -8,
-	    marginTop: -8,
-	    marginBottom: -8,
-	    borderRadius: '4px 0 0 4px',
-	    backgroundColor: theme.palette.secondary.main
+	root : {
+		display: 'grid',
+		gridTemplateColumns: '1fr',
+
+    },
+    actionTop : {
+        height: '24px',
+        textAlign: 'center',
+        marginBottom: '16px'
+    },
+
+    actionContainer : {
+        display: 'grid',
+        gridTemplateColumns: '128px 128px 128px',
+        maxHeight: '300px',
+        overflow: 'scroll',
+        padding : '16px'
+
+    },
+
+	actionItem : {
+		height: '128px',
+		width: '128px',
+        display: 'grid',
+        gridTemplateRows: '1fr, 4fr'
 	}
+
 });
 
-const PlayerTurnCard = ({ classes, isTurn, name, playsRemaining, canEndTurn, endTurn }) => (
-	<Paper classes={{ root: classes.root }} >
-		{ (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
-		<UserInfo name={ name } playsRemaining={ playsRemaining } isTurn={ isTurn } />
-		<div className={ classes.spacer } />
-		{ (isTurn) ? (<Button variant='contained' color='primary' disabled={ !canEndTurn } onClick={ endTurn } >End Turn</Button>) : ''}
+const PlayerTurnCard = ({ classes }) => (
+	<Paper className={classes.root} >
+		<div className={classes.actionTop} >
+            <Typography  variant='subtitle2' align='center'>
+                Available actions
+            </Typography>
+		</div>
+        <div className={classes.actionContainer}>
+            <Button className={classes.actionItem} >
+                1
+            </Button>
+            <Button className={classes.actionItem}>
+                2
+            </Button>
+            <Button className={classes.actionItem}>
+                3
+            </Button>
+            <Button className={classes.actionItem}>
+                4
+            </Button>
+            <Button className={classes.actionItem}>
+                5
+            </Button>
+            <Button className={classes.actionItem}>
+                5
+            </Button>
+            <Button className={classes.actionItem}>
+                5
+            </Button>
+        </div>
+
+
 	</Paper>
 );
 
