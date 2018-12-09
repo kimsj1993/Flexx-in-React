@@ -9,35 +9,49 @@ const styles = theme => ( {
 	root: {
 		borderRadius: 4,
 		position: 'relative',
-		minWidth: 100,
-		minHeight: 72,
+		minHeight: 144,
+		width: '50%',
+		padding: 16,
 
 		'&:hover': {
-			backgroundColor: '#F6BA08'
+			backgroundColor: theme.palette.cards.goal
 		},
 
 		'&:hover $text': {
 			color: theme.palette.common.white
+		},
+
+		'&:hover $icon': {
+			backgroundColor: theme.palette.common.white
 		}
 	},
-	label: {
-		marginTop: 10,
-		fontSize: '14px',
-		fontWeight: 500,
-		color: theme.palette.grey[ 800 ]
+	icon: {
+		borderRadius: '50%',
+		backgroundColor: theme.palette.cards.goal,
+		height: 40,
+		width: 40,
+		marginTop: 4,
+		marginLeft: 'auto',
+		marginRight: 'auto'
 	},
-	count: {
-		fontSize: '20px',
+	label: {
+		marginTop: 8,
+		fontSize: '14px',
 		fontWeight: 500
+	},
+	req: {
+		fontSize: '12px',
+		fontWeight: 400
 	},
 	text: {
 		textAlign: 'center',
 		height: 24,
-		width: '100%'
+		width: '100%',
+		color: theme.palette.cards.goal
 	},
 	info: {
 		position: 'absolute',
-		bottom: 4,
+		top: 4,
 		right: 4,
 		color: theme.palette.common.white,
 		height: 24,
@@ -46,16 +60,18 @@ const styles = theme => ( {
 	}
 } );
 
-let Rule = ( { classes, count = '—', label, showInfo = () => {} } ) => (
+let Goal = ( { classes, label, requirements, showInfo = () => {} } ) => (
 	<div className={ classes.root } >
+
+		<div className={ classes.icon } />
 
 		<Typography classes={ {
 			root: classNames( classes.text, classes.label )
 		} } > { label } </Typography>
 
 		<Typography classes={ {
-			root: classNames( classes.text, classes.count )
-		} } > { count } </Typography>
+			root: classNames( classes.text, classes.req )
+		} } > { requirements } </Typography>
 
 		<IconButton classes={ { 
 			root: classNames( classes.text, classes.info )
@@ -66,4 +82,4 @@ let Rule = ( { classes, count = '—', label, showInfo = () => {} } ) => (
 	</div>
 );
 
-export default withStyles( styles )( Rule );
+export default withStyles( styles )( Goal );

@@ -11,11 +11,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import MainRules from './main-rules';
+import CurrentGoals from './current-goals';
 
 const styles = theme => ( {
 	root: {
 		width: 432,
-		height: 430,
 		position: 'relative'
 	},
 	header: {
@@ -24,10 +24,11 @@ const styles = theme => ( {
 	title: {
 		height: 24,
 		fontSize: '14px',
-		fontWeight: 'medium',
+		fontWeight: 500,
 		marginBottom: 16,
 		width: '100%',
-		textAlign: 'center'
+		textAlign: 'center',
+		color: theme.palette.grey[ 800 ]
 	},
 	info: {
 		position: 'absolute',
@@ -52,10 +53,10 @@ let Component = ( { classes, showInfo = () => {}, tab = 0, changeTab = () => {} 
 
 			<Typography classes={ { root: classes.title } } > Game Summary </Typography>
 
-			<Tooltip title='info' >
-			<IconButton classes={ { root: classes.info } } onClick={ showInfo } >
-				<InfoIcon />
-			</IconButton>
+			<Tooltip title='More Info' >
+				<IconButton classes={ { root: classes.info } } onClick={ showInfo } >
+					<InfoIcon />
+				</IconButton>
 			</Tooltip>
 
 			<MainRules />
@@ -79,6 +80,8 @@ let Component = ( { classes, showInfo = () => {}, tab = 0, changeTab = () => {} 
 			</Tabs>
 
 		</AppBar>
+
+		{ tab == 0 && <CurrentGoals /> }
 
 	</Paper>
 );
