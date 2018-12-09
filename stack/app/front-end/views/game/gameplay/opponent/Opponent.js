@@ -9,10 +9,10 @@ import KeepersContainer from '../KeepersContainer';
 
 const styles = theme => ({
   root: {
-    width: 288,
+    width: '100%',
     height: '100%',
-    paddingLeft: 16,
-    paddingRight: 16
+      backgroundColor: '#926496'
+
   },
   opponentHighlight: {
     backgroundColor: theme.palette.primary.light
