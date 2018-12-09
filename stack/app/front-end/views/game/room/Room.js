@@ -7,13 +7,14 @@ import Participant from'./Participant'
 import Button from '@material-ui/core/Button';
 
 import ChatContainer from '../chat/ChatContainer';
+import LeaveButton from "../../LeaveButton";
 
 const styles = theme => ({
     root: {
         display : 'grid',
         gridTemplateColumns: '2.5fr 2fr',
         gridGap: '30px',
-        padding: '50px'
+        padding: '50px',
     },
     currentUserContainer: {
         gridRowStart: '1',
@@ -42,6 +43,7 @@ const styles = theme => ({
         gridGap: '30px'
     },
     button: {
+
         margin: '30px'
     }
 
@@ -59,9 +61,10 @@ const Room = ({ classes, players, startGameHandler }) => (
                 >
                     Start
                 </Button>
-                <Button variant="contained" color="secondary" className={classes.button}>
-                    Invite
-                </Button>
+                <div className={classes.button} variant="contained">
+                    <LeaveButton />
+                </div>
+
             </div>
 
         </div>

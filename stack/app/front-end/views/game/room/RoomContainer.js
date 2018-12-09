@@ -24,6 +24,7 @@ const mapDispatchToProps = dispatch => bindActionCreators( {
 
 		dispatch(roomOperations.startGame( { id: gameId } ) );
 	}
+
 }, dispatch );
 
 const RoomContainer = ( props ) => {

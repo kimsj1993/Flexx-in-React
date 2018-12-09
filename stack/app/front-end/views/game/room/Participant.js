@@ -43,7 +43,7 @@ const styles = theme => ({
 
 });
 
-const Participant = ({ classes, name, status }) => (
+const Participant = ({ classes, name }) => (
     <Paper classes={{ root: classes.root }} >
         <div className={classes.userImage}>
         </div>
@@ -53,13 +53,6 @@ const Participant = ({ classes, name, status }) => (
             </Typography>
 
         </div>
-        <div className={classes.userStatus}>
-            <Typography variant="h4"  gutterBottom>
-                { status }
-            </Typography>
-        </div>
-
-
     </Paper>
 );
 
