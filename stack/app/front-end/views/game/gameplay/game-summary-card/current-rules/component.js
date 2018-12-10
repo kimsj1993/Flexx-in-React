@@ -33,23 +33,29 @@ NoRules = withStyles( noRulesStyles )( NoRules );
 
 const styles = theme => ( {
 	root: {
-		display: 'grid',
-		gridTemplateColumns: 'repeat( 4, 1fr )',
-		gridAutoRows: '84px',
 		width: '100%',
 		padding: 16,
 		height: 160,
 		overflowY: 'scroll',
 		maxHeight: 160
+	},
+
+	grid: {
+		display: 'grid',
+		gridTemplateColumns: 'repeat( 4, 1fr )',
+		gridAutoRows: '84px',
+		width: '100%'
 	}
 } );
 
 const Component = ( { classes, rules = [], showRuleInfo = () => {} } ) => (
 	<div className={ classes.root } >
 
+		<div className={ classes.grid } >
 		{ rules.map( goal => 
 			<Rule name={ goal.name } showInfo={ showRuleInfo( goal.id ) } /> 
 		) }
+		</div>
 
 		{ rules.length == 0 && <NoRules /> }
 	</div>
