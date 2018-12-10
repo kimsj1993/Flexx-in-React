@@ -117,7 +117,7 @@ const subtypeText = ( id, subtype ) => {
 	return null
 };
 
-const Card = ({ classes, name, type, subtype, id, showInfo = () => {}, noinfo }) => (
+const Card = ({ classes, name, type, subtype, id, requirements, showInfo = () => {}, noinfo }) => (
 	<Paper classes={{ root: classes.root }} >
 		<div className={ classNames( classes.sash, classes[ type ] ) }>
 			<div className={ classes.rotate } >
@@ -147,6 +147,16 @@ const Card = ({ classes, name, type, subtype, id, showInfo = () => {}, noinfo })
 				<Typography classes={ { root: classes.subtypeText } } >
 
 					{ subtypeText( id, subtype ) }
+
+				</Typography>
+			}
+
+			{
+				type == 'goal' &&
+
+				<Typography classes={ { root: classes.subtypeText } } >
+
+					{ requirements }
 
 				</Typography>
 			}

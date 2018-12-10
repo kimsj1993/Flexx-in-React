@@ -100,7 +100,7 @@ export const onSocketConnect = dispatch => socket => {
 
 				break;
 			case 'GAME_SYNC':
-				dispatch( socketOperations.userGameSync( { game: data.game, state: data.state } ) );
+				dispatch( socketOperations.userGameSync( { game: data.game, state: data.state, messages: data.messages } ) );
 				break;
 			case 'HAND_UPDATE':
 				dispatch( socketOperations.userHandUpdate( { game_id: data.game_id, hand: data.hand, temp_hand: data.temp_hand } ) );

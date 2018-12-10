@@ -3,7 +3,7 @@ import { createAction } from 'redux-actions';
 
 const showDialog = createAction( 
 	types.SHOW_DIALOG,
-	( { winnerId, goalId } ) => ( { winnerId, goalId } )
+	( { winnerId } ) => ( { winnerId } )
 );
 
 const hideDialog = createAction( types.HIDE_DIALOG );

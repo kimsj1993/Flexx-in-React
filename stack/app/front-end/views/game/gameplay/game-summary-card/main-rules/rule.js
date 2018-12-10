@@ -55,7 +55,7 @@ let Rule = ( { classes, count, label, showInfo = () => {} } ) => (
 
 		<Typography classes={ {
 			root: classNames( classes.text, classes.count )
-		} } > { count || '—' } </Typography>
+		} } > { ( count !== null && count !== undefined ) ? count : '—' } </Typography>
 
 		<IconButton classes={ { 
 			root: classNames( classes.text, classes.info )

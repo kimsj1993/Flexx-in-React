@@ -16,7 +16,7 @@ import Typography from '@material-ui/core/Typography';
 const Transition = props => <Slide direction='down' { ...props } />;
 
 const mapDispatchToProps = dispatch => ( {
-	handleClose: () => dispatch( winModalUIOperations.hideModal() )
+	handleClose: () => dispatch( winModalUIOperations.hideDialog() )
 } );
 
 const styles = theme => ( {
@@ -30,7 +30,13 @@ let WinModal = ( { classes, show, winner, handleClose } ) => (
 		
 		<section className={ classes.root } >
 
-			<Typography> { winner && winner.username } wins! </Typography>
+			<DialogTitle> { winner && winner.username } wins! </DialogTitle>
+
+			<DialogActions>
+
+				<Button color='primary' onClick={ handleClose } > Dismiss </Button>
+
+			</DialogActions>
 
 		</section>
 

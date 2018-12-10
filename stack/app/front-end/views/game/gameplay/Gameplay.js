@@ -30,6 +30,8 @@ import EndTurnButton from './EndTurnButton';
 
 import Notifier from './Notifier';
 
+import BrowseDiscardsModal from './browse-discards-modal';
+
 import { gameSelectors, gameOperations } from '../../../state/modules/data/game';
 import * as userSelectors from "../../../state/modules/user/selectors";
 
@@ -91,6 +93,7 @@ const styles = theme => ({
 let Gameplay = ( { classes, isTurn } ) => (
 	<section className={ classes.root } >
 		<ActionModeSelectsDialog />
+		<BrowseDiscardsModal />
 		<Paper elevation={ 2 } square classes={ { root: classes.opponentsRoot } }>
 			<OpponentsContainer />
 		</Paper>

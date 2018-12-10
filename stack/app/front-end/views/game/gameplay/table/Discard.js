@@ -35,11 +35,11 @@ const styles = theme => ({
 	}
 });
 
-const Discard = ({ classes, cards, ids, browse = () => {} }) => (
+const Discard = ({ classes, cards, ids, browseDiscards }) => (
 	<div className={ classes.root } >
 		{ ids.map(id => (
 			
-			<div className={ classes.card } ><CardContainer id={ id } /></div>
+			<div className={ classes.card } ><CardContainer id={ id } noinfo /></div>
 
 			))[cards.length - 1] }
 
@@ -52,7 +52,7 @@ const Discard = ({ classes, cards, ids, browse = () => {} }) => (
 					classes={ { root: classes.button } } 
 					variant='contained' 
 					color='primary' 
-					onClick={ browse } 
+					onClick={ browseDiscards } 
 				> 
 					Browse 
 				</Button>

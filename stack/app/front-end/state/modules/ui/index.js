@@ -11,6 +11,7 @@ import { default as logoutModal } from './logout-modal';
 import { default as actionModeSelects } from './action-mode-selects';
 import { default as discardCardsModal } from './discard-cards-modal';
 import { default as winModal } from './win-modal';
+import { default as browseDiscardsModal } from './browse-discards-modal';
 
 const reducer = combineReducers( {
 	login,
@@ -23,7 +24,8 @@ const reducer = combineReducers( {
 	logoutModal,
 	actionModeSelects,
 	discardCardsModal,
-	winModal
+	winModal,
+	browseDiscardsModal
 } );
 
 export default reducer;

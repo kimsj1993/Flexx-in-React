@@ -7,13 +7,14 @@ import Card from './Card';
 const mapStateToProps = (state, ownProps) => {
 	const { id } = ownProps;
 
-	const { type, name, subtype } = cardsSelectors.getCardById( state, id );
+	const { type, name, subtype, requirements } = cardsSelectors.getCardById( state, id );
 
 	return {
 		type,
 		name,
 		subtype,
-		id
+		id,
+		requirements
 	};
 }
 

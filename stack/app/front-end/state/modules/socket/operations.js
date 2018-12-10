@@ -74,15 +74,15 @@ const globalGameReset = ( { game } ) => ( dispatch, getState ) => {
 	dispatch( appUIOperations.appLoadRequest() );
 
 	const { id, host_id, created, started, free_join, 
-		has_password, min_players, max_players, player_states } = game;
+		has_password, min_players, max_players, player_ids } = game;
 
 	dispatch( lobbyOperations.updateRoom( { id, host: host_id, created, started, 
 		freeJoin: free_join, minPlayers: min_players, maxPlayers: max_players,
-		password: has_password, playerIds: player_states.map( state => state.id ) } ) );
+		password: has_password, playerIds: player_ids } ) );
 
 	const state = getState();
 
-	if ( game_id == gameSelectors.getGameId( state ) ) {
+	if ( game.id == gameSelectors.getGameId( state ) ) {
 
 		dispatch( handOperations.clearHand() );
 		dispatch( handOperations.clearTempHand() );
@@ -203,7 +203,11 @@ const globalGameVictory = ( { game_id, user_id } ) => ( dispatch, getState ) => 
 
 	dispatch( appUIOperations.appLoadRequest() );
 
-	dispatch( winModalUIOperations.showDialog( { winnerId: user_id } ) );
+	if ( game_id == gameSelectors.getGameId( getState() ) ) {
+
+		dispatch( winModalUIOperations.showDialog( { winnerId: user_id } ) );
+
+	}
 
 	dispatch( appUIOperations.appLoadSuccess() );
 };
@@ -216,14 +220,6 @@ const gameCardDiscard = ( { card_id, game_id, player_id } ) => ( dispatch, getSt
 	dispatch( tableOperations.addDiscard( { id: card_id } ) );
 
 	dispatch( appUIOperations.appLoadSuccess() );
-
-	const state = getState();
-
-	const card = state.data.cards.byId[ card_id ];
-
-	dispatch( notifierOperations.enqueueMessage( {
-		message: `The ${ card.type } card "${ card.name }" was discarded.`
-	} ) );
 };
 
 const gameCardPlay = ( { card_id, from_location, from_player, game_id, player_id, to_location } ) => ( dispatch, getState ) => {
@@ -395,8 +391,8 @@ const userActionStep = ( { game_id, pick, reason } ) => ( dispatch, getState ) =
 	dispatch( actionModeSelectsUIOperations.showDialog( { picks: Array.isArray( pick ) ? pick : [ pick ] , id: reason } ) );
 };
 
-const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
-	console.log('user socket event: GAME_SYNC, with data: ', game, state );
+const userGameSync = ( { game, state, messages } ) => ( dispatch, getState ) => {
+	console.log('user socket event: GAME_SYNC, with data: ', game, state, messages );
 
 	dispatch( appUIOperations.appLoadRequest() );
 
@@ -423,6 +419,10 @@ const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 
 	dispatch( handOperations.replaceHand( { ids: state.hand } ) );
 	dispatch( handOperations.replaceTempHand( { ids: state.temp_hand } ) );
+
+	dispatch( chatOperations.clearMessages() );
+	messages.forEach( msg => dispatch( chatOperations.addMessage( { userId: msg.player_id, message: msg.message } ) ) );
+
 
 	dispatch( appUIOperations.appLoadSuccess() );
 };
@@ -458,7 +458,8 @@ const userHello = ( { cards, games, users } ) => ( dispatch, getState ) => {
 		type: typeMapping[ card.type ],
 		subtype: card.subtype && card.subtype.toLowerCase(),
 		precondition: card.precondition,
-		description: card.description
+		description: card.description,
+		requirements: card.requirements
 	} ) ) } ) );
 
 	dispatch( lobbyOperations.replaceRooms( { rooms: games.map( room => ( {
