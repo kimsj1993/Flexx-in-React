@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 
 
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Typography from "@material-ui/core/Typography/Typography";
 
 const styles = theme => ( {
 	root: {
@@ -23,6 +24,10 @@ const LoginForm = ( { classes, loading, error, value, handleChange, handleLogin 
 	loading ? 
 		<CircularProgress /> :
 		<form className={ classes.root } onSubmit={ handleLogin } >
+            <Typography variant='h1' align='center'>
+                Fluxx
+            </Typography>
+
 			<TextField 
 				variant='outlined'
 				label='Username'
@@ -34,7 +39,12 @@ const LoginForm = ( { classes, loading, error, value, handleChange, handleLogin 
 				fullWidth
 			/>
 			<Button classes={ { root: classes.buttonRoot } } variant='contained' color='primary' type='submit'>Start</Button>
+
 		</form>
+
+
+
+
 );
 
 export default withStyles( styles )( LoginForm );
