@@ -23,29 +23,6 @@ const styles = theme => ( {
 
 		'&:hover $icon': {
 			backgroundColor: theme.palette.common.white
-		},
-
-		'&:first-child': {
-			borderRight: '1px solid #efe7ef',
-			borderBottom: '1px solid #efe7ef'
-
-		},
-
-		'&:nth-child( 2 )': {
-			borderRight: '1px solid #fbe3f0',
-			borderBottom: '1px solid #efe7ef'
-		},
-
-		'&:nth-child( 3 )': {
-			borderBottom: '1px solid #efe7ef'
-		},
-
-		'&:nth-child( 4 )': {
-			borderRight: '1px solid #efe7ef'
-		},
-
-		'&:nth-child( 5 )': {
-			borderRight: '1px solid #efe7ef'
 		}
 	},
 	icon: {

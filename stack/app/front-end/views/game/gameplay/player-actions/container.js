@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => ( {
 		cardId,
 		types: [
 			'request',
-			'error',
-			'success'
+			'success',
+			'error'
 		]
 	} ) )
 } );

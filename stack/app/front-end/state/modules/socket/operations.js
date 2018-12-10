@@ -356,7 +356,7 @@ const gamePlayerUpdate = ( { game_id, player } ) => ( dispatch, getState ) => {
 
 	if ( player.keepers ) updatedPlayer.keeperIds = player.keepers;
 	if ( player.plays_left !== undefined && player.plays_left !== null ) updatedPlayer.playsLeft = player.plays_left;
-	if ( player.plays_left_t !== undefined && players.plays_left_t !== null ) updatedPlayer.tempPlaysLeft = player.plays_left_t;
+	if ( player.plays_left_t !== undefined && player.plays_left_t !== null ) updatedPlayer.tempPlaysLeft = player.plays_left_t;
 	if ( player.position !== undefined && player.position !== null ) updatedPlayer.position = player.position;
 	if ( player.hand_size !== undefined && player.hand_size !== null ) updatedPlayer.cards = player.hand_size;
 	if ( player.temp_hand_size !== undefined && player.temp_hand_size !== null ) updatedPlayer.tempCards = player.temp_hand_size;
