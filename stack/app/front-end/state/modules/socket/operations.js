@@ -389,6 +389,12 @@ const gameTurnBegin = ( { game_id, player_id, plays_remaining } ) => ( dispatch,
 	dispatch( appUIOperations.appLoadSuccess() );
 };
 
+const userActionStep = ( { game_id, pick, reason } ) => ( dispatch, getState ) => {
+	console.log('user socket event: ACTION_STEP, with data: ', game_id, pick, reason );
+
+	dispatch( actionModeSelectsUIOperations.showDialog( { picks: Array.isArray( pick ) ? pick : [ pick ] , id: reason } ) );
+};
+
 const userGameSync = ( { game, state } ) => ( dispatch, getState ) => {
 	console.log('user socket event: GAME_SYNC, with data: ', game, state );
 
@@ -497,6 +503,7 @@ export {
 	gamePlayerUpdate,
 	gameRulesUpdate,
 	gameTurnBegin,
+	userActionStep,
 	userGameSync,
 	userHandUpdate,
 	userHello

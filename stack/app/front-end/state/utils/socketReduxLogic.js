@@ -95,6 +95,10 @@ export const onSocketConnect = dispatch => socket => {
 
 	socket.on('user', data => {
 		switch ( data.e ) {
+			case 'ACTION_STEP':
+				dispatch( socketOperations.userActionStep( { game_id: data.game_id, pick: data.pick, reason: data.reason } ) );
+
+				break;
 			case 'GAME_SYNC':
 				dispatch( socketOperations.userGameSync( { game: data.game, state: data.state } ) );
 				break;

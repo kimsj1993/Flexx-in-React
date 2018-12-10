@@ -12,7 +12,9 @@ const id = handleActions(
 	null
 );
 
-const createCanSubmit = ( count, selectedLength ) => {
+const createCanSubmit = ( kind, count, selectedLength ) => {
+
+	if ( kind != 'CARD' || !count ) return () => selectedLength == 1;
 
 	if ( typeof count == 'number' ) {
 
@@ -148,19 +150,19 @@ const select = handleActions(
 		[ types.ADD_SELECT ]: ( state, action ) => ( {
 			...action.payload,
 			selected: selected( undefined, action ),
-			canSubmit: createCanSubmit( action.payload.pick.count, state.selected.length )
+			canSubmit: createCanSubmit( action.payload.pick.kind, action.payload.pick.count, 0 )
 		} ),
 
 		[ types.ADD_SELECTION ]: ( state, action ) => ( {
 			...state,
 			selected: selected( state.selected, action ),
-			canSubmit: createCanSubmit( action.payload.pick.count, state.selected.length )
+			canSubmit: createCanSubmit( action.payload.pick.kind, action.payload.pick.count, state.selected.length + 1 )
 		} ),
 
 		[ types.REMOVE_SELECTION ]: ( state, action ) => ( {
 			...state,
 			selected: selected( state.selected, action ),
-			canSubmit: createCanSubmit( action.payload.pick.count, state.selected.length )
+			canSubmit: createCanSubmit( action.payload.pick.kind, action.payload.pick.count, state.selected.length - 1 )
 		} )
 	},
 

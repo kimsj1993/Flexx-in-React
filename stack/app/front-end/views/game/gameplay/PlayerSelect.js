@@ -1,19 +1,42 @@
 import { withStyles } from '@material-ui/core/styles';
 
+import { connect } from 'react-redux';
+
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
+const mapStateToProps = ( state, ownProps ) => ( {
+	player: state.data.users.byId[ ownProps.id ]
+} );
 
 const playerStyles = theme => ( {
-
+	root: {
+		padding: 16
+	},
+	icon: {
+		borderRadius: '50%',
+		height: 64,
+		width: 64,
+		marginBottom: 16,
+		marginLeft: 'auto',
+		marginRight: 'auto',
+		backgroundColor: theme.palette.primary.main
+	},
+	name: {
+		fontSize: '16px',
+		fontWeight: 400,
+		color: theme.palette.primary.main,
+		textAlign: 'center',
+		width: '100%'
+	}
 } );
 
 let Player = ( { classes, name } ) => (
-	<Paper>
+	<Paper classes={ { root: classes.root } } >
 
-		<div/>
+		<div className={ classes.icon } />
 
-		<Typography> { name } </Typography>
+		<Typography classes={ { root: classes.name } } > { name } </Typography>
 		
 	</Paper>
 );
@@ -38,10 +61,14 @@ const styles = theme => ( {
 	}
 } )
 
-const PlayerSelect = ( { classes, name, selected, handleClick } ) => (
+let PlayerSelect = ( { classes, player, selected, handleClick } ) => (
 	<Paper classes={ { root: selected ? classes.selectedRoot: classes.root } } elevation={ selected ? 8 : 0 } >
-		<Player name={ name } />
+		<Player name={ player.username } />
 	</Paper>
 );
 
-export default withStyles( styles )( PlayerSelect );
+PlayerSelect = withStyles( styles )( PlayerSelect );
+
+export default connect(
+	mapStateToProps
+)( PlayerSelect );

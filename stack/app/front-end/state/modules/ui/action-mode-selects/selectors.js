@@ -21,7 +21,34 @@ const getSelectionOptions = ( state, pick ) => {
 
 	const thisUserId = state.user.id;
 
+	const isOfType = type => id => {
+
+		if ( Array.isArray( type ) )
+			return type.some( t => {
+				if ( t == 'ACTION' ) return state.data.cards.byId[ id ].type == 'action';
+				if ( t == 'NEW_RULE' ) return state.data.cards.byId[ id ].type == 'rule';
+				if ( t == 'KEEPER' ) return state.data.cards.byId[ id ].type == 'keeper';
+				if ( t == 'GOAL' ) return state.data.cards.byId[ id ].type == 'goal';
+			} );
+		else {
+			if ( type == 'ACTION' ) return state.data.cards.byId[ id ].type == 'action';
+			if ( type == 'NEW_RULE' ) return state.data.cards.byId[ id ].type == 'rule';
+			if ( type == 'KEEPER' ) return state.data.cards.byId[ id ].type == 'keeper';
+			if ( type == 'GOAL' ) return state.data.cards.byId[ id ].type == 'goal';
+		} 
+
+		return false;
+	};
+
 	switch ( collection ) {
+
+		case 'discard':
+
+			let discards = state.data.table.discards;
+
+			if ( type ) discards = discards.filter( isOfType( type ) );
+
+			return discards;
 
 		case 'player_keepers':
 
@@ -33,7 +60,7 @@ const getSelectionOptions = ( state, pick ) => {
 
 				const playersCardCount = state.data.players.allIds
 					.map( id => state.data.players.byId[ id ] )
-					.filter( id != thisUserId )
+					.filter( id => id != thisUserId )
 					.reduce( ( total, player ) => total + player.cards );
 
 				return Array( playersCardCount ).fill( null );

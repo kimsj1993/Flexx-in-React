@@ -205,7 +205,7 @@ const gameKickPlayer = createApiAction(
 
 const gameInvokeAction = createApiAction(
 	{
-		endpoint: id => `https://fluxx.d.calebj.io/api/games/${id}`,
+		endpoint: id => `https://fluxx.d.calebj.io/api/games/${id}?action`,
 		method: 'POST',
 		credentials: 'include',
 		headers: {
@@ -217,6 +217,26 @@ const gameInvokeAction = createApiAction(
 		types,
 		body: JSON.stringify( {
 			action_name: cardId
+		} ),
+		endpoint: rsaa.endpoint( id )
+	} )
+);
+
+const gameContinueAction = createApiAction(
+	{
+		endpoint: id => `https://fluxx.d.calebj.io/api/games/${id}?continue`,
+		method: 'POST',
+		credentials: 'include',
+		headers: {
+		    'Accept': 'application/json',
+		    'Content-Type': 'application/json'
+		}
+	},
+	( rsaa, { types, id = '@current', cardId, pick } ) => ( {
+		types,
+		body: JSON.stringify( {
+			action_name: cardId,
+			pick
 		} ),
 		endpoint: rsaa.endpoint( id )
 	} )
@@ -286,6 +306,7 @@ export {
 	deleteGame,
 	gameKickPlayer,
 	gameInvokeAction,
+	gameContinueAction,
 	gameDiscardCard,
 	gamePlayCard,
 	gameEndTurn

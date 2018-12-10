@@ -32,10 +32,10 @@ let CardKind = ( { classes, options, selected, pick, satisfied, select, index } 
 
 		<Paper classes={ { root: classes.cardSelectWell } } elevation={ 0 } >
 
-			{ options.map( id => 
-				<div onClick={ select( index, selected.includes( id ), id ) } >
+			{ options.map( ( id, index ) => 
+				<div onClick={ select( index, selected.includes( id ), id, pick ) } >
 					<CardSelect 
-						cardId={ id } 
+						cardId={ id || index } 
 						selected={ selected.includes( id ) } 
 						index={ pick.index }
 					/>
@@ -44,7 +44,7 @@ let CardKind = ( { classes, options, selected, pick, satisfied, select, index } 
 
 		</Paper>
 
-		<Typography color={ satisfied ? 'default' : 'error' } variant="subtitle2"> { pick.message } </Typography>
+		<Typography color={ satisfied ? 'default' : 'error' } variant="subtitle2"> { pick.message || 'Pick 1 card.' } </Typography>
 
 	</section>
 );
@@ -66,14 +66,14 @@ const playerKindStyles = theme => ( {
 let PlayerKind = ( { classes, options, selected, pick, satisfied, select, index } ) => (
 	<section>
 
-		<Typography variant='subtitle1'> Select Cards </Typography>
+		<Typography variant='subtitle1'> Select Players </Typography>
 
 		<Paper classes={ { root: classes.cardSelectWell } } elevation={ 0 } >
 
 			{ options.map( id => 
-				<div onClick={ select( index, selected.includes( id ), id ) } >
+				<div onClick={ select( index, selected.includes( id ), id, pick ) } >
 					<PlayerSelect 
-						playerId={ id }
+						id={ id }
 						selected={ selected.includes( id ) }
 					/>
 				</div> ) 
@@ -81,7 +81,7 @@ let PlayerKind = ( { classes, options, selected, pick, satisfied, select, index 
 
 		</Paper>
 
-		<Typography color={ satisfied ? 'default' : 'error' } variant="subtitle2"> { pick.message } </Typography>
+		<Typography color={ satisfied ? 'default' : 'error' } variant="subtitle2"> { pick.message || 'Pick a player.' } </Typography>
 
 	</section>
 );
@@ -103,12 +103,12 @@ const directionKindStyles = theme => ( {
 let DirectionKind = ( { classes, options, selected, pick, satisfied, select, index } ) => (
 	<section>
 
-		<Typography variant='subtitle1'> Select Cards </Typography>
+		<Typography variant='subtitle1'> Select A Direction </Typography>
 
 		<Paper classes={ { root: classes.cardSelectWell } } elevation={ 0 } >
 
 			{ options.map( direction => 
-				<div onClick={ select( index, selected.includes( direction ), direction ) } >
+				<div onClick={ select( index, selected.includes( direction ), direction, pick ) } >
 					<DirectionSelect 
 						direction={ direction }
 						selected={ selected.includes( direction ) }
@@ -118,7 +118,7 @@ let DirectionKind = ( { classes, options, selected, pick, satisfied, select, ind
 
 		</Paper>
 
-		<Typography color={ satisfied ? 'default' : 'error' } variant="subtitle2"> { pick.message } </Typography>
+		<Typography color={ satisfied ? 'default' : 'error' } variant="subtitle2"> { pick.message || 'Pick a direction.' } </Typography>
 
 	</section>
 );
@@ -143,9 +143,28 @@ let Component = ( { classes, options, selected, pick, satisfied, select, index }
 				pick={ pick }
 				satisfied={ satisfied }
 				index={ index }
-			/> } 
-		{ pick.kind == 'PLAYER' && <PlayerKind /> }
-		{ pick.kind == 'DIRECTION' && <DirectionKind /> }
+			/> 
+		} 
+		{ pick.kind == 'PLAYER' && 
+			<PlayerKind 
+				options={ options }
+				selected={ selected }
+				select={ select }
+				pick={ pick }
+				satisfied={ satisfied }
+				index={ index }
+			/> 
+		}
+		{ pick.kind == 'DIRECTION' && 
+			<DirectionKind 
+				options={ options }
+				selected={ selected }
+				select={ select }
+				pick={ pick }
+				satisfied={ satisfied }
+				index={ index }
+			/> 
+		}
 
 	</Paper>
 );

@@ -13,6 +13,7 @@ const {
 	deleteGame,
 	gameKickPlayer,
 	gameInvokeAction,
+	gameContinueAction,
 	gameDiscardCard,
 	gamePlayCard,
 	gameEndTurn
@@ -31,6 +32,7 @@ export {
 	deleteGame,
 	gameKickPlayer,
 	gameInvokeAction,
+	gameContinueAction,
 	gameDiscardCard,
 	gamePlayCard,
 	gameEndTurn

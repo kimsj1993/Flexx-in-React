@@ -5,10 +5,10 @@ import { actionModeSelectsUIOperations, actionModeSelectsUISelectors } from '../
 import Component from './component';
 
 const mapDispatchToProps = dispatch => ( {
-	select: ( index, selected, selection ) => () => {
+	select: ( index, selected, selection, pick ) => () => {
 
-		if ( selected ) dispatch( actionModeSelectsUIOperations.removeSelection( { selection, index } ) );
-		else dispatch( actionModeSelectsUIOperations.addSelection( { selection, index } ) );
+		if ( selected ) dispatch( actionModeSelectsUIOperations.removeSelection( { selection, index, pick } ) );
+		else dispatch( actionModeSelectsUIOperations.addSelection( { selection, index, pick } ) );
 
 	}
 } );

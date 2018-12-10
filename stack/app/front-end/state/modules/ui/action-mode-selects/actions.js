@@ -18,12 +18,12 @@ const clearCardId = createAction( types.CLEAR_CARD_ID );
 
 const addSelection = createAction(
 	types.ADD_SELECTION,
-	( { selection, index } ) => ( { selection, index } )
+	( { selection, index, pick } ) => ( { selection, index, pick } )
 );
 
 const removeSelection = createAction(
 	types.REMOVE_SELECTION,
-	( { selection, index } ) => ( { selection, index } )
+	( { selection, index, pick } ) => ( { selection, index, pick } )
 );
 
 const showDialog = createAction( types.SHOW_DIALOG );

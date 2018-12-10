@@ -20,7 +20,7 @@ const styles = theme => ( {
 	
 } );
 
-const Component = ( { classes, show, card, handleClose, handleContinue, selects, canSubmit } ) => {
+const Component = ( { classes, show, card, handleClose, confirmSelection, selects, canSubmit } ) => {
 
 	return (
 		<Dialog open={ show } onClose={ handleClose } TransitionComponent={ Transition } disableBackdropClick disableEscapeKeyDown >
@@ -43,16 +43,19 @@ const Component = ( { classes, show, card, handleClose, handleContinue, selects,
 
 					?
 
-					<Button color='primary' onClick={ null } >
-						Discard Cards
+					<Button color='primary' onClick={ confirmSelection( { 
+						cardId: card && card.id, 
+						pick: selects.reduce( ( arr, select ) => [ ...arr, ...select.selected ], [] ) 
+					} ) } >
+						Confirm
 					</Button>
 
 					:
 
-					<Tooltip title='You must select the correct amount of cards to continue.' placement='top' >
+					<Tooltip title='You must make a correct selection to continue.' placement='top' >
 						<span>
 							<Button color='primary' disabled >
-								Discard Cards
+								Confirm
 							</Button>
 						</span>
 					</Tooltip>
