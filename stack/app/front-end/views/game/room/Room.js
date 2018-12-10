@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 
 import ChatContainer from '../chat/ChatContainer';
 import LeaveButton from "../../LeaveButton";
-import Header from "../../../components/game/gameplay/Header";
 
 const styles = theme => ({
     root: {
@@ -34,7 +33,7 @@ const styles = theme => ({
 
     buttonsContainer: {
         gridColumnStart: '1',
-        gridColumnEnd:'3',
+        gridColumnEnd:'2',
         display: 'flex',
         flexDirection: 'column',
     },
@@ -51,8 +50,6 @@ const styles = theme => ({
 });
 
 const Room = ({ classes, players, startGameHandler }) => (
-    <div>
-    <Header/>
     <Paper classes={{ root: classes.root }} >
         <div className={classes.currentUserContainer}>
             <div className={classes.buttonsContainer}>
@@ -64,7 +61,9 @@ const Room = ({ classes, players, startGameHandler }) => (
                 >
                     Start
                 </Button>
-
+                <div className={classes.button}>
+                    <LeaveButton />
+                </div>
 
             </div>
 
@@ -85,7 +84,6 @@ const Room = ({ classes, players, startGameHandler }) => (
         </div>
 
     </Paper>
-    </div>
 );
 
 
