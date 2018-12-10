@@ -28,7 +28,7 @@ const byId = handleActions(
 		}, {} ),
 
 		[ types.UPDATE_PLAYER ]: ( state, { payload } ) =>
-			Object.keys( state ).reduce( (newState, id ) => {
+			Object.keys( state ).reduce( ( newState, id ) => {
 				return ( id == payload.id ) ?
 					assign( {}, newState, { [ id ] : assign( {}, state[ id ], payload ) } ) :
 					{ ...newState, [ id ]: { ...state[ id ] } }

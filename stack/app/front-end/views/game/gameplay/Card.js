@@ -7,6 +7,7 @@ const styles = theme => ({
 	root: {
 		height: 192,
 		width: 128,
+		minWidth: 128,
 		borderRadius: 8,
 		backgroundColor: theme.palette.common.white,
 		display: 'flex'

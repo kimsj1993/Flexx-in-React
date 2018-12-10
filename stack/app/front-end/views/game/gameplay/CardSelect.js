@@ -24,7 +24,7 @@ const styles = theme => ( {
 
 const CardSelect = ( { classes, cardId, selected, handleClick, index } ) => (
 	<Paper classes={ { root: selected ? classes.selectedRoot: classes.root } } elevation={ selected ? 8 : 0 } >
-		{ !index && <CardContainer id={ cardId } /> }
+		{ !index && <CardContainer id={ cardId } noinfo /> }
 		{ index && <CardBack /> }
 	</Paper>
 );

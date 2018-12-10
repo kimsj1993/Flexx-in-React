@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 
 import Component from './component';
 
+import { apiOperations } from '../../../../state/modules/api';
+
 const mapStateToProps = ( state, ownProps ) => ( {
 	actions: state.data.table.rules
 		.map( id => state.data.cards.byId[ id ] )
@@ -10,7 +12,14 @@ const mapStateToProps = ( state, ownProps ) => ( {
 } );
 
 const mapDispatchToProps = dispatch => ( {
-	
+	invokeAction: ( { cardId } ) => () => dispatch( apiOperations.gameInvokeAction( {
+		cardId,
+		types: [
+			'request',
+			'error',
+			'success'
+		]
+	} ) )
 } );
 
 const Container = ( props ) => (

@@ -103,7 +103,7 @@ const Component = ({ classes, actions, showInfo = () => {}, showActionInfo = () 
             { actions.map( action => 
             	<Action 
 	            	label={ action.name } 
-	            	invoke={ invokeAction( action.id ) } 
+	            	invoke={ invokeAction( { cardId: action.id } ) } 
 	            	showInfo={ showActionInfo( action.id ) } 
             	/> ) }
         </div>

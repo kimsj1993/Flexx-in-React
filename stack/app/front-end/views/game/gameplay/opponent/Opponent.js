@@ -27,6 +27,9 @@ const styles = theme => ({
     marginBottom: 8,
     display: 'flex'
   },
+  userInfoContentTurn: {
+        backgroundColor: '#FEFCE5'
+    },
   userInfoHighlight: {
     width: 8,
     height: 64,
@@ -43,7 +46,7 @@ const Opponent = ({ classes, name, playsRemaining, isTurn, cardCount, keeperIds 
   <div className={ 
     classNames( classes.root, { [ classes.opponentHighlight ]: isTurn } )
   } >
-      <Paper classes={{ root: classes.userInfoRoot }} >
+      <Paper classes={{ root: classNames( classes.userInfoRoot, { [ classes.userInfoContentTurn ]: isTurn } ) }} >
         { (isTurn) ? (<div className={ classes.userInfoHighlight } />) : '' }
         <UserInfo 
           name={ name } 

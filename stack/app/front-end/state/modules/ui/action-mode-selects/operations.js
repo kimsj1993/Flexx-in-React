@@ -20,6 +20,7 @@ const resetSelects = () => dispatch => {
 };
 
 const showDialog = ( { picks, id } ) => dispatch => {
+	dispatch( resetSelects() );
 	dispatch( initSelects( { picks, id } ) );
 	dispatch( actions.showDialog() );
 };

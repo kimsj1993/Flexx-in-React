@@ -102,7 +102,7 @@ const globalGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 
 	const updatedRoom = { id: game.id };
 
-	if ( game.host_id ) updatedRoom.host = game.host_id;
+	if ( game.host_id !== undefined && game.host_id !== null ) updatedRoom.host = game.host_id;
 	if ( game.created ) updatedRoom.created = game.created;
 	if ( game.started ) updatedRoom.started = game.started;
 	if ( game.free_join ) updatedRoom.freeJoin = game.free_join;
@@ -286,7 +286,7 @@ const gameGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 
 	const updatedRoom = { id: game.id };
 
-	if ( game.host_id ) updatedRoom.host = game.host_id;
+	if ( game.host_id !== undefined && gane.host_id !== null ) updatedRoom.host = game.host_id;
 	if ( game.created ) updatedRoom.created = game.created;
 	if ( game.started ) updatedRoom.started = game.started;
 	if ( game.free_join ) updatedRoom.freeJoin = game.free_join;
@@ -299,7 +299,7 @@ const gameGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 
 	const updatedGame = { id: game.id };
 
-	if ( game.current_player_id ) updatedGame.turn = game.current_player_id;
+	if ( game.current_player_id !== undefined && game.current_player_id !== null ) updatedGame.turn = game.current_player_id;
 
 	dispatch( gameOperations.updateGame( updatedGame ) );
 
@@ -307,15 +307,15 @@ const gameGameUpdate = ( { game } ) => ( dispatch, getState ) => {
 
 	if ( game.goals ) dispatch( tableOperations.replaceGoals( { ids: game.goals } ) );
 
-	if ( game.play_num ) dispatch( tableOperations.updatePlayRule( { count: game.play_num } ) );
+	if ( game.play_num !== undefined && game.play_num !== null ) dispatch( tableOperations.updatePlayRule( { count: game.play_num } ) );
 
 	if ( game.rules ) dispatch( tableOperations.replaceRules( { ids: game.rules } ) );
 
-	if ( game.draw_num ) dispatch( tableOperations.updateDrawRule( { count: game.draw_num } ) );
+	if ( game.draw_num !== undefined && game.draw_num !== null ) dispatch( tableOperations.updateDrawRule( { count: game.draw_num } ) );
 
-	if ( game.keeper_limit ) dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
+	if ( game.keeper_limit !== undefined && game.keeper_limit !== null ) dispatch( tableOperations.updateKeeperLimit( { limit: game.keeper_limit } ) );
 
-	if ( game.hand_limit ) dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
+	if ( game.hand_limit !== undefined && game.hand_limit !== null ) dispatch( tableOperations.updateHandLimit( { limit: game.hand_limit } ) );
 
 	dispatch( lobbyOperations.updateRoom( updatedRoom ) );
 
@@ -355,11 +355,11 @@ const gamePlayerUpdate = ( { game_id, player } ) => ( dispatch, getState ) => {
 	const updatedPlayer = { id: player.player_id };
 
 	if ( player.keepers ) updatedPlayer.keeperIds = player.keepers;
-	if ( player.plays_left ) updatedPlayer.playsLeft = player.plays_left;
-	if ( player.plays_left_t ) updatedPlayer.tempPlaysLeft = player.plays_left_t;
-	if ( player.position ) updatedPlayer.position = player.position;
-	if ( player.hand_size ) updatedPlayer.cards = player.hand_size;
-	if ( player.temp_hand_size ) updatedPlayer.tempCards = player.temp_hand_size;
+	if ( player.plays_left !== undefined && player.plays_left !== null ) updatedPlayer.playsLeft = player.plays_left;
+	if ( player.plays_left_t !== undefined && players.plays_left_t !== null ) updatedPlayer.tempPlaysLeft = player.plays_left_t;
+	if ( player.position !== undefined && player.position !== null ) updatedPlayer.position = player.position;
+	if ( player.hand_size !== undefined && player.hand_size !== null ) updatedPlayer.cards = player.hand_size;
+	if ( player.temp_hand_size !== undefined && player.temp_hand_size !== null ) updatedPlayer.tempCards = player.temp_hand_size;
 
 	dispatch( playersOperations.updatePlayer( updatedPlayer ) );
 

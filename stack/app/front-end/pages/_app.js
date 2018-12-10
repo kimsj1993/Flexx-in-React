@@ -53,7 +53,13 @@ class MyApp extends App {
       <Container>
 
         <Provider store={ store }>
-          <SnackbarProvider>
+          <SnackbarProvider
+            variant='info'
+            anchorOrigin={ {
+              vertical: 'top',
+              horizontal: 'right'
+            } }
+          >
             <ConnectedRouter>
 
               {/* Wrap every page in Jss and Theme providers */}

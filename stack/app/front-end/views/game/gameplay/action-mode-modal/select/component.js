@@ -92,6 +92,7 @@ PlayerKind = withStyles( playerKindStyles )( PlayerKind );
 const directionKindStyles = theme => ( {
 	cardSelectWell: {
 		display: 'flex',
+		justifyContent: 'center',
 		marginBottom: 8,
 		marginTop: 8,
 		overflowX: 'scroll',
@@ -103,7 +104,7 @@ const directionKindStyles = theme => ( {
 let DirectionKind = ( { classes, options, selected, pick, satisfied, select, index } ) => (
 	<section>
 
-		<Typography variant='subtitle1'> Select A Direction </Typography>
+		<Typography variant='subtitle1'> Select a Direction </Typography>
 
 		<Paper classes={ { root: classes.cardSelectWell } } elevation={ 0 } >
 
@@ -128,12 +129,12 @@ DirectionKind = withStyles( directionKindStyles )( DirectionKind );
 
 const styles = theme => ( {
 	root: {
-
+		marginBottom: 16
 	}
 } );
 
 let Component = ( { classes, options, selected, pick, satisfied, select, index } ) => (
-	<Paper classes={ { root: classes.root } } key={ index } >
+	<Paper classes={ { root: classes.root } } key={ index  } elevation={ 0 } >
 
 		{ pick.kind == 'CARD' && 
 			<CardKind 

@@ -13,11 +13,21 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 
 import ActionModeSelect from './select';
+import CardContainer from '../card/CardContainer';
 
 const Transition = props => <Slide direction='down' { ...props } />;
 
 const styles = theme => ( {
-	
+	header: {
+		display: 'flex',
+		marginBottom: 24
+	},
+	card: {
+		margin: 24,
+		marginBottom: 0,
+		marginLeft: 16,
+		transform: 'rotate( 3deg )'
+	}
 } );
 
 const Component = ( { classes, show, card, handleClose, confirmSelection, selects, canSubmit } ) => {
@@ -25,11 +35,33 @@ const Component = ( { classes, show, card, handleClose, confirmSelection, select
 	return (
 		<Dialog open={ show } onClose={ handleClose } TransitionComponent={ Transition } disableBackdropClick disableEscapeKeyDown >
 
-			<DialogTitle> { card && card.name } </DialogTitle>
+			<header className={ classes.header } >
+
+				{ 
+					card && 
+
+					<div className={ classes.card } >
+
+						<CardContainer id={ card.id } noinfo />
+
+					</div> 
+				}
+
+				<div>
+
+					<DialogTitle> { card && card.name } </DialogTitle>
+
+					<DialogContent>
+
+						<DialogContentText> { card && card.description } </DialogContentText>
+
+					</DialogContent>
+
+				</div>
+
+			</header>
 
 			<DialogContent>
-
-				<DialogContentText> { card && card.description } </DialogContentText>
 
 				{ selects.map( ( select, index ) => <ActionModeSelect index={ index } /> ) }
 

@@ -31,6 +31,9 @@ const styles = theme => ({
         marginBottom: 6,
         borderBottom: '1px solid ' + theme.palette.divider
     },
+    userInfoContentTurn: {
+        backgroundColor: '#FEFCE5'
+    },
     userInfoHighlight: {
         width: 8,
         height: 64,
@@ -53,7 +56,7 @@ const User = ({ classes, name, playsRemaining, isTurn,  keeperIds }) => (
     <Paper square elevation={ 2 } classes={ { 
         root: classNames( classes.root, { [ classes.turnHighlight ]: isTurn } )
     } } >
-        <Paper classes={ { root: classes.userInfoRoot } } >
+        <Paper classes={ { root: classNames( classes.userInfoRoot, { [ classes.userInfoContentTurn ]: isTurn } ) } } >
             <div className={ classes.userInfoContent } >
             { (isTurn) ? <div className={ classes.userInfoHighlight } /> : '' }
             <UserInfo

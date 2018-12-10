@@ -10,6 +10,7 @@ const styles = theme => ({
 	root: {
 		height: 192,
 		width: 128,
+		minWidth: 128,
 		borderRadius: 8,
 		backgroundColor: theme.palette.common.white,
 		display: 'flex',
@@ -116,7 +117,7 @@ const subtypeText = ( id, subtype ) => {
 	return null
 };
 
-const Card = ({ classes, name, type, subtype, id, showInfo = () => {} }) => (
+const Card = ({ classes, name, type, subtype, id, showInfo = () => {}, noinfo }) => (
 	<Paper classes={{ root: classes.root }} >
 		<div className={ classNames( classes.sash, classes[ type ] ) }>
 			<div className={ classes.rotate } >
@@ -150,11 +151,11 @@ const Card = ({ classes, name, type, subtype, id, showInfo = () => {} }) => (
 				</Typography>
 			}
 
-			<IconButton classes={ { 
+			{ !noinfo && <IconButton classes={ { 
 				root: classes.info
 			} } onClick={ showInfo } >
 				<InfoIcon />
-			</IconButton>
+			</IconButton> }
 
 		</div>
 
